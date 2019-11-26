@@ -3,3 +3,9 @@
         Í dag ætlum við að klára kröfulista, byrja og klára klasarit og einnig byrja vinnu á 
         use cases. Úlfur og Richard ætla að vinna á klasaritinu á meðan Árna klárar 
         kröfulistann og fer svo að hjálpa Hlín með use casein.
+
+    Önnur færsla, 13:50
+        Við vorum ekki búin að klára user-flow og ákvöddum því að bíða með use-casein og 
+        einblíndum á það að ná að klára user-flowið. Árna kláraði kröfulistan og fór þá 
+        að hjálpa Hlín með user-flowið. Úlfur og Richard eru komin langleiðina með
+        klasaritið.
