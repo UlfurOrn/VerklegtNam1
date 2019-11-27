@@ -9,3 +9,13 @@
         einblíndum á það að ná að klára user-flowið. Árna kláraði kröfulistan og fór þá 
         að hjálpa Hlín með user-flowið. Úlfur og Richard eru komin langleiðina með
         klasaritið.
+        
+    Seinasta færsla, 15:40
+        Hlín og Árna bjuggu til lista af öllum þeim skjám/functionum sem þurftu að koma
+        framm. Úlfur og Richard kláruðu klasaritið.
+
+
+27/11/19
+    Fyrsta færsla, 12:50
+        Í dag ætlum við að negla niður hvernig við viljum hafa user-flowið. Eftir það
+        ætlum við að byrja á útlitshönnun, stöðuriti og use-cases
