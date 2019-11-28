@@ -23,3 +23,10 @@
     Seinasta færsla, 16:00
         Við kláruðum að gera user flow, erum komin með útlitshönnun að mestu á hreinu,
         stöðuritið var næstum klárað og við vorum byrjuð á use-cases.
+
+
+28/11/19
+    Fyrsta færsla, 10:30
+        Í dag ætlum við að gera öll rit svosem klasaritið fallegra og síðan byrja að setja 
+        allt sem við höfum gert í skýrslu. Árna og Hlín gerðu skýrsluna og Úlfur og Richard 
+        gerðu ritin.
