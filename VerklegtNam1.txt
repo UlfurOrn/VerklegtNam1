@@ -19,3 +19,7 @@
     Fyrsta færsla, 12:50
         Í dag ætlum við að negla niður hvernig við viljum hafa user-flowið. Eftir það
         ætlum við að byrja á útlitshönnun, stöðuriti og use-cases
+        
+    Seinasta færsla, 16:00
+        Við kláruðum að gera user flow, erum komin með útlitshönnun að mestu á hreinu,
+        stöðuritið var næstum klárað og við vorum byrjuð á use-cases.
