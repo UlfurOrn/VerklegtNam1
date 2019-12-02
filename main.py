@@ -11,14 +11,14 @@ class Airway:
 
 cair = Airway()
 
-cair.employees.hire_employee("siggi","251135","652584","22325","spain-drive 21","siggi@sigg.is",False)
+cair.employees.hire_employee("siggi","251135","652584","22325","spain-drive 21","siggi@sigg.is","boeing 747",False)
 
 
 
 for i in cair.employees.all:
     print(cair.assets[i])
 print()
-cair.employees.update_employee(1,["","","spain-drive 23",""])
+cair.employees.update_employee(1,["","","spain-drive 23","",""])
 
 for i in cair.employees.all:
     print(cair.assets[i])
