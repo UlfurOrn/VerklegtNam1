@@ -1,5 +1,5 @@
 class Employee:
-    def __init__(self, name,social,mobile,home_phone, address, email,job_type, cid):
+    def __init__(self, name, social, mobile, home_phone, address, email, job_type, cid):
         self.name = name
         self.social = social
         self.mobile = mobile
@@ -28,10 +28,10 @@ class Employee:
 
 
 class EmployeeContainer:
-    def __init__(self,airway):
+    def __init__(self, airway):
         self.all = []
         self.attendants = []
-        self.pilots = [] 
+        self.pilots = []
         self.airway = airway
     def hire_employee(self,name,social,mobile,home_phone, address, email,job_type):
         cemployee = Employee(name,social,mobile,home_phone,address,email,job_type,self.airway.id_counter)
@@ -52,4 +52,3 @@ class EmployeeContainer:
         cemployee.update_variable(updates[2],"address")
         cemployee.update_variable(updates[3],"email")
 
-                
