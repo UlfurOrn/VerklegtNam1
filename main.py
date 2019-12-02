@@ -1,4 +1,7 @@
-class airway:
+from Employee import *
+from Destination import *
+
+class Airway:
     def __init__(self):
         self.employees = []
         self.attendants = []
@@ -7,7 +10,7 @@ class airway:
         self.id_counter = 1
 
     def hire_employee(self,name,mobile,home_phone, address, email,job_type):
-        cemployee = employee(name,mobile,home_phone,address,email,job_type,self.id_counter)
+        cemployee = Employee(name,mobile,home_phone,address,email,job_type,self.id_counter)
         
         self.assets[self.id_counter] = cemployee
         self.employees.append(self.id_counter)
@@ -17,27 +20,7 @@ class airway:
             self.attendants.append(self.id_counter)
         self.id_counter+=1
 
-        
-            
-        
-        
-class employee:
-    def __init__(self, name,mobile,home_phone, address, email,job_type, cid):
-        self.name = name
-        self.mobile = mobile
-        self.home_phone = home_phone
-        self.address = address
-        self.email = email
-        self.id = cid
-        self.is_pilot = job_type
-
-
-    def __str__(self):
-        return "id: "+str(self.id)+"\nname: "+self.name+"\nmobile phone: "+str(self.mobile)+"\nhome phone: "+str(self.home_phone)+"\nadress: "+self.address+"\nemail: "+self.email
-
-
-
-cair = airway()
+cair = Airway()
 
 cair.hire_employee("siggi",52584,22325,"spain-drive 21","siggi@sigg.is",False)
 
