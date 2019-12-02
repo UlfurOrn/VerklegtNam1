@@ -6,7 +6,7 @@ class Airway:
     def __init__(self):
         self.employees = []
         self.attendants = []
-        self.pilots = [] 
+        self.pilots = []
         self.assets = {}
         self.id_counter = 1
 
