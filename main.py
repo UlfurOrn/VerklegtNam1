@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+from Employee import *
+from Destination import *
+
+>>>>>>> c9effb4d03e372efe41152ba2c6bde047a2d57e1
 class Airway:
     def __init__(self):
         self.employees = []
@@ -6,8 +12,13 @@ class Airway:
         self.assets = {}
         self.id_counter = 1
 
+<<<<<<< HEAD
     def hire_employee(self,name,social,mobile,home_phone, address, email,job_type):
         cemployee = Employee(name,social,mobile,home_phone,address,email,job_type,self.id_counter)
+=======
+    def hire_employee(self,name,mobile,home_phone, address, email,job_type):
+        cemployee = Employee(name,mobile,home_phone,address,email,job_type,self.id_counter)
+>>>>>>> c9effb4d03e372efe41152ba2c6bde047a2d57e1
         
         self.assets[self.id_counter] = cemployee
         self.employees.append(self.id_counter)
@@ -17,6 +28,7 @@ class Airway:
             self.attendants.append(self.id_counter)
         self.id_counter+=1
 
+<<<<<<< HEAD
     def update_employee(cid):
         cemployee = assets[cid]
         for i in range(5):
@@ -42,6 +54,8 @@ class Employee:
 
 
 
+=======
+>>>>>>> c9effb4d03e372efe41152ba2c6bde047a2d57e1
 cair = Airway()
 
 cair.hire_employee("siggi",251135,652584,22325,"spain-drive 21","siggi@sigg.is",False)
