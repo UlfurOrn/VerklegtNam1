@@ -3,14 +3,14 @@ from Destinations import *
 from Routes import *
 from datetime import datetime
 
-class Airway:
+class Airline:
     def __init__(self):
         self.employees = EmployeeContainer(self)
         self.assets = {}
         self.id_counter = 1
 
 
-cair = Airway()
+cair = Airline()
 
 cair.employees.hire_employee("siggi","251135","652584","22325","spain-drive 21","siggi@sigg.is","boeing 747",False)
 
