@@ -35,27 +35,27 @@ class Employee:
 
 
 class EmployeeContainer:
-    def __init__(self, airway):
+    def __init__(self, airline):
         self.all = []
         self.attendants = []
         self.pilots = []
-        self.airway = airway
+        self.airline = airline
 
 
     def hire_employee(self, name, social, mobile, home_phone, address, email,plane_type, job_type):
-        cemployee = Employee(name, social, mobile, home_phone, address, email, plane_type, job_type, self.airway.id_counter)
+        cemployee = Employee(name, social, mobile, home_phone, address, email, plane_type, job_type, self.airline.id_counter)
 
-        self.airway.assets[self.airway.id_counter] = cemployee
-        self.all.append(self.airway.id_counter)
+        self.airline.assets[self.airline.id_counter] = cemployee
+        self.all.append(self.airline.id_counter)
         if job_type:
-            self.pilots.append(self.airway.id_counter)
+            self.pilots.append(self.airline.id_counter)
         else:
-            self.attendants.append(self.airway.id_counter)
-        self.airway.id_counter+=1
+            self.attendants.append(self.airline.id_counter)
+        self.airline.id_counter+=1
 
 
     def update_employee(self, cid, updates):
-        cemployee = self.airway.assets[cid]
+        cemployee = self.airline.assets[cid]
         cemployee.update_variable(updates[0],"mobile")
         cemployee.update_variable(updates[1],"home_phone")
         cemployee.update_variable(updates[2],"address")
