@@ -60,5 +60,7 @@
         Í dag ætlum við að halda áfram með útfærslu helstu klasa og leysa nokkur forritunar pælingar
         sem við höfðum.
     
-        
+    Seinni færsla, 22:50
+        Við erum búin að útfæra helstu virknina sem Logic klasarnir þurfa að framkvæma innra með sér
+        og byrjuðum að skoða hvernig UI klasarnir myndu vera
         
