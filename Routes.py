@@ -73,7 +73,7 @@ class Route:
 class Routes:
     def __init__(self):
         self._flights = {}
-        with open("../STUDENTDATA/PastFlights.csv") as csvfile:
+        with open("../UPDATEDSTUDENTDATA/PastFlights.csv") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 newFlight = Flight(
@@ -83,18 +83,23 @@ class Routes:
                 )  # including the captain in the pilots list might be better, same for assistants
 
                 self._flights[newFlight.flightNumber] = newFlight
-        with open("../STUDENTDATA/UpcomingFlights.csv") as csvfile:
+        with open("../UPDATEDSTUDENTDATA/UpcomingFlights.csv") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 newFlight = Flight(
                     *[row[reader.fieldnames[i]] for i in range(5)])
 
                 self._flights[newFlight.flightNumber] = newFlight
-        print(self._flights)
+
+    def __str__(self):
+        return "".join([str(k) + ": " + str(v) + "\n" for (k,v) in self._flights.items()])
+
+    def __repr__(self):
+        return str(self)
 
     def add_route(self, route):
         route.id = self._routes.len()
         self._routes.append(route)
 
 
-Routes()
+print(Routes())

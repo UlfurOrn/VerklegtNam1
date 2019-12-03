@@ -15,11 +15,11 @@ class Aircraft:
         return self.__str__()
 
 class AircraftType:
-    def __init__(self, planeTypeId, planeType, model, capacity, emptyWeight,
+    def __init__(self, planeTypeId, manufacturer, model, capacity, emptyWeight,
                  maxTakeoffWeight, unitThrust, serviceCeiling, length, height,
                  wingspan):
         self.planeTypeId = planeTypeId
-        self.planeType = planeType
+        self.manufacturer = manufacturer
         self.model = model
         self.capacity = int(capacity)
         self.emptyWeight = float(emptyWeight)
@@ -31,37 +31,30 @@ class AircraftType:
         self.wingspan = float(wingspan)
 
     def __str__(self):
-        return self.planeTypeId + ", " + self.planeType + ", " + self.model + ", " + str(self.capacity) + ", " + str(self.emptyWeight) + ", " + str(self.maxTakeoffWeight) + ", " + str(self.unitThrust) + ", " + str(self.serviceCeiling) + ", " + str(self.length) + ", " + str(self.height) + ", " + str(self.wingspan)
+        return self.planeTypeId + ", " + self.manufacturer + ", " + self.model + ", " + str(self.capacity) + ", " + str(self.emptyWeight) + ", " + str(self.maxTakeoffWeight) + ", " + str(self.unitThrust) + ", " + str(self.serviceCeiling) + ", " + str(self.length) + ", " + str(self.height) + ", " + str(self.wingspan)
 
     def __repr__(self):
         return self.__str__()
 class AircraftContainer:
     def __init__(self):
-        with open("../STUDENTDATA/Aircraft.csv") as csvfile:
+        with open("../UPDATEDSTUDENTDATA/Aircraft.csv") as csvfile:
             reader = csv.DictReader(csvfile)
             self._aircraft = {}
-            self._insignia = {}
             self._typeIds = defaultdict(set)
-
             for row in reader:
                 newAircraft = Aircraft(row[reader.fieldnames[0]],
                                        row[reader.fieldnames[1]])
+                self._aircraft[newAircraft.insignia] = newAircraft
+                self._typeIds[newAircraft.typeId].add(newAircraft.insignia)
 
-                self._aircraft[id(newAircraft)] = newAircraft
-                self._insignia[newAircraft.insignia] = id(newAircraft)
-                self._typeIds[newAircraft.typeId].add(id(newAircraft))
-        with open("../STUDENTDATA/AircraftType.csv") as csvfile:
+        with open("../UPDATEDSTUDENTDATA/AircraftType.csv") as csvfile:
             reader = csv.DictReader(csvfile)
             self._aircraftTypes = {}
-
             for row in reader:
-                print("the row is: " + str(row))
                 newAircraftType = AircraftType(*[row[reader.fieldnames[i]] for i in range(11)])
                 self._aircraftTypes[row[reader.fieldnames[0]]] = newAircraftType
-            print(self._aircraftTypes)
 
+    def __str__(self):
+        return "".join([str(k) + ": " + str(v) + "\n" for (k, v) in self._aircraft.items()])
 
-
-
-
-AircraftContainer()
+print( AircraftContainer() )
