@@ -1,6 +1,7 @@
 from datetime import datetime
 
 
+
 class Employee:
     def __init__(self, name, social, mobile, home_phone, address, email, plane_type, job_type, cid):
         self.name = name
@@ -12,7 +13,7 @@ class Employee:
         self.id = cid
         self.plane_type = plane_type
         self.is_pilot = job_type
-        self.schedual = []
+        self.schedule = [[datetime(2019,10,23,10,30),datetime(2019,10,30,10,30)],[datetime(2019,12,1,10,30),datetime(2019,12,1,2,30)],[datetime(2019,12,3,10,30),datetime(2019,12,3,12,30)]]
 
     def update_variable(self, value, variable):
         if variable is not "":
@@ -27,6 +28,8 @@ class Employee:
             if(variable == "plane"):
                 self.plane_type = value
 
+    def employee_info(self):
+        return [self.id,self.name,self.social,self.mobile,self.home_phone,self.address,self.email,self.plane_type]
 
     def __str__(self):
         return "id: "+str(self.id)+"\nname: "+self.name+"\nmobile phone: "+str(self.mobile)+"\nhome phone: "+str(self.home_phone)+"\naddress: "+self.address+"\nemail: "+self.email

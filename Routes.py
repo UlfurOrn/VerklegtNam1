@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from copy import deepcopy
 
 class Route:
-    def __init__(self, destination_id = 0, outbound_departure = date(1,1,1), returning_departure = date(1,1,1), employees = [], pilots = [], head_pilot = 0, assistants = [], head_assistant = []):
+    def __init__(self, destination_id = 0, outbound_departure = datetime(1,1,1), returning_departure = datetime(1,1,1), employees = [], pilots = [], head_pilot = 0, assistants = [], head_assistant = []):
         self.destination_id = destination_id
         self.outbound_departure = outbound_departure
         self.returning_departure = returning_departure
