@@ -1,6 +1,7 @@
 from datetime import datetime
 
 
+
 class Employee:
     def __init__(self, name, social, mobile, home_phone, address, email, plane_type, job_type, cid):
         self.name = name
@@ -27,6 +28,8 @@ class Employee:
             if(variable == "plane"):
                 self.plane_type = value
 
+    def employee_info(self):
+        return [self.id,self.name,self.social,self.mobile,self.home_phone,self.address,self.email,self.plane_type]
 
     def __str__(self):
         return "id: "+str(self.id)+"\nname: "+self.name+"\nmobile phone: "+str(self.mobile)+"\nhome phone: "+str(self.home_phone)+"\naddress: "+self.address+"\nemail: "+self.email
