@@ -1,11 +1,11 @@
 import datetime
 
-class Destinations:
+class DestinationContainer:
     def __init__(self):
-        self.destinations = []
+        self._destinations = []
 
     def add_destination(self, country, airport, flight_time, distance, contact_id):
-        self.destinations.append(Destination(self.destinations.len(), country, airport, flight_time, distance, contact_id))
+        self._destinations.append(Destination(self.destinations.len(), country, airport, flight_time, distance, contact_id))
 
 class Destination:
     def __init__(self, id, country, airport, flight_time, distance, contact_id):

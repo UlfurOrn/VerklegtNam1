@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from copy import deepcopy
 
 class Route:
     def __init__(self, destination_id = 0, outbound_departure = date(1,1,1), returning_departure = date(1,1,1), employees = [], pilots = [], head_pilot = 0, assistants = [], head_assistant = []):
