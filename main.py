@@ -3,6 +3,7 @@ from Destinations import *
 from Routes import *
 from datetime import datetime
 
+
 class Airline:
     def __init__(self):
         self.employees = EmployeeContainer(self)
@@ -14,6 +15,8 @@ cair = Airline()
 
 cair.employees.hire_employee("siggi","251135","652584","22325","spain-drive 21","siggi@sigg.is","boeing 747",False)
 
+
+print(cair.assets[1].schedule[2][1] < datetime.now())
 
 
 for i in cair.employees.all:

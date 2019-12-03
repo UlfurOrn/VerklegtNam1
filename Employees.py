@@ -12,7 +12,7 @@ class Employee:
         self.id = cid
         self.plane_type = plane_type
         self.is_pilot = job_type
-        self.schedual = []
+        self.schedule = [[datetime(2019,10,23,10,30),datetime(2019,10,30,10,30)],[datetime(2019,12,1,10,30),datetime(2019,12,1,2,30)],[datetime(2019,12,3,10,30),datetime(2019,12,3,12,30)]]
 
     def update_variable(self, value, variable):
         if variable is not "":
