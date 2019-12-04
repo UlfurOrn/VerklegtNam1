@@ -69,6 +69,9 @@
         Í dag ætlum við að byrja útfærslu á Data layernum og byrja að prototýpa skjánna sem við 
         þurfum. Einnig ætlum við að klára útlitshönnun fyrir þá skjái sem okkur vantaði.
     
+    Önnur færsla, 16:00
+        Prototype komin fyrir flesta skjánna. Útlitshönnun hefur verið gerð fyrir flesta skjái.
+        Útfærsla af data layernum er að hluta til búin.
     
     
         
