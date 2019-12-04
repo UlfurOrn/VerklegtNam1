@@ -16,4 +16,6 @@ class UserInterface:
     		page_amount = (len(array)//page_delimeter)+1
     	print(page_amount)
 
+
+
 UserInterface.display_assets([1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,16,17,18],9)

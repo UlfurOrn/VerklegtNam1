@@ -14,7 +14,7 @@ class Employee:
                  home_phone=0,
                  email="",
                  job_type="",
-                 cid=0):
+                 current_id=0):
         self.social = social
         self.name = name
         self.role = role
@@ -24,7 +24,7 @@ class Employee:
         self.mobile = mobile
         self.home_phone = home_phone
         self.email = email
-        self.id = cid
+        self.id = current_id
         self.schedule = [
             [datetime(2019, 10, 23, 10, 30),
              datetime(2019, 10, 30, 10, 30)],
@@ -41,13 +41,13 @@ class Employee:
             if (variable == "home phone"):
                 self.home_phone = value
             if (variable == "address"):
-                se
-
-                lf.address = value
+                self.address = value
             if (variable == "email"):
                 self.email = value
-            if (variable == "plane"):
+            if (variable == "plane" and self.role):
                 self.plane_type = value
+            if (variable == "rank"):
+                self.role = not self.role
 
     def employee_info(self):
         return [
@@ -88,7 +88,7 @@ class EmployeeContainer:
         cemployee = Employee(name, social, mobile, home_phone, address, email,
                              plane_type, job_type, self.airline.id_counter)
 
-        self.airline.assets[self.airline.id_counter] = cemployee
+        self.airline.data_collection[self.airline.id_counter] = cemployee
         self.all.append(self.airline.id_counter)
         if job_type:
             self.pilots.append(self.airline.id_counter)
@@ -96,12 +96,15 @@ class EmployeeContainer:
             self.attendants.append(self.airline.id_counter)
         self.airline.id_counter += 1
 
-    def update_employee(self, cid, updates):
-        cemployee = self.airline.assets[cid]
+    def update_employee(self, current_id, updates):
+        cemployee = self.airline.data_collection[current_id]
         cemployee.update_variable(updates[0], "mobile")
         cemployee.update_variable(updates[1], "home_phone")
         cemployee.update_variable(updates[2], "address")
         cemployee.update_variable(updates[3], "email")
         cemployee.update_variable(updates[4], "plane")
+        cemployee.update_variable(updates[5], "rank")
 
-print(EmployeeContainer())
+
+
+print(EmployeeContainer().get_employees())
