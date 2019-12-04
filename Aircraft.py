@@ -3,59 +3,52 @@ from copy import copy
 from collections import defaultdict
 
 
-class Aircraft:
-    def __init__(self, insignia="", typeId=""):
-        self.insignia = insignia
-        self.typeId = typeId
+class Aircraft(dict):
+    def sadflkjasdf(self):
+        pass
 
-    def __str__(self):
-        return self.insignia + ", " + self.typeId
 
-    def __repr__(self):
-        return self.__str__()
+class AircraftType(dict):
+    def asdlfkj(self):
+        pass
 
-class AircraftType:
-    def __init__(self, planeTypeId, manufacturer, model, capacity, emptyWeight,
-                 maxTakeoffWeight, unitThrust, serviceCeiling, length, height,
-                 wingspan):
-        self.planeTypeId = planeTypeId
-        self.manufacturer = manufacturer
-        self.model = model
-        self.capacity = int(capacity)
-        self.emptyWeight = float(emptyWeight)
-        self.maxTakeoffWeight = float(maxTakeoffWeight)
-        self.unitThrust = float(unitThrust)
-        self.serviceCeiling = float(serviceCeiling)
-        self.length = float(length)
-        self.height = float(height)
-        self.wingspan = float(wingspan)
-
-    def __str__(self):
-        return self.planeTypeId + ", " + self.manufacturer + ", " + self.model + ", " + str(self.capacity) + ", " + str(self.emptyWeight) + ", " + str(self.maxTakeoffWeight) + ", " + str(self.unitThrust) + ", " + str(self.serviceCeiling) + ", " + str(self.length) + ", " + str(self.height) + ", " + str(self.wingspan)
-
-    def __repr__(self):
-        return self.__str__()
 
 class AircraftContainer:
     def __init__(self):
+        self._aircraft = {}
+        self._typeIds = defaultdict(set)
+        self._aircraftTypes = {}
+        self.load_csv()
+
+    def __str__(self):
+        return "Aircraft: " + "".join([
+            str(k) + ": " + str(v) + "\n"
+            for (k, v) in self._aircraft.items()
+        ]) + "Type ids: " + "".join([
+            str(k) + ": " + str(v) + "\n"
+            for (k, v) in self._typeIds.items()
+        ]) + "Aircraft Types: " + "".join([
+            str(k) + ": " + str(v) + "\n"
+            for (k, v) in self._aircraftTypes.items()
+        ])
+
+    def add_aircraft(self, aircraft):
+        self._aircraft[aircraft["planeInsignia"]] = aircraft
+        self._typeIds[aircraft["planeTypeId"]].add(aircraft["planeInsignia"])
+
+    def add_types(self, aircraftType):
+        self._aircraftTypes[aircraftType["planeTypeId"]] = aircraftType
+
+    def load_csv(self):
         with open("../UPDATEDSTUDENTDATA/Aircraft.csv") as csvfile:
             reader = csv.DictReader(csvfile)
-            self._aircraft = {}
-            self._typeIds = defaultdict(set)
             for row in reader:
-                newAircraft = Aircraft(row[reader.fieldnames[0]],
-                                       row[reader.fieldnames[1]])
-                self._aircraft[newAircraft.insignia] = newAircraft
-                self._typeIds[newAircraft.typeId].add(newAircraft.insignia)
+                self.add_aircraft(Aircraft(row))
 
         with open("../UPDATEDSTUDENTDATA/AircraftType.csv") as csvfile:
             reader = csv.DictReader(csvfile)
-            self._aircraftTypes = {}
             for row in reader:
-                newAircraftType = AircraftType(*[row[reader.fieldnames[i]] for i in range(11)])
-                self._aircraftTypes[row[reader.fieldnames[0]]] = newAircraftType
+                self.add_types(AircraftType(row))
 
-    def __str__(self):
-        return "".join([str(k) + ": " + str(v) + "\n" for (k, v) in self._aircraft.items()])
 
-print( AircraftContainer() )
+print(AircraftContainer())
