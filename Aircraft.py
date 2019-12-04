@@ -35,6 +35,7 @@ class AircraftType:
 
     def __repr__(self):
         return self.__str__()
+
 class AircraftContainer:
     def __init__(self):
         with open("../UPDATEDSTUDENTDATA/Aircraft.csv") as csvfile:
