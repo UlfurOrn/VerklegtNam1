@@ -96,14 +96,18 @@ class EmployeeContainer:
             self.attendants.append(self.airline.id_counter)
         self.airline.id_counter += 1
 
+
+    def promote_employee(self):
+        cemployee.update_variable("a", "rank")
+
+
     def update_employee(self, current_id, updates):
         cemployee = self.airline.data_collection[current_id]
-        cemployee.update_variable(updates[0], "mobile")
-        cemployee.update_variable(updates[1], "home_phone")
-        cemployee.update_variable(updates[2], "address")
-        cemployee.update_variable(updates[3], "email")
-        cemployee.update_variable(updates[4], "plane")
-        cemployee.update_variable(updates[5], "rank")
+        cemployee.update_variable(updates[2], "mobile")
+        cemployee.update_variable(updates[3], "home_phone")
+        cemployee.update_variable(updates[4], "address")
+        cemployee.update_variable(updates[5], "email")
+        cemployee.update_variable(updates[6], "plane")
 
 
 

@@ -31,6 +31,9 @@ class Airline:
    	def get_pilots(self):
    		return self.employees.get_pilots()
 
+   	def get_employee_by_id(self,current_id):
+   		return self.employees.get_by_id(current_id)
+
    	def get_data_by_Week(self,data):
    		return self.data_collection[data]
 
