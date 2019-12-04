@@ -1,26 +1,30 @@
 from datetime import datetime
+import csv
 
 
 class Employee:
     def __init__(self,
                  social=0,
                  name="",
+                 role="",
+                 rank="",
+                 license="",
+                 address="",
                  mobile=0,
                  home_phone=0,
-                 address="",
                  email="",
-                 plane_type="",
                  job_type="",
                  cid=0):
         self.social = social
         self.name = name
+        self.role = role
+        self.rank = rank
+        self.license = license
+        self.address = address
         self.mobile = mobile
         self.home_phone = home_phone
-        self.address = address
         self.email = email
         self.id = cid
-        self.plane_type = plane_type
-        self.is_pilot = job_type
         self.schedule = [
             [datetime(2019, 10, 23, 10, 30),
              datetime(2019, 10, 30, 10, 30)],
@@ -37,7 +41,9 @@ class Employee:
             if (variable == "home phone"):
                 self.home_phone = value
             if (variable == "address"):
-                self.address = value
+                se
+
+                lf.address = value
             if (variable == "email"):
                 self.email = value
             if (variable == "plane"):
@@ -58,18 +64,24 @@ class Employee:
 
 
 class EmployeeContainer:
-    def __init__(self, airline):
+    def __init__(self, airline=None):
         self._employees = {}
         with open("../UPDATEDSTUDENTDATA/Crew.csv") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                newEmployee = Destination(row[reader.fieldnames[0]],
-                                          row[reader.fieldnames[1]])
-                self._employees[newDestination.airport] = newDestination
+                newEmployee= Employee(*[row[reader.fieldnames[i]] for i in range(7)])
+                self._employees[newEmployee.social] = newEmployee
         self.all = []
         self.attendants = []
         self.pilots = []
         self.airline = airline
+
+    def __str__(self):
+        return "".join([
+            str(k) + ": " + str(v) + "\n"
+            for (k, v) in self._employees.items()
+        ])
+        
 
     def hire_employee(self, name, social, mobile, home_phone, address, email,
                       plane_type, job_type):
@@ -91,3 +103,5 @@ class EmployeeContainer:
         cemployee.update_variable(updates[2], "address")
         cemployee.update_variable(updates[3], "email")
         cemployee.update_variable(updates[4], "plane")
+
+print(EmployeeContainer())
