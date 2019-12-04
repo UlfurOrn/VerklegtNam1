@@ -1,21 +1,22 @@
 from Employees import *
 from Destinations import *
 from Routes import *
-from datetime import datetime
+from DataLayer import *
+from datetime import datetime, timedelta
 
 
 class Airline:
 	def __init__(self):
 		self.employees = EmployeeContainer(self)
-		self.assets = {}
+		self.data_collection = DataLayer()
 		self.id_counter = 1
 
-	def asset_occupied_day(self,cid,day):
-		return self.asset_occupied_time_period(cid,[day,day])
+	def data_occupied_day(self,entity,day):
+		return self.data_occupied_time_period(current_id,[day,day])
 
 
-	def asset_occupied_time_period(self,cid,time):
-		cschedule = self.assets[cid].schedule
+	def data_occupied_time_period(self,entity,time):
+		cschedule = self.data_collection.get_schedule()
 		if cschedule[0][0] > time[1]:
 			return False
 		if(cschedule[-1][1] < time[0]):
@@ -27,6 +28,24 @@ class Airline:
 				else:
    					return True
 
+   	def get_pilots(self):
+   		return self.employees.get_pilots()
+
+   	def get_employee_by_id(self,current_id):
+   		return self.employees.get_by_id(current_id)
+
+   	def get_data_by_Week(self,data):
+   		return self.data_collection[data]
+
+   	def get_week_schedule(self,entity,current_week):
+   		weekwork = []
+   		voyage = self.routes.get_voyages(entity)
+   		for i in employee.schedule():
+   			if(current_week > voyage[i].outboundDeparture and current_week+timedelta(week=1) < voyage[i].outboundDeparture):
+   				weekwork.append(voyage)
+
+   		return weekwork
+
 
 
 cair = Airline()
@@ -34,13 +53,13 @@ cair = Airline()
 cair.employees.hire_employee("siggi","251135","652584","22325","spain-drive 21","siggi@sigg.is","boeing 747",False)
 
 
-print(cair.asset_occupied_day(1,datetime(2019,10,23,10,30)))
+print(cair.data_occupied_day(1,datetime(2019,10,23,10,30)))
 
 
 for i in cair.employees.all:
-    print(cair.assets[i])
+    print(cair.data_collection[i])
 print()
 cair.employees.update_employee(1,["","","spain-drive 23","",""])
 
 for i in cair.employees.all:
-    print(cair.assets[i])
+    print(cair.data_collection[i])

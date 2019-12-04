@@ -64,3 +64,11 @@
         Við erum búin að útfæra helstu virknina sem Logic klasarnir þurfa að framkvæma innra með sér
         og byrjuðum að skoða hvernig UI klasarnir myndu vera
         
+04/12/19
+    Fyrsta færsla, 10:00
+        Í dag ætlum við að byrja útfærslu á Data layernum og byrja að prototýpa skjánna sem við 
+        þurfum. Einnig ætlum við að klára útlitshönnun fyrir þá skjái sem okkur vantaði.
+    
+    
+    
+        
