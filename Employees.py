@@ -39,6 +39,9 @@ class EmployeeContainer:
     def get_pilots(self):
         return [self._employees[kt] for kt in self.pilots]
 
+    def get_all(self):
+        return [self._employees[kt] for kt in self._employees.keys()]
+
     # def hire_employee(self, name, social, mobile, home_phone, address, email,
     #                   plane_type, job_type):
     #     cemployee = Employee(name, social, mobile, home_phone, address, email,

@@ -11,11 +11,11 @@ class Airline:
 		self.data_collection = DataLayer()
 		self.id_counter = 1
 
-	def data_occupied_day(self,entity,day):
+	def entity_occupied_day(self,entity,day):
 		return self.data_occupied_time_period(current_id,[day,day])
 
 
-	def data_occupied_time_period(self,entity,time):
+	def entity_occupied_time_period(self,entity,time):
 		cschedule = self.data_collection.get_schedule()
 		if cschedule[0][0] > time[1]:
 			return False
@@ -27,6 +27,15 @@ class Airline:
 					return False
 				else:
    					return True
+
+   	def get_occupied_employees_by_day(self,day):
+   		employees = self.employees.get_all()
+   		return_array = []
+   		for employee in employees:
+   			if(self.entity_occupied_day(day)):
+   				return_array.append(employee)
+   		return return_array
+
 
    	def get_pilots(self):
    		return self.employees.get_pilots()
