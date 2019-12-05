@@ -1,14 +1,15 @@
 from Employees import *
 from Destinations import *
 from Routes import *
-from DataLayer import *
+from UserInterface import *
 from datetime import datetime, timedelta
 
 
 class Airline:
 	def __init__(self):
-		self.employees = EmployeeContainer(self)
-		self.data_collection = DataLayer()
+		self.employees = EmployeeContainer()
+		#self.data_collection = DataLayer()
+		self.UI = UserInterface(self)
 		self.id_counter = 1
 
 	def entity_occupied_day(self,entity,day):
@@ -28,7 +29,7 @@ class Airline:
 				else:
    					return True
 
-   	def get_occupied_employees_by_day(self,day):
+	def get_occupied_employees_by_day(self,day):
    		employees = self.employees.get_all()
    		return_array = []
    		for employee in employees:
@@ -36,17 +37,19 @@ class Airline:
    				return_array.append(employee)
    		return return_array
 
+	def get_all(self):
+   		return self.employees.get_all()
 
-   	def get_pilots(self):
+	def get_pilots(self):
    		return self.employees.get_pilots()
 
-   	def get_employee_by_id(self,current_id):
+	def get_employee_by_id(self,current_id):
    		return self.employees.get_by_id(current_id)
 
-   	def get_data_by_Week(self,data):
+	def get_data_by_Week(self,data):
    		return self.data_collection[data]
 
-   	def get_week_schedule(self,entity,current_week):
+	def get_week_schedule(self,entity,current_week):
    		weekwork = []
    		voyage = self.routes.get_voyages(entity)
    		for i in employee.schedule():
@@ -55,20 +58,7 @@ class Airline:
 
    		return weekwork
 
-
-
 cair = Airline()
 
-cair.employees.hire_employee("siggi","251135","652584","22325","spain-drive 21","siggi@sigg.is","boeing 747",False)
+cair.UI.main_menu()
 
-
-print(cair.data_occupied_day(1,datetime(2019,10,23,10,30)))
-
-
-for i in cair.employees.all:
-    print(cair.data_collection[i])
-print()
-cair.employees.update_employee(1,["","","spain-drive 23","",""])
-
-for i in cair.employees.all:
-    print(cair.data_collection[i])

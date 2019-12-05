@@ -38,7 +38,7 @@ class UserInterface:
             print("\n" * 30)
             print("------ Employee List ------")
             for i in range(len(employee_dict_list)):
-                print("   {}: {}".format(i + 1, employee_dict_list[i]["Name"]))
+                print("   {}: {}".format(i + 1, employee_dict_list[i]["name"]))
             print("---------------------------")
             print("\n" * 5)
 
