@@ -73,5 +73,8 @@
         Prototype komin fyrir flesta skjánna. Útlitshönnun hefur verið gerð fyrir flesta skjái.
         Útfærsla af data layernum er að hluta til búin.
     
-    
+05/12/19
+    Fyrsta færsla, 10:00
+        Í dag ætlum við að útfæra sem mesta UI virkni og við getum og klára Data layerinn.
+        Einnig ætlum við að útfæra fleiri Use-cases.
         
