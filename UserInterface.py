@@ -1,6 +1,7 @@
 class UserInterface:
-    def __init__(self):
+    def __init__(self, airline):
         self.current_prompt = "hello: "
+        self.airline = airline
         # self.input_loop(self)
 
     # The main input loop
@@ -21,7 +22,7 @@ class UserInterface:
             user_input = input("Enter command: ")
 
             if user_input == "1":
-                self.list_employees([{"Name": "Úlfur Örn", "Social Num": "2811002110", "Address": "Heiðargerði 21", "Home Phone": "5822588", "Work Phone": "6627880", "Email": "ulfurinn@gmail.com", "Plane Type": "Boeing 767"}, {"Name": "Árna Ben", "Social Num": "0412002110", "Address": "Tunguvegur 12", "Home Phone": "", "Work Phone": "5812345", "Email": "arnabben@gmail.com", "Plane Type": "Boeing 757"}])
+                self.list_employees(self.airline.get_all())
             elif user_input == "2":
                 print("Destinations")
             elif user_input == "3":
@@ -76,5 +77,5 @@ class UserInterface:
 #UserInterface.display_assets([1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,16,17,18],9)
 
 
-ui = UserInterface()
-ui.main_menu()
+#ui = UserInterface()
+#ui.main_menu()
