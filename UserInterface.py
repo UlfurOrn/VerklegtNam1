@@ -34,20 +34,48 @@ class UserInterface:
 
 
     def list_employees(self, employee_dict_list):
-        while True:
+        current_page = 1
+
+        num_pages = len(employee_dict_list) // 9 
+        if len(employee_dict_list) % 9 != 0:
+            num_pages += 1
+
+        while True: 
             print("\n" * 30)
             print("------ Employee List ------")
-            for i in range(len(employee_dict_list)):
-                print("   {}: {}".format(i + 1, employee_dict_list[i]["name"]))
+            for i in range(9):
+                try:
+                    print("   {}: {}".format(i + 1, employee_dict_list[(current_page - 1) * 9 + i]["name"]))
+                except IndexError:
+                    print("")
+            print("---------------------------")
+            print("  c. Create new Employee")
+            print("  s. Select Sorting method")
+            print("  q. Back to Main Menu")
+            print("---------------------------")
+            print("prev(a) Page: {:>2}/{:<2} next(d)".format(current_page, num_pages))
             print("---------------------------")
             print("\n" * 5)
 
             user_input = input("Enter command: ")
 
-            if user_input == "b":
-                return
+            if user_input == "d":
+                if current_page == num_pages:
+                    current_page = 1
+                else:
+                    current_page += 1
+
+            elif user_input == "a":
+                if current_page == 1:
+                    current_page = num_pages
+                else:
+                    current_page -= 1
+            
             elif user_input.isdigit():
-                self.display_employee(employee_dict_list[int(user_input) - 1])
+                self.display_employee(employee_dict_list[(current_page - 1) * 9 + int(user_input) - 1])
+
+            elif user_input == "b":
+                return
     
 
     def display_employee(self, employee_dict):
