@@ -82,3 +82,8 @@
         Í dag kláruðum við nokkra UI skjái en komumst ekki í data layerinn þar sem ein tölva dó.
         Bættum við nokkrum Use cases.
         
+        
+06/12/19
+    Fyrsta færsla, 10:00
+        Í dag ætlum við að halda áfram með UI og útfæra Data layerin. Einnig ætlum við að uppfæra 
+        skýrsluna.
