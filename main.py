@@ -17,7 +17,7 @@ class Airline:
 
 
 	def entity_occupied_time_period(self,entity,time):
-		cschedule = self.data_collection.get_schedule()
+		cschedule = self.data_collection.get_schedule(entity)
 		if cschedule[0][0] > time[1]:
 			return False
 		if(cschedule[-1][1] < time[0]):
