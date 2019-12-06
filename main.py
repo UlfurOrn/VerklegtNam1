@@ -43,6 +43,9 @@ class Airline:
 	def get_pilots(self):
    		return self.employees.get_pilots()
 
+   	def get_attendants(self):
+   		return self.employees.get_attendants()
+
 	def get_employee_by_id(self,current_id):
    		return self.employees.get_by_id(current_id)
 
