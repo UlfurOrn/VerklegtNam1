@@ -34,16 +34,28 @@ class UserInterface:
 
 
     def list_employees(self, employee_dict_list):
-        title = "Employee List"
-        instructions = ["   c. Create New Employee", "   s. Select Sorting Method", "   b. Back to Main Menu"]
         current_page = 1
 
-        num_pages = len(employee_dict_list) // UserInterface.PAGE_DELIMETER
-        if len(employee_dict_list) % UserInterface.PAGE_DELIMETER != 0:
+        num_pages = len(employee_dict_list) // 9 
+        if len(employee_dict_list) % 9 != 0:
             num_pages += 1
 
         while True: 
-            self.display_screen(title, employee_dict_list, instructions, current_page, num_pages)
+            print("\n" * 30)
+            print("------ Employee List ------")
+            for i in range(9):
+                try:
+                    print("   {}: {}".format(i + 1, employee_dict_list[(current_page - 1) * 9 + i]["name"]))
+                except IndexError:
+                    print("")
+            print("---------------------------")
+            print("  c. Create new Employee")
+            print("  s. Select Sorting method")
+            print("  q. Back to Main Menu")
+            print("---------------------------")
+            print("prev(a) Page: {:>2}/{:<2} next(d)".format(current_page, num_pages))
+            print("---------------------------")
+            print("\n" * 5)
 
             user_input = input("Enter command: ")
 
@@ -61,9 +73,6 @@ class UserInterface:
             
             elif user_input.isdigit():
                 self.display_employee(employee_dict_list[(current_page - 1) * 9 + int(user_input) - 1])
-
-            elif user_input == "s":
-                return self.select_sorting()
 
             elif user_input == "b":
                 return
@@ -84,43 +93,12 @@ class UserInterface:
                 return
 
 
-    def display_screen(self, title, dict_list, instructions, current_page, num_pages):
-
-        screen_length = 14 + len(title)
-
-        print("\n" * 30)
-        print("------", title, "------")
-        for index in range(UserInterface.PAGE_DELIMETER):
-            try:
-                print(dict_list[(current_page - 1) * UserInterface.PAGE_DELIMETER + index].get_summary())
-            except IndexError:
-                print("")
-        print("-" * screen_length)
-        for instruction in instructions:
-            print(instruction)
-        print("-" * screen_length)
-        print("prev(a) Page: {:>2}/{:<2} next(d)".format(current_page, num_pages))
-        print("-" * screen_length)
-    
-    def select_sorting(self):
-        while True:
-            print("\n" * 30)
-            print("------ Sorting Methods ------")
-            print("   1. List All Employees")
-            print("   2. List All Pilots")
-            print("-----------------------------")
-            print("\n" * 5)
-
-            user_input = input("Enter command: ")
-
-            if user_input == "1":
-                return self.list_employees(self.airline.get_all())
-
-            elif user_input == "2":
-                return self.list_employees(self.airline.get_pilots())
-            
-            elif user_input == "b":
-                return
+    def display_assets(array, page_delimeter):
+    	if len(array) % page_delimeter == 0:
+    		page_amount = int(len(array)/page_delimeter)
+    	else:
+    		page_amount = (len(array)//page_delimeter)+1
+    	print(page_amount)
 
 
 

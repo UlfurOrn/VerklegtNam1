@@ -5,6 +5,9 @@ import csv
 class Employee(dict):
     def is_pilot(self):
         return self["role"] == "Pilot"
+
+    def get_summary(self):
+        return self["name"]+" ("+self["role"]+")"
       
 class EmployeeContainer:
     def __init__(self):

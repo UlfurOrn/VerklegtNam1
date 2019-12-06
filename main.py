@@ -17,7 +17,7 @@ class Airline:
 
 
 	def entity_occupied_time_period(self,entity,time):
-		cschedule = self.data_collection.get_schedule()
+		cschedule = self.data_collection.get_schedule(entity)
 		if cschedule[0][0] > time[1]:
 			return False
 		if(cschedule[-1][1] < time[0]):
@@ -42,6 +42,9 @@ class Airline:
 
 	def get_pilots(self):
    		return self.employees.get_pilots()
+
+   	def get_attendants(self):
+   		return self.employees.get_attendants()
 
 	def get_employee_by_id(self,current_id):
    		return self.employees.get_by_id(current_id)
