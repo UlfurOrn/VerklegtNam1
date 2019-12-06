@@ -32,7 +32,6 @@ class UserInterface:
             elif user_input == "q":
                 break
 
-
     def list_employees(self, employee_dict_list):
         current_page = 1
 
@@ -76,7 +75,6 @@ class UserInterface:
 
             elif user_input == "b":
                 return
-    
 
     def display_employee(self, employee_dict):
         while True:
@@ -92,17 +90,16 @@ class UserInterface:
             if user_input == "b":
                 return
 
-
     def display_assets(array, page_delimeter):
-    	if len(array) % page_delimeter == 0:
-    		page_amount = int(len(array)/page_delimeter)
-    	else:
-    		page_amount = (len(array)//page_delimeter)+1
-    	print(page_amount)
+        if len(array) % page_delimeter == 0:
+            page_amount = int(len(array)/page_delimeter)
+        else:
+            page_amount = (len(array)//page_delimeter)+1
+        print(page_amount)
 
 
 
-#UserInterface.display_assets([1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,16,17,18],9)
+# UserInterface.display_assets([1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,16,17,18],9)
 
 
 #ui = UserInterface()

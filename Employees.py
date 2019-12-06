@@ -11,13 +11,15 @@ class EmployeeContainer:
         self._employees = {}
         self.attendants = []
         self.pilots = []
-        self.load_csv()
 
     def __str__(self):
         return "".join([
             str(k) + ": " + str(v) + "\n"
             for (k, v) in self._employees.items()
         ])
+
+    def load(self):
+        self._load_csv()
 
     def add(self, employee):
         self._employees[employee["ssn"]] = employee
@@ -26,7 +28,7 @@ class EmployeeContainer:
         else:
             self.attendants.append(employee["ssn"])
 
-    def load_csv(self):
+    def _load_csv(self):
         self._employees = {}
         with open("../UPDATEDSTUDENTDATA/Crew.csv") as csvfile:
             reader = csv.DictReader(csvfile)
@@ -40,7 +42,7 @@ class EmployeeContainer:
         return [self._employees[kt] for kt in self.pilots]
 
     def get_all(self):
-        return [self._employees[kt] for kt in self._employees.keys()]
+        return self._employees.values()
 
     # def hire_employee(self, name, social, mobile, home_phone, address, email,
     #                   plane_type, job_type):

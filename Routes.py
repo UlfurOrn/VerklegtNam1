@@ -21,18 +21,20 @@ class Route(dict):
     #     ) >= 1 and self.headPilot != 0 and self.headAssistant != 0 and self.headPilot in self.pilots and self.headAssistant in self.assistants
 
 
-class Routes:
+class RouteContainer:
     def __init__(self):
         self._flights = {}
-        self.load_csv()
 
     def __str__(self):
         return "".join([str(k) + ": " + str(v) + "\n" for (k,v) in self._flights.items()])
 
+    def load(self):
+        self._load_csv()
+
     def add(self, flight):
         self._flights[flight["flightNumber"]] = flight
 
-    def load_csv(self):
+    def _load_csv(self):
         with open("../UPDATEDSTUDENTDATA/PastFlights.csv") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:

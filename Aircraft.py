@@ -18,7 +18,6 @@ class AircraftContainer:
         self._aircraft = {}
         self._typeIds = defaultdict(set)
         self._aircraftTypes = {}
-        self.load_csv()
 
     def __str__(self):
         return "Aircraft: " + "".join([
@@ -32,6 +31,9 @@ class AircraftContainer:
             for (k, v) in self._aircraftTypes.items()
         ])
 
+    def load(self):
+        self._load_csv()
+
     def add_aircraft(self, aircraft):
         self._aircraft[aircraft["planeInsignia"]] = aircraft
         self._typeIds[aircraft["planeTypeId"]].add(aircraft["planeInsignia"])
@@ -39,7 +41,7 @@ class AircraftContainer:
     def add_types(self, aircraftType):
         self._aircraftTypes[aircraftType["planeTypeId"]] = aircraftType
 
-    def load_csv(self):
+    def _load_csv(self):
         with open("../UPDATEDSTUDENTDATA/Aircraft.csv") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
