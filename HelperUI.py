@@ -31,14 +31,13 @@ class HelperUI:
 
 
 
-    def display_info(self, asset, current_index):
+    def display_info(self, asset, current_index = None):
         key_list = asset.get_keys()
         header_list = asset.get_header()
-
         arrow_pos = [HelperUI.ARROW if current_index == pos else "" for pos in range(len(header_list))]
 
         for header, key, arrow in zip(header_list, key_list, arrow_pos):
-            print("{:>13}: {}{}".format(header, asset.info_dict[key], arrow))
+            print("{:>13}: {}{}".format(header, asset[key], arrow))
 
 
 

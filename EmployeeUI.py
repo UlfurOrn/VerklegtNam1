@@ -49,10 +49,7 @@ class EmployeeUI:
             
             elif user_input.isdigit():
                 if int(user_input) >= 1 and int(user_input) <= self.HUI.PAGE_DELIMETER:
-                    try:
-                        self.display_employee(employee_list[(current_page - 1) * self.HUI.PAGE_DELIMETER + int(user_input) - 1])
-                    except:
-                        pass
+                    self.display_employee(employee_list[(current_page - 1) * self.HUI.PAGE_DELIMETER + int(user_input) - 1])
 
             elif user_input == "c":
                 return self.create_employee()
@@ -67,7 +64,7 @@ class EmployeeUI:
         while True:
             print("\n" * 30)
             print("------ Display Employee ------")
-            self.HUI.display_info(employee, None)
+            self.HUI.display_info(employee)
             print("------------------------------")
             print("  u. Update Employee")
             print("  v. View Work Plan")
