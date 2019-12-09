@@ -13,7 +13,7 @@ class EmployeeIO():
 
         
     def save_employees(self):
-        with open("CSVFolder/employees.csv", "w") as employee_file:
+        with open("VerklegtNam1/CSVFolder/employees.csv", "w") as employee_file:
             fieldnames = ["name", "ssn", "address", "home_phone", "work_phone", "email", "plane_type", "job_type", "time_table"]
             
             csv_writer = csv.DictWriter(employee_file, fieldnames=fieldnames)
@@ -26,7 +26,7 @@ class EmployeeIO():
     def load_employees(self):
         if self.employee_list == []:
             
-            with open("CSVFolder/employees.csv", "r") as employee_file:
+            with open("VerklegtNam1/CSVFolder/employees.csv", "r") as employee_file:
                 csv_reader = csv.DictReader(employee_file)
 
                 for info_dict in csv_reader:

@@ -13,7 +13,7 @@ class DestinationIO:
 
         
     def save_destinations(self):
-        with open("CSVFolder/destinations.csv", "w") as destination_file:
+        with open("VerklegtNam1/CSVFolder/destinations.csv", "w") as destination_file:
             fieldnames = ["country" ,"airport", "abrev", "flight_time", "flight_dist", "contact_name", "contact_num"]
             
             csv_writer = csv.DictWriter(destination_file, fieldnames=fieldnames)
@@ -26,7 +26,7 @@ class DestinationIO:
     def load_destinations(self):
         if self.destination_list == []:
             
-            with open("CSVFolder/destinations.csv", "r") as destination_file:
+            with open("VerklegtNam1/CSVFolder/destinations.csv", "r") as destination_file:
                 csv_reader = csv.DictReader(destination_file)
 
                 for info_dict in csv_reader:
