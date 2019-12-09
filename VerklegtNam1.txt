@@ -91,3 +91,7 @@
     Önnur færsla, 16:00
         Í dag kláruðum við að útfæra Data layerinn og bættum við 2 skjáum í UI.
         
+09/12/19
+    Fyrsta færsla, 9:30
+        Í dag ætlum við að reyna að modulerize-a UI föll og halda áfram að gera hann.
+        
