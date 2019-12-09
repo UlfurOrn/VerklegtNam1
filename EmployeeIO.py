@@ -2,41 +2,6 @@ import csv
 from Employee import Employee
 
 class EmployeeIO():
-    """ 
-    def __init__(self):
-        self.employee_list = []
-    
-
-    def add_employee(self, employee):
-        self.employee_list.append(employee)
-        self.save_employees()
-
-        
-    def save_employees(self):
-        with open("VerklegtNam1/CSVFolder/employees.csv", "w") as employee_file:
-            fieldnames = ["name", "ssn", "address", "home_phone", "work_phone", "email", "plane_type", "job_type", "time_table"]
-            
-            csv_writer = csv.DictWriter(employee_file, fieldnames=fieldnames)
-            csv_writer.writeheader()
-
-            for employee in self.employee_list:
-                csv_writer.writerow(employee.info_dict)
-
-    
-    def load_employees(self):
-        if self.employee_list == []:
-            
-            with open("VerklegtNam1/CSVFolder/employees.csv", "r") as employee_file:
-                csv_reader = csv.DictReader(employee_file)
-
-                for info_dict in csv_reader:
-                    employee = Employee(dict(info_dict))
-                    
-                    self.employee_list.append(employee)
-        
-        return self.employee_list
-
-"""
     def __init__(self):
         self._employees = {}
         self.attendants = []
@@ -61,16 +26,33 @@ class EmployeeIO():
 
     def _load_csv(self):
         self._employees = {}
-        with open("CSVFolder/employees.csv", encoding="utf8") as csvfile:
+        with open("CSVFolder/employees.csv", "r" ,encoding="utf8") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                self.add(Employee(row))
+                self.add(Employee(dict(row)))
+
+
+    def save_employees(self):
+        with open("CSVFolder/employees.csv", "w", encoding="utf8") as employee_file:
+            fieldnames = ["name", "ssn", "address", "home_phone", "work_phone", "email", "plane_type", "job_type", "time_table"]
+            
+            csv_writer = csv.DictWriter(employee_file, fieldnames=fieldnames)
+            csv_writer.writeheader()
+            for employee in list(self._employees.values()):
+                csv_writer.writerow(employee)
+
 
     def get_attendants(self):
-        return [self._employees[kt] for kt in self.attendants]
+        return [self._employees[ssn] for ssn in self.attendants]
     
     def get_pilots(self):
-        return [self._employees[kt] for kt in self.pilots]
+        return [self._employees[ssn] for ssn in self.pilots]
 
     def get_all(self):
         return list(self._employees.values())
+
+
+IO = EmployeeIO()
+
+IO.load()
+IO.save_employees()
