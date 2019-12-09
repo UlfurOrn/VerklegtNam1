@@ -1,12 +1,31 @@
+from os import system
+from sys import platform
+
+from Airline import Airline
+
+
 class UserInterface:
-    def __init__(self, airline):
+    def __init__(self):
         self.current_prompt = "hello: "
-        self.airline = airline
+        self.width = 30
+        self.airline = Airline()
         # self.input_loop(self)
+
+    def clear_screen(self):
+        if platform == "win32":
+            system("cls")
+        else:
+            system("clear")
 
     # The main input loop
     def input_loop(self):
         user_input = input(self.current_prompt)
+
+    def heading(self, title=""):
+        if len(title) + 2 > self.width:
+            print("Error: width is too small and title is too long")
+        fluff = "-" * ((self.width-len(title)) // 2)
+        return fluff + " " + title + " " + fluff
 
     def main_menu(self):
         while True:
@@ -40,7 +59,7 @@ class UserInterface:
             num_pages += 1
 
         while True: 
-            print("\n" * 30)
+            self.clear_screen()
             print("------ Employee List ------")
             for i in range(9):
                 try:
@@ -92,15 +111,17 @@ class UserInterface:
 
     def display_assets(array, page_delimeter):
         if len(array) % page_delimeter == 0:
-            page_amount = int(len(array)/page_delimeter)
+            page_amount = len(array)//page_delimeter
         else:
             page_amount = (len(array)//page_delimeter)+1
         print(page_amount)
 
 
-
+ui = UserInterface()
+print(ui.heading("Main Menu", 30))
+print(ui.heading("hello", 20))
 # UserInterface.display_assets([1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,16,17,18],9)
 
 
 #ui = UserInterface()
-#ui.main_menu()
+ui.main_menu()
