@@ -49,10 +49,7 @@ class EmployeeUI:
             
             elif user_input.isdigit():
                 if int(user_input) >= 1 and int(user_input) <= self.HUI.PAGE_DELIMETER:
-                    try:
-                        self.display_employee(employee_list[(current_page - 1) * self.HUI.PAGE_DELIMETER + int(user_input) - 1])
-                    except:
-                        pass
+                    self.display_employee(employee_list[(current_page - 1) * self.HUI.PAGE_DELIMETER + int(user_input) - 1])
 
             elif user_input == "c":
                 return self.create_employee()
@@ -67,7 +64,7 @@ class EmployeeUI:
         while True:
             print("\n" * 30)
             print("------ Display Employee ------")
-            self.HUI.display_info(employee, None)
+            self.HUI.display_info(employee)
             print("------------------------------")
             print("  u. Update Employee")
             print("  v. View Work Plan")
@@ -117,7 +114,7 @@ class EmployeeUI:
 
 
     def create_employee(self):
-        new_employee = Employee()
+        new_employee = Employee({"name": "", "ssn": "", "address": "", "home_phone": "", "work_phone": "", "email": "", "plane_type": "", "job_type": "", "time_table": ""})
         key_list = new_employee.get_keys()
         header_list = new_employee.get_header()
         current_index = 0
@@ -160,7 +157,7 @@ class EmployeeUI:
             user_input = input("Enter {}: ".format(header_list[current_index]))
 
             if user_input != "":
-                employee.info_dict[key_list[current_index]] = user_input
+                employee[key_list[current_index]] = user_input
             
             current_index += 1
 

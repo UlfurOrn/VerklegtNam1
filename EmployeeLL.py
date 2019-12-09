@@ -8,29 +8,15 @@ class EmployeeLL:
     
 
     def get_all(self):
-        return self.IO.load_employees()
+        return self.IO.get_all()
 
 
     def get_pilots(self):
-        pilot_list = []
-        employee_list = self.get_all()
-
-        for employee in employee_list:
-            if employee.get_job() == "Captain" or employee.get_job() == "Co Pilot":
-                pilot_list.append(employee)
-        
-        return pilot_list
+        return self.IO.get_pilots()
     
 
     def get_attendants(self):
-        attendant_list = []
-        employee_list = self.get_all()
-
-        for employee in employee_list:
-            if employee.get_job() == "Super Attendant" or employee.get_job() == "Attendant":
-                attendant_list.append(employee)
-        
-        return attendant_list
+        return self.IO.get_attendants()
 
     
     def add_employee(self, employee):

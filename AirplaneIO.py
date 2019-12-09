@@ -13,7 +13,7 @@ class AirplaneIO:
 
         
     def save_airplanes(self):
-        with open("CSVFolder/airplanes.csv", "w") as airplane_file:
+        with open("VerklegtNam1/CSVFolder/airplanes.csv", "w") as airplane_file:
             fieldnames = ["name" ,"manufacturer", "plane_type", "seat_cap", "time_table"]
             
             csv_writer = csv.DictWriter(airplane_file, fieldnames=fieldnames)
@@ -26,7 +26,7 @@ class AirplaneIO:
     def load_airplanes(self):
         if self.airplane_list == []:
             
-            with open("CSVFolder/airplanes.csv", "r") as airplane_file:
+            with open("VerklegtNam1/CSVFolder/airplanes.csv", "r") as airplane_file:
                 csv_reader = csv.DictReader(airplane_file)
 
                 for info_dict in csv_reader:
