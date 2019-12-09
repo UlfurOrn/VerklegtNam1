@@ -157,7 +157,7 @@ class EmployeeUI:
             user_input = input("Enter {}: ".format(header_list[current_index]))
 
             if user_input != "":
-                employee.info_dict[key_list[current_index]] = user_input
+                employee[key_list[current_index]] = user_input
             
             current_index += 1
 
