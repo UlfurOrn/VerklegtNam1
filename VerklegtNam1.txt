@@ -87,3 +87,7 @@
     Fyrsta færsla, 10:00
         Í dag ætlum við að halda áfram með UI og útfæra Data layerin. Einnig ætlum við að uppfæra 
         skýrsluna.
+        
+    Önnur færsla, 16:00
+        Í dag kláruðum við að útfæra Data layerinn og bættum við 2 skjáum í UI.
+        
