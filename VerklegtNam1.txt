@@ -95,3 +95,5 @@
     Fyrsta færsla, 9:30
         Í dag ætlum við að reyna að modulerize-a UI föll og halda áfram að gera hann.
         
+    Önnur færlsa, 23:00
+        Í dag modulerizeuðum við 3 UI föll og byrjuðum að útfæra skjánna fyrir Voyages
