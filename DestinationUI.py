@@ -44,6 +44,7 @@ class DestinationUI:
                     try:
                         self.display_destination(destination_list[(current_page - 1) * self.HUI.PAGE_DELIMETER + int(user_input) - 1])
                     except:
+                        print("hello")
                         pass
 
             elif user_input == "c":
@@ -73,7 +74,7 @@ class DestinationUI:
 
 
     def create_destination(self):
-        new_destination = Destination()
+        new_destination = Destination({"country": "", "airport": "", "abrev": "", "flight_time": "", "flight_dist": "", "contact_name": "", "contact_num": ""})
         key_list = new_destination.get_keys()
         header_list = new_destination.get_header()
         current_index = 0
@@ -91,11 +92,11 @@ class DestinationUI:
                 pass
 
             else:
-                new_destination.info_dict[key_list[current_index]] = user_input
+                new_destination[key_list[current_index]] = user_input
                 current_index += 1
             
             if current_index == len(header_list):
-                self.LL.add_destination(new_destination)
+                self.LL.add(new_destination)
                 return self.list_destinations()
         
     
@@ -116,7 +117,7 @@ class DestinationUI:
             user_input = input("Enter {}: ".format(header_list[current_index]))
 
             if user_input != "":
-                destination.info_dict[key_list[current_index]] = user_input
+                destination[key_list[current_index]] = user_input
             
             current_index += 1
 

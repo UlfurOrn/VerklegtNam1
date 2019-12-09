@@ -114,7 +114,7 @@ class EmployeeUI:
 
 
     def create_employee(self):
-        new_employee = Employee()
+        new_employee = Employee({"name": "", "ssn": "", "address": "", "home_phone": "", "work_phone": "", "email": "", "plane_type": "", "job_type": "", "time_table": ""})
         key_list = new_employee.get_keys()
         header_list = new_employee.get_header()
         current_index = 0
