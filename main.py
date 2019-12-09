@@ -1,8 +1,8 @@
-from OtherUI import OtherUI
+from UserInterface import UserInterface
 
 def main():
-    ui = OtherUI()
-    ui.main_menu()
+    ui = UserInterface()
+    ui.loop()
 
 if __name__ == '__main__':
 	main()

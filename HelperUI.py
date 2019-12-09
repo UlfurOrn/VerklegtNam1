@@ -1,4 +1,6 @@
 from Employee import Employee
+from sys import platform
+from os import system
 
 class HelperUI:
     PAGE_DELIMETER = 9
@@ -7,6 +9,11 @@ class HelperUI:
     def __init__(self):
         pass
 
+    def clear_screen(self):
+        if platform == "win32":
+            system("cls")
+        else:
+            system("clear")
     
     def list_screen(self, asset_list, title, instruction_list, current_page, num_pages):
         print("\n" * 30)
