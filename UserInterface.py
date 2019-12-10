@@ -23,17 +23,8 @@ class State:
         self.commands = commands
 
 class Menu:
-    def title(self):
-        return ""
-
-    def commands(self):
-        return {}
-
     def has_list(self):
         return False
-
-    def listing(self):
-        return ""
 
     def prompt(self):
         return "Input Command: "
