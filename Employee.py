@@ -1,34 +1,35 @@
-"""class Employee:
+class Employee:
 
-    def __init__(self, info_dict={"name": "", "ssn": "", "address": "", "home_phone": "", "work_phone": "", "email": "", "plane_type": "", "job_type": "", "time_table": ""}):
-        self.info_dict = info_dict
-
-
-    def get_header(self):
-        return ["Name", "Social Num", "Address", "Home Phone", "Work Phone", "Email", "Plane Auth", "Job Title"]
-
-
-    def get_keys(self):
-        return ["name" ,"ssn", "address", "home_phone", "work_phone", "email", "plane_type", "job_type"]
-
-
-    def get_summary(self):
-        return "{} ({})".format(self.info_dict["name"], self.get_job())
-
-    def get_job(self):
-        return self.info_dict["job_type"]
-"""
-
-class Employee(dict):
-    def is_pilot(self):
-        return self["job_type"] == "Co Pilot" or self["job_type"] == "Captain"
-
-    def get_summary(self):
-        return self["name"]+" ("+self["job_type"]+")"
+    def __init__(self, name="", ssn="", address="", hphone="", wphone="", email="", plane_type="", job_type="", time_table=[]):
+        self.name = name
+        self.ssn = ssn
+        self.address = address
+        self.hphone = hphone
+        self.wphone = wphone
+        self.email = email
+        self.plane_type = plane_type
+        self.job_type = job_type
+        self.time_table = time_table
 
     def get_header(self):
         return ["Name", "Social Num", "Address", "Home Phone", "Work Phone", "Email", "Plane Auth", "Job Title"]
 
+    def get_print_info(self):
+        return [self.name, self.ssn, self.address, self.hphone, self.wphone, self.email, self.plane_type, self.job_type]
 
-    def get_keys(self):
-        return ["name" ,"ssn", "address", "home_phone", "work_phone", "email", "plane_type", "job_type"]
+    def get_save_info(self):
+        return [self.name, self.ssn, self.address, self.hphone, self.wphone, self.email, self.plane_type, self.job_type, self.time_table]
+
+    def update_info(self, new_info_list):
+        name, ssn, address, hphone, wphone, email, plane_type, job_type = new_info_list
+        self.name = name
+        self.ssn = ssn
+        self.address = address
+        self.hphone = hphone
+        self.wphone = wphone
+        self.email = email
+        self.plane_type = plane_type
+        self.job_type = job_type
+
+    def get_summary(self):
+        return "{} ({})".format(self.name, self.job_type)
