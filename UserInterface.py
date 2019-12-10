@@ -22,6 +22,7 @@ class State:
         self.title = title
         self.commands = commands
 
+
 class Menu:
     def has_list(self):
         return False
@@ -60,7 +61,7 @@ class Asset(Menu):
         self.asset_list = self.logic.get_all()
         self.page_length = 9
         self.current_page = 1
-        self.page_count = 1 + (len(self.asset_list)//9)
+        self.page_count = 1 + (len(self.asset_list) // 9)
 
     def commands(self, sorts=True):
         result = {
@@ -68,7 +69,7 @@ class Asset(Menu):
             "b": Command("b", "Back to main menu", MainMenu()),
         }
         if sorts:
-            result["s"] = Command("s", "Select sorting method", 6)
+            result["s"] = Command("s", "Select sorting method", SortingMenu(self))
         return result
 
     def title(self):
@@ -78,7 +79,10 @@ class Asset(Menu):
         return True
 
     def listing(self):
-        return "\n".join(["  {}: {}".format(1 + i, e.get_summary()) for i,e in enumerate(self.asset_list)])
+        return "\n".join([
+            "  {}: {}".format(1 + i, e.get_summary())
+            for i, e in enumerate(self.asset_list)
+        ])
 
     def selected(self, user_input):
         if user_input.isdigit():
@@ -106,6 +110,14 @@ class AirplaneMenu(Asset):
     def new(self):
         return Airplane()
 
+    def sorting_commands(self):
+        return {
+            "1": Command("1", "Find all Airplanes"),
+            "2": Command("2", "Sort by Manufacturer"),
+            "3": Command("3", "Airplanes not in use"),
+            "4": Command("4", "Airplanes in use"),
+        }
+
 
 class DestinationMenu(Asset):
     def __init__(self):
@@ -114,7 +126,7 @@ class DestinationMenu(Asset):
         super().__init__()
 
     def commands(self):
-        return super().commands(True)
+        return super().commands(False)
 
     def new(self):
         return Destination()
@@ -127,36 +139,55 @@ class VoyageMenu(Asset):
         super().__init__()
 
     def commands(self):
-        return super().commands(True)
+        return super().commands(False)
 
 
 class EditingMenu(Asset):
-    def __init__(self, thing, focused_asset=None):
-        self.thing = thing
-        self.new_asset = thing.new() if focused_asset is None else focused_asset
+    def __init__(self, mother, focused_asset=None):
+        self.mother = mother
+        self.new_asset = mother.new() if focused_asset is None else focused_asset
         self._title = "New" if focused_asset is None else "Update"
         self.current_index = 0
 
     def title(self):
-        return self._title + " " + self.thing.asset
+        return self._title + " " + self.mother.asset
 
     def commands(self):
         result = {
-            "b": Command("b", "Back to " + self.thing.asset + " list", self.thing),
+            "b": Command("b", "Back to " + self.mother.asset + " list",
+                         self.mother),
         }
         return result
 
     def listing(self):
-        key_list = self.new_asset.get_keys()
+        info_list = self.new_asset.get_print_info()
         header_list = self.new_asset.get_header()
         arrow_pos = [
             " <---" if self.current_index == pos else ""
             for pos in range(len(header_list))
         ]
-        return "\n".join(["{:>13}: {}{}".format(header, self.new_asset[key], arrow) for header, key, arrow in zip(header_list, key_list, arrow_pos)])
+        return "\n".join([
+            "{:>13}: {}{}".format(header, info, arrow)
+            for header, info, arrow in zip(header_list, info_list, arrow_pos)
+        ])
 
     def prompt(self):
-        return "Enter {}: ".format(self.new_asset.get_header()[self.current_index])
+        return "Enter {}: ".format(
+            self.new_asset.get_header()[self.current_index])
+
+
+class SortingMenu(Asset):
+    def __init__(self, mother):
+        self.mother = mother
+
+    def has_list(self):
+        return False
+
+    def title(self):
+        return "Sorting " + self.mother.asset + "s"
+
+    def commands(self):
+        return self.mother.sorting_commands()
 
 
 class UserInterface:
@@ -188,5 +219,4 @@ class UserInterface:
 
             self.menu = self.menu.selected(user_input)
             if user_input == "q":
-                return # we outa here
-
+                return  # we outa here
