@@ -97,3 +97,7 @@
         
     Önnur færlsa, 23:00
         Í dag modulerizeuðum við 3 UI föll og byrjuðum að útfæra skjánna fyrir Voyages
+        
+10/12/19
+    Fyrsta færsla, 10:00
+        Í dag ætlum við að halda áfram að klára UI-ið og bæta við því sem þarf í hin lögin
