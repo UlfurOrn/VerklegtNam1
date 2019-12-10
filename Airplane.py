@@ -1,6 +1,6 @@
 class Airplane:
 
-    def __init__(self, name, manufacturer, plane_type, seat_cap, time_table):
+    def __init__(self, name="", manufacturer="", plane_type="", seat_cap="", time_table=[]):
         self.name = name
         self.manufacturer = manufacturer
         self.plane_type = plane_type
