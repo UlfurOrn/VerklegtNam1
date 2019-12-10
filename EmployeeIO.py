@@ -16,7 +16,7 @@ class EmployeeIO:
 
         
     def save_employees(self):
-        with open("VerklegtNam1/CSVFolder/employees.csv", "w", encoding="utf8") as employee_file:
+        with open("CSVFolder/employees.csv", "w", encoding="utf8") as employee_file:
             csv_writer = csv.writer(employee_file)
 
             for employee in self.employee_list:
@@ -26,7 +26,7 @@ class EmployeeIO:
     def load_employees(self):
         if self.employee_list == []:
             
-            with open("VerklegtNam1/CSVFolder/employees.csv", "r", encoding="utf8") as employee_file:
+            with open("CSVFolder/employees.csv", "r", encoding="utf8") as employee_file:
                 csv_reader = csv.reader(employee_file)
 
                 for line in csv_reader:
