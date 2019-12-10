@@ -15,7 +15,7 @@ class DestinationIO:
 
         
     def save_destinations(self):
-        with open("VerklegtNam1/CSVFolder/destinations.csv", "w", encoding="utf8") as destination_file:
+        with open("CSVFolder/destinations.csv", "w", encoding="utf8") as destination_file:
             csv_writer = csv.writer(destination_file)
 
             for destination in self.destination_list:
@@ -25,7 +25,7 @@ class DestinationIO:
     def load_destinations(self):
         if self.destination_list == []:
             
-            with open("VerklegtNam1/CSVFolder/destinations.csv", "r", encoding="utf8") as destination_file:
+            with open("CSVFolder/destinations.csv", "r", encoding="utf8") as destination_file:
                 csv_reader = csv.reader(destination_file)
 
                 for line in csv_reader:
