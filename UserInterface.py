@@ -88,7 +88,7 @@ class Menu:
     def selected(self, user_input):
         command = self.commands().get(user_input, None)
         if command == None:
-            return self # TODO: punish the user
+            return self  # TODO: punish the user
         else:
             return command.next_menu
 
@@ -106,10 +106,12 @@ class MainMenu(Menu):
             "q": Command("q", "Quit the program"),
         }
 
+
 class Asset(Menu):
     def __init__(self):
         self.HUI = HelperUI()
         self.asset_list = self.logic.get_all()
+        self.current_page = 0
 
     def commands(self, sorts=True):
         result = {
@@ -124,8 +126,14 @@ class Asset(Menu):
         return True
 
     def listing(self):
-        
-        self.HUI.list_screen(self.asset_list, self.title(), [], 1,1)
+        for i in range(9):
+            try:
+                print("  {}: {}".format(
+                    1 + i,
+                    self.asset_list[(self.current_page)+i].get_summary()))
+            except IndexError:
+                print("")
+        # self.HUI.list_screen(self.asset_list, self.title(), [], 1,1)
 
 
 class EmployeeMenu(Asset):
@@ -182,9 +190,8 @@ class CreationMenu(Menu):
         return "New " + self.thing.asset
 
     def commands(self):
-        return {
+        return {}
 
-        }
 
 class UserInterface:
     def __init__(self):

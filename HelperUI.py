@@ -2,6 +2,7 @@ from Employee import Employee
 from sys import platform
 from os import system
 
+
 class HelperUI:
     PAGE_DELIMETER = 9
     ARROW = "  <---"
@@ -14,14 +15,18 @@ class HelperUI:
             system("cls")
         else:
             system("clear")
-    
-    def list_screen(self, asset_list, title, instruction_list, current_page, num_pages):
+
+    def list_screen(self, asset_list, title, instruction_list, current_page,
+                    num_pages):
         print("\n" * 30)
         print("------", title, "------")
 
         for i in range(HelperUI.PAGE_DELIMETER):
             try:
-                print("  {}: {}".format(i + 1, asset_list[(current_page - 1) * HelperUI.PAGE_DELIMETER + i].get_summary()))
+                print("  {}: {}".format(
+                    i + 1,
+                    asset_list[(current_page - 1) * HelperUI.PAGE_DELIMETER +
+                               i].get_summary()))
             except IndexError:
                 print("")
 
@@ -31,22 +36,19 @@ class HelperUI:
             print("  {}".format(instruction))
         print("-" * (14 + len(title)))
 
-        print("prev(a) Page: {:>2}/{:<2} next(d)".format(current_page, num_pages))
+        print("prev(a) Page: {:>2}/{:<2} next(d)".format(
+            current_page, num_pages))
 
         print("-" * (14 + len(title)))
         print("\n" * 5)
 
-
-
-    def display_info(self, asset, current_index = None):
+    def display_info(self, asset, current_index=None):
         key_list = asset.get_keys()
         header_list = asset.get_header()
-        arrow_pos = [HelperUI.ARROW if current_index == pos else "" for pos in range(len(header_list))]
+        arrow_pos = [
+            HelperUI.ARROW if current_index == pos else ""
+            for pos in range(len(header_list))
+        ]
 
         for header, key, arrow in zip(header_list, key_list, arrow_pos):
             print("{:>13}: {}{}".format(header, asset[key], arrow))
-
-
-
-
-

@@ -70,4 +70,3 @@ class DestinationIO:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 self.add(Destination(dict(row)))
-        print(self._destinations)
