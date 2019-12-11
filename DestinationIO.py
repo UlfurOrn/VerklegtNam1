@@ -4,16 +4,15 @@ from Destination import Destination
 
 class DestinationIO:
     def __init__(self):
-        self.destination_list = []
+        self.destinations = {}
 
     def get_all(self):
-        return self.load_destinations()
+        return self.load()
 
-    def add_destination(self, destination):
-        self.destination_list.append(destination)
-        self.save_destinations()
+    def add(self, destination):
+        self.destinations[destination.abrev] = destination
 
-    def save_destinations(self):
+    def save(self):
         with open("CSVFolder/destinations.csv", "w",
                   encoding="utf8") as destination_file:
             csv_writer = csv.writer(destination_file)
@@ -21,8 +20,8 @@ class DestinationIO:
             for destination in self.destination_list:
                 csv_writer.writerow(destination.get_save_info())
 
-    def load_destinations(self):
-        if self.destination_list == []:
+    def load(self):
+        if self.destinations == {}:
 
             with open("CSVFolder/destinations.csv", "r",
                       encoding="utf8") as destination_file:
@@ -34,6 +33,6 @@ class DestinationIO:
                                               flight_time, flight_dist,
                                               contact_name, contact_num)
 
-                    self.destination_list.append(destination)
+                    self.add(destination)
 
-        return self.destination_list
+        return list(self.destinations.values())

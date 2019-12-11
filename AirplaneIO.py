@@ -10,18 +10,18 @@ class AirplaneIO:
         return self.load_airplanes()
 
     def add(self, airplane):
-        self.airplanes[airplane.id] = airplane
+        self.airplanes[airplane.ID] = airplane
 
     def save_airplanes(self):
         with open("CSVFolder/airplanes.csv", "w",
                   encoding="utf8") as airplane_file:
             csv_writer = csv.writer(airplane_file)
 
-            for airplane in self.airplane_list:
+            for airplane in list(self.airplanes.values()):
                 csv_writer.writerow(airplane.get_save_info())
 
     def load_airplanes(self):
-        if self.airplane_list == []:
+        if self.airplanes == {}:
 
             with open("CSVFolder/airplanes.csv", "r",
                       encoding="utf8") as airplane_file:
@@ -34,4 +34,4 @@ class AirplaneIO:
 
                     self.add(airplane)
 
-        return self.airplane_list
+        return list(self.airplanes.values())
