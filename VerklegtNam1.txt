@@ -101,3 +101,6 @@
 10/12/19
     Fyrsta færsla, 10:00
         Í dag ætlum við að halda áfram að klára UI-ið og bæta við því sem þarf í hin lögin
+    
+    Önnur færsla, 22:00
+        Í dag kláruðum við mikið af UI-inu fyrir Voyages og bættum við logic fyrir það.
