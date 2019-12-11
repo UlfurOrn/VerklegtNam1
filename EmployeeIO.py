@@ -18,14 +18,13 @@ class EmployeeIO:
         elif(employee.job_type == "Senior Attendant" and employee.job_type == "Attendant"):
             self.attendants.append(employee.ssn)
 
-        self.save()
 
     def save(self):
         with open("CSVFolder/employees.csv", "w",
                   encoding="utf8") as employee_file:
             csv_writer = csv.writer(employee_file)
 
-            for employee in self.employees:
+            for employee in list(self.employees.values()):
                 csv_writer.writerow(employee.get_save_info())
 
     def load(self):

@@ -10,6 +10,7 @@ class LogicLayer:
 
 	def add(self, asset):
 		self.IO.add(asset)
+		self.save()
 
 	def save(self):
 		self.IO.save()
