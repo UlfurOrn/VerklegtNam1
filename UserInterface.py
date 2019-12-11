@@ -24,6 +24,12 @@ class State:
 
 
 class Menu:
+    def title(self):
+        return ""
+
+    def commands(self):
+        return {}
+
     def has_list(self):
         return False
 
@@ -33,7 +39,7 @@ class Menu:
     def commands_printable(self):
         return "\n".join([str(e) for e in self.commands().values()])
 
-    def selected(self, user_input):
+    def handle_input(self, user_input):
         command = self.commands().get(user_input, None)
         if command == None:
             return self  # TODO: punish the user
@@ -84,11 +90,18 @@ class Asset(Menu):
             for i, e in enumerate(self.asset_list)
         ])
 
-    def selected(self, user_input):
+    def needs_legend(self):
+        return False
+        return self.logic.is_paginated()
+
+    def page_legend(self):
+        return "you are on page " + self.logic.current_page() + " out of " + self.logic.total_pages() + " pages"
+
+    def handle_input(self, user_input):
         if user_input.isdigit():
             return EditingMenu(self, self.asset_list[int(user_input) - 1])
         else:
-            return super().selected(user_input)
+            return super().handle_input(user_input)
 
 
 class EmployeeMenu(Asset):
@@ -175,6 +188,9 @@ class EditingMenu(Asset):
         return "Enter {}: ".format(
             self.new_asset.get_header()[self.current_index])
 
+    def handle_input(self, user_input):
+        self.new_asset[self.new_asset.get_keys()[self.current_index]] = user_input
+
 
 class SortingMenu(Asset):
     def __init__(self, mother):
@@ -214,9 +230,12 @@ class UserInterface:
                 print(self.separator())
             print(self.menu.commands_printable())
             print(self.separator())
+            if self.menu.has_list() and self.menu.needs_legend():
+                print(self.menu.page_legend())
+                print(self.separator())
 
             user_input = input(self.menu.prompt())
 
-            self.menu = self.menu.selected(user_input)
+            self.menu = self.menu.handle_input(user_input)
             if user_input == "q":
                 return  # we outa here
