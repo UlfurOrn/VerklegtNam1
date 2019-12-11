@@ -43,4 +43,4 @@ class EmployeeIO:
 
                     self.add(employee)
 
-        return self.employees
+        return list(self.employees.values())
