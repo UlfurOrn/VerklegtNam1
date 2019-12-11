@@ -4,25 +4,32 @@ from Employee import Employee
 
 class EmployeeIO:
     def __init__(self):
-        self.employee_list = []
+        self.employees = {}
+        self.attendants = []
+        self.pilots = []
 
     def get_all(self):
-        return self.load_employees()
+        return self.load()
 
-    def add_employee(self, employee):
-        self.employee_list.append(employee)
-        self.save_employees()
+    def add(self, employee):
+        self.employees[employee.ssn] = employee
+        if(employee.job_type == "Captain" and employee.job_type == "Co Pilot"):
+            self.pilots.append(employee.ssn)
+        elif(employee.job_type == "Senior Attendant" and employee.job_type == "Attendant"):
+            self.attendants.append(employee.ssn)
 
-    def save_employees(self):
+        self.save()
+
+    def save(self):
         with open("CSVFolder/employees.csv", "w",
                   encoding="utf8") as employee_file:
             csv_writer = csv.writer(employee_file)
 
-            for employee in self.employee_list:
+            for employee in self.employees:
                 csv_writer.writerow(employee.get_save_info())
 
-    def load_employees(self):
-        if self.employee_list == []:
+    def load(self):
+        if self.employees == {}:
 
             with open("CSVFolder/employees.csv", "r",
                       encoding="utf8") as employee_file:
@@ -34,6 +41,6 @@ class EmployeeIO:
                                         email, plane_type, job_type,
                                         time_table)
 
-                    self.employee_list.append(employee)
+                    self.add(employee)
 
-        return self.employee_list
+        return self.employees
