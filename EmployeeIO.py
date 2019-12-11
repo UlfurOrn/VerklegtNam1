@@ -41,5 +41,4 @@ class EmployeeIO:
                                         time_table)
 
                     self.add(employee)
-
         return list(self.employees.values())
