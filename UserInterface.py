@@ -86,7 +86,7 @@ class Asset(Menu):
 
     def listing(self):
         return "\n".join([
-            "  {}: {}".format(1 + i, e.get_summary())
+            "  {}: {}".format(1 + i, e)
             for i, e in enumerate(self.asset_list)
         ])
 
