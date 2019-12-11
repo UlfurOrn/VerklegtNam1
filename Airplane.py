@@ -27,5 +27,5 @@ class Airplane:
         self.plane_type = plane_type
         self.seat_cap = seat_cap
 
-    def get_summary(self):
+    def __str__(self):
         return "{}: {} {}".format(self.name, self.manufacturer, self.plane_type)

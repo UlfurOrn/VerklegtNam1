@@ -6,7 +6,7 @@ class AirplaneIO:
     def __init__(self):
         self.airplane_list = []
 
-    def get_all():
+    def get_all(self):
         return self.load_airplanes()
 
     def add_airplane(self, airplane):
