@@ -31,5 +31,5 @@ class Employee:
         self.plane_type = plane_type
         self.job_type = job_type
 
-    def get_summary(self):
+    def __str__(self):
         return "{} ({})".format(self.name, self.job_type)

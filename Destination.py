@@ -29,5 +29,5 @@ class Destination:
 		self.contact_name = contact_name
 		self.contact_num = contact_num
 
-	def get_summary(self):
+	def __str__(self):
 		return "{} ({})".format(self.country, self.airport)

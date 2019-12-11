@@ -1,7 +1,8 @@
 from DestinationIO import DestinationIO
 from Destination import Destination
+from LogicLayer import LogicLayer
 
-class DestinationLL:
+class DestinationLL(LogicLayer):
 
     def __init__(self):
         self.IO = DestinationIO()
