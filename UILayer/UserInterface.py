@@ -108,7 +108,7 @@ class Asset(Menu):
         self.asset_list = self.logic.get_all()
         self.page_length = 9
         self.current_page = 1
-        self.page_count = 1 + (len(self.asset_list) // 9)
+        self.page_count = self.logic.total_pages(self.asset_list, self.page_length)
 
     def __call__(self, sorting_method=0):
         self.sorting_method = sorting_method
@@ -132,7 +132,7 @@ class Asset(Menu):
 
     def listing(self):
         return "\n".join([
-            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.asset_list)
+            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.logic.get_page(self.asset_list, self.current_page, self.page_length))
         ])
 
     def needs_legend(self):
@@ -144,11 +144,14 @@ class Asset(Menu):
         ) + " out of " + self.logic.total_pages() + " pages"
 
     def handle_input(self, user_input):
+        self.current_page = self.logic.change_page(user_input, self.page_count, self.current_page)
+
         if user_input.isdigit() and int(user_input) <= len(self.asset_list):
             # pass the selected asset to the new editing menu
             return EditingMenu(self, self.asset_list[int(user_input) - 1])
         else:
             return self._invoke_comand(user_input)
+
 
 
 class EmployeeMenu(Asset):
