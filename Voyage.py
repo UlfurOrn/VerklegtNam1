@@ -36,3 +36,12 @@ class Voyage:
     #     return string
 
 
+    def __str__ (self):
+        total  = ""
+        total+= "Time of Departure: "+departure_time+"\n"
+        total+= "Time of Arrival: "+arrival_time+"\n"
+        total+= "pilot Count: "+str(len(pilot_list))+"\n"
+        total+= "attendant Count"+str(len(attendant_list))+"\n"
+        total+= "seats sold: "+str(seats_sold)+"\n"
+
+

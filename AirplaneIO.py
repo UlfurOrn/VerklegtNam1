@@ -4,25 +4,24 @@ from Airplane import Airplane
 
 class AirplaneIO:
     def __init__(self):
-        self.airplane_list = []
+        self.airplanes = {}
 
     def get_all(self):
         return self.load_airplanes()
 
-    def add_airplane(self, airplane):
-        self.airplane_list.append(airplane)
-        self.save_airplanes()
+    def add(self, airplane):
+        self.airplanes[airplane.ID] = airplane
 
     def save_airplanes(self):
         with open("CSVFolder/airplanes.csv", "w",
                   encoding="utf8") as airplane_file:
             csv_writer = csv.writer(airplane_file)
 
-            for airplane in self.airplane_list:
+            for airplane in list(self.airplanes.values()):
                 csv_writer.writerow(airplane.get_save_info())
 
     def load_airplanes(self):
-        if self.airplane_list == []:
+        if self.airplanes == {}:
 
             with open("CSVFolder/airplanes.csv", "r",
                       encoding="utf8") as airplane_file:
@@ -33,6 +32,6 @@ class AirplaneIO:
                     airplane = Airplane(name, manufacturer, plane_type,
                                         seat_cap, time_table)
 
-                    self.airplane_list.append(airplane)
+                    self.add(airplane)
 
-        return self.airplane_list
+        return list(self.airplanes.values())

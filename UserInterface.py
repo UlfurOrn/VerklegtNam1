@@ -8,14 +8,35 @@ from HelperUI import HelperUI
 
 
 class Command:
-    def __init__(self, character, description="", next_menu=None):
+    def __init__(self, character, description="", next_menu=None, arguments=None):
         self.character = character
         self.description = description
         self.next_menu = next_menu
+        self.arguments = arguments
 
     def __str__(self):
         return "  " + self.character + ". " + self.description
 
+    def invoke(self):
+        return self.next_menu() if self.arguments is None else self.next_menu(self.arguments)
+
+class Commander:
+    def __init__(self, *commands):
+        self._commands = {}
+        for command in commands:
+            self._commands[command.character] = command
+
+    def __getitem__(self, key):
+        return self._commands[key]
+
+    def __iter__(self):
+        return iter(self._commands.values())
+
+    def add(self, command):
+        self._commands[command.character] = command
+
+    def has(self, key):
+        return self._commands.get(key, None)
 
 class State:
     def __init__(self, title="", commands={}):
@@ -24,6 +45,14 @@ class State:
 
 
 class Menu:
+    def title(self):
+        raise NotImplementedError()
+        return ""
+
+    def commands(self):
+        raise NotImplementedError()
+        return Commander() # an example
+
     def has_list(self):
         return False
 
@@ -31,14 +60,14 @@ class Menu:
         return "Input Command: "
 
     def commands_printable(self):
-        return "\n".join([str(e) for e in self.commands().values()])
+        return "\n".join([str(e) for e in self.commands()])
 
-    def selected(self, user_input):
-        command = self.commands().get(user_input, None)
+    def handle_input(self, user_input):
+        command = self.commands().has(user_input)
         if command == None:
             return self  # TODO: punish the user
         else:
-            return command.next_menu
+            return command.invoke()
 
 
 class MainMenu(Menu):
@@ -46,13 +75,13 @@ class MainMenu(Menu):
         return "Main menu"
 
     def commands(self):
-        return {
-            "1": Command("1", "Employees", EmployeeMenu()),
-            "2": Command("2", "Airplanes", AirplaneMenu()),
-            "3": Command("3", "Destinations", DestinationMenu()),
-            "4": Command("4", "Voyages", VoyageMenu()),
-            "q": Command("q", "Quit the program"),
-        }
+        return Commander(
+            Command("1", "Employees", EmployeeMenu),
+            Command("2", "Airplanes", AirplaneMenu),
+            Command("3", "Destinations", DestinationMenu),
+            Command("4", "Voyages", VoyageMenu),
+            Command("q", "Quit the program"),
+        )
 
 
 class Asset(Menu):
@@ -64,12 +93,12 @@ class Asset(Menu):
         self.page_count = 1 + (len(self.asset_list) // 9)
 
     def commands(self, sorts=True):
-        result = {
-            "c": Command("c", "Create new " + self.asset, EditingMenu(self)),
-            "b": Command("b", "Back to main menu", MainMenu()),
-        }
+        result = Commander(
+            Command("c", "Create new " + self.asset, EditingMenu, self),
+            Command("b", "Back to main menu", MainMenu),
+        )
         if sorts:
-            result["s"] = Command("s", "Select sorting method", SortingMenu(self))
+            result.add(Command("s", "Select sorting method", SortingMenu, self))
         return result
 
     def title(self):
@@ -80,15 +109,22 @@ class Asset(Menu):
 
     def listing(self):
         return "\n".join([
-            "  {}: {}".format(1 + i, e.get_summary())
+            "  {}: {}".format(1 + i, e)
             for i, e in enumerate(self.asset_list)
         ])
 
-    def selected(self, user_input):
+    def needs_legend(self):
+        return False
+        return self.logic.is_paginated()
+
+    def page_legend(self):
+        return "you are on page " + self.logic.current_page() + " out of " + self.logic.total_pages() + " pages"
+
+    def handle_input(self, user_input):
         if user_input.isdigit():
             return EditingMenu(self, self.asset_list[int(user_input) - 1])
         else:
-            return super().selected(user_input)
+            return super().handle_input(user_input)
 
 
 class EmployeeMenu(Asset):
@@ -102,21 +138,22 @@ class EmployeeMenu(Asset):
 
 
 class AirplaneMenu(Asset):
-    def __init__(self):
+    def __init__(self, sorting_method=0):
         self.asset = "Airplane"
         self.logic = AirplaneLL()
+        self.sorting_method = sorting_method
         super().__init__()
 
     def new(self):
         return Airplane()
 
     def sorting_commands(self):
-        return {
-            "1": Command("1", "Find all Airplanes"),
-            "2": Command("2", "Sort by Manufacturer"),
-            "3": Command("3", "Airplanes not in use"),
-            "4": Command("4", "Airplanes in use"),
-        }
+        return Commander(
+            Command("1", "Find all Airplanes", self),
+            Command("2", "Sort by Manufacturer"),
+            Command("3", "Airplanes not in use"),
+            Command("4", "Airplanes in use"),
+        )
 
 
 class DestinationMenu(Asset):
@@ -153,10 +190,10 @@ class EditingMenu(Asset):
         return self._title + " " + self.mother.asset
 
     def commands(self):
-        result = {
-            "b": Command("b", "Back to " + self.mother.asset + " list",
+        result = Commander(
+            Command("b", "Back to " + self.mother.asset + " list",
                          self.mother),
-        }
+        )
         return result
 
     def listing(self):
@@ -175,8 +212,11 @@ class EditingMenu(Asset):
         return "Enter {}: ".format(
             self.new_asset.get_header()[self.current_index])
 
+    def handle_input(self, user_input):
+        self.new_asset[self.new_asset.get_keys()[self.current_index]] = user_input
 
-class SortingMenu(Asset):
+
+class SortingMenu(Menu):
     def __init__(self, mother):
         self.mother = mother
 
@@ -214,9 +254,12 @@ class UserInterface:
                 print(self.separator())
             print(self.menu.commands_printable())
             print(self.separator())
+            if self.menu.has_list() and self.menu.needs_legend():
+                print(self.menu.page_legend())
+                print(self.separator())
 
             user_input = input(self.menu.prompt())
 
-            self.menu = self.menu.selected(user_input)
+            self.menu = self.menu.handle_input(user_input)
             if user_input == "q":
                 return  # we outa here
