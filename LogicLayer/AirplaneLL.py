@@ -15,7 +15,7 @@ class AirplaneLL(LogicLayer):
 
     def get_all(self):
     	return self.IOAPI.get_airplanes()
-
+    # TODO: make this work and consolidate the function above
     def set_sorting_method(self, sorting_method):
         if sorting_method == AirplaneSortingMethods.ALL_AIRPLANES:
             self.asset_list.sort()

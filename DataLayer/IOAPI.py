@@ -4,7 +4,7 @@ from DataLayer.EmployeeIO import EmployeeIO
 from DataLayer.VoyageIO import VoyageIO
 
 
-class IO:
+class IOAPI:
     def __init__(self):
         self.voyage = VoyageIO()
         self.destination = DestinationIO()
