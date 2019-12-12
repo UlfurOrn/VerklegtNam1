@@ -39,9 +39,8 @@ class LogicLayer:
 		return departure_time, arrival_time
 	
 
-	def get_available(self, departure_str, arrival_str):
+	def get_available(self, asset_list, departure_str, arrival_str):
 		departure_time, arrival_time = self.text_to_datetime(departure_str, arrival_str)
-		asset_list = self.IO.load_assets()
 
 		return_list = []
 
@@ -51,13 +50,44 @@ class LogicLayer:
 			time_table_to_check = []
 			for voyage_id in asset_time_table:
 				voyage = self.IO.get_voyage_by_id(voyage_id)
-				time_table_to_check.append([self.text_to_datetime(voyage.departure_time, voyage.arrival_time)])
+				time_table_to_check.append([self.text_to_datetime(voyage.departure_time, voyage.departure_return_time)])
 
 				if self.check_time_table(time_table_to_check, departure_time, arrival_time):
 					return_list.append(asset)
 		
 		return return_list
 
+	
+	def is_only_letters(self, string):
+		for c in string.strip():
+			if c != " ":
+				if not c.isalpha():
+					return False
+		else:
+			return True
+
+	def is_only_numbers(self, string):
+		for c in string:
+			if not c.isdigit():
+				return False
+		else:
+			return True
+					
+	
+	def is_date_format(self, string):
+		try:
+			datetime.datetime.strptime(string, "‰d/%m/%Y %H:%M")
+			return True
+		except ValueError:
+			return False
+
+	"hh:mm"
+	def is_time_format(self, string):
+		try:
+			datetime.datetime.striptime(string, "%H:%M")
+			return True
+		except ValueError:
+			return False
 
 
 	def get_all(self):
