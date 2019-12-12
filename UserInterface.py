@@ -8,17 +8,20 @@ from HelperUI import HelperUI
 
 
 class Command:
-    def __init__(self, character, description="", next_menu=None, arguments=None):
+    def __init__(self, character, description="", command=None, arguments=None):
         self.character = character
         self.description = description
-        self.next_menu = next_menu
+        self._command = command
         self.arguments = arguments
 
     def __str__(self):
         return "  " + self.character + ". " + self.description
 
+    def is_none(self):
+        return self._command == None
+
     def invoke(self):
-        return self.next_menu() if self.arguments is None else self.next_menu(self.arguments)
+        return self._command() if self.arguments is None else self._command(self.arguments)
 
 class Commander:
     def __init__(self, *commands):
@@ -38,11 +41,6 @@ class Commander:
     def has(self, key):
         return self._commands.get(key, None)
 
-class State:
-    def __init__(self, title="", commands={}):
-        self.title = title
-        self.commands = commands
-
 
 class Menu:
     def title(self):
@@ -59,12 +57,15 @@ class Menu:
     def prompt(self):
         return "Input Command: "
 
+    def needs_legend(self):
+        return False
+
     def commands_printable(self):
         return "\n".join([str(e) for e in self.commands()])
 
     def handle_input(self, user_input):
         command = self.commands().has(user_input)
-        if command == None:
+        if command == None or command.is_none():
             return self  # TODO: punish the user
         else:
             return command.invoke()
@@ -185,10 +186,11 @@ class VoyageMenu(Asset):
         return super().commands(False)
 
 
-class EditingMenu(Asset):
+class EditingMenu(Menu):
     def __init__(self, mother, focused_asset=None):
         self.mother = mother
         self.new_asset = mother.new() if focused_asset is None else focused_asset
+        self.asset_fields = self.new_asset.get_print_info()
         self._title = "New" if focused_asset is None else "Update"
         self.current_index = 0
 
@@ -201,16 +203,18 @@ class EditingMenu(Asset):
         )
         return result
 
+    def has_list(self):
+        return True
+
     def listing(self):
         header_list = self.new_asset.get_header()
-        info_list = self.new_asset.get_print_info()
         arrow_pos = [
             " <---" if self.current_index == pos else ""
             for pos in range(len(header_list))
         ]
         return "\n".join([
             "{:>13}: {}{}".format(header, info, arrow)
-            for header, info, arrow in zip(header_list, info_list, arrow_pos)
+            for header, info, arrow in zip(header_list, self.asset_fields, arrow_pos)
         ])
 
     def prompt(self):
@@ -219,9 +223,16 @@ class EditingMenu(Asset):
 
     def handle_input(self, user_input):
         commanded = super().handle_input(user_input)
-        if commanded == None:
-            self.new_asset[self.new_asset.get_print_info()[self.current_index]] = user_input
+        if commanded == self:
+            self.asset_fields[self.current_index] = user_input
+            self.current_index += 1
+            print(self.current_index)
+            if self.current_index < len(self.asset_fields):
+                return self
+            else:
+                return self.mother
         else:
+            self.new_asset.update_info(self.asset_fields)
             return commanded
 
 
