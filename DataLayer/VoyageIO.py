@@ -1,5 +1,5 @@
 import csv
-from Voyage import Voyage
+from ModelFolder.Voyage import Voyage
 
 
 class VoyageIO:

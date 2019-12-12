@@ -1,5 +1,6 @@
 from DataLayer.IO import IO
-from LogicLayer import LogicLayer
+from LogicLayer.LogicLayer import LogicLayer
+from ModelFolder.Voyage import Voyage
 
 class VoyageLL(LogicLayer):
 

@@ -1,5 +1,5 @@
 import csv
-from Airplane import Airplane
+from ModelFolder.Airplane import Airplane
 
 
 class AirplaneIO:

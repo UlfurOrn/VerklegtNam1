@@ -1,6 +1,6 @@
 from DataLayer.IO import IO
 from ModelFolder.Employee import Employee
-from LogicLayer import LogicLayer
+from LogicLayer.LogicLayer import LogicLayer
 
 
 class EmployeeLL(LogicLayer):

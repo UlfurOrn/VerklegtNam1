@@ -1,5 +1,5 @@
 import csv
-from Destination import Destination
+from ModelFolder.Destination import Destination
 
 
 class DestinationIO:

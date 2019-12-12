@@ -1,6 +1,6 @@
 from DataLayer.IO import IO
 from ModelFolder.Airplane import Airplane
-from LogicLayer import LogicLayer
+from LogicLayer.LogicLayer import LogicLayer
 
 class AirplaneLL(LogicLayer):
 
