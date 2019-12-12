@@ -24,6 +24,9 @@ class LogicLayer:
     def get_current_page(self):
         return self._current_page
 
+    def current_page_size(self):
+        return 9 # TODO: Úlfur útfæra plz
+
     def change_page(self, user_input, num_pages, _current_page):
         if user_input == "a":
             if _current_page == 1:

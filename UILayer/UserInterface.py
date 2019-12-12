@@ -141,11 +141,9 @@ class Asset(Menu):
         ) ) + "/" + str(self.logic.total_pages()) + " next(d)"
 
     def handle_input(self, user_input):
-        self.current_page = self.logic.change_page(user_input, self.page_count, self.current_page)
-
-        if user_input.isdigit() and int(user_input) <= len(self.asset_page):
+        if user_input.isdigit() and int(user_input) <= len(self.logic.current_page_size()):
             # pass the selected asset to the new editing menu
-            return EditingMenu(self, self.asset_list[(self.current_page - 1) * self.page_length + int(user_input) - 1])
+            return EditingMenu(self, self.asset_list[(self.logic.get_current_page() - 1) * self.page_length + int(user_input) - 1])
         else:
             return self._invoke_comand(user_input)
 
