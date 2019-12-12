@@ -1,12 +1,12 @@
-from Destination import Destination
-from Employee import Employee
-from Airplane import Airplane
-from Voyage import Voyage
-from DestinationLL import DestinationLL
-from EmployeeLL import EmployeeLL
-from AirplaneLL import AirplaneLL
-from VoyageLL import VoyageLL
-from HelperUI import HelperUI
+from ModelFolder.Destination import Destination
+from ModelFolder.Employee import Employee
+from ModelFolder.Airplane import Airplane
+from ModelFolder.Voyage import Voyage
+from LogicLayer.DestinationLL import DestinationLL
+from LogicLayer.EmployeeLL import EmployeeLL
+from LogicLayer.AirplaneLL import AirplaneLL
+from LogicLayer.VoyageLL import VoyageLL
+from UILayer.HelperUI import HelperUI
 
 
 class Command:
