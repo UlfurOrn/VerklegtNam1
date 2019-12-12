@@ -1,5 +1,5 @@
 from EmployeeLL import EmployeeLL
-from Employee import Employee
+from ModelFolder.Employee import Employee
 from HelperUI import HelperUI
 
 class EmployeeUI:

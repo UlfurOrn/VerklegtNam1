@@ -1,5 +1,5 @@
 from DestinationLL import DestinationLL
-from Destination import Destination
+from ModelFolder.Destination import Destination
 from HelperUI import HelperUI
 
 class DestinationUI:

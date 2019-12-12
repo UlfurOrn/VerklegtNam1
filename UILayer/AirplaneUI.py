@@ -1,5 +1,5 @@
 from AirplaneLL import AirplaneLL
-from Airplane import Airplane
+from ModelFolder.Airplane import Airplane
 from HelperUI import HelperUI
 
 class AirplaneUI:

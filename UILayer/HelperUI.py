@@ -1,4 +1,4 @@
-from Employee import Employee
+from ModelFolder.Employee import Employee
 from sys import platform
 from os import system
 

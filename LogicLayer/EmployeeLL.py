@@ -1,4 +1,4 @@
-from Employee import Employee
+from ModelFolder.Employee import Employee
 from LogicLayer import LogicLayer
 from IO import IO
 

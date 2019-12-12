@@ -1,5 +1,5 @@
 from IO import IO
-from Destination import Destination
+from ModelFolder.Destination import Destination
 from LogicLayer import LogicLayer
 
 class DestinationLL(LogicLayer):

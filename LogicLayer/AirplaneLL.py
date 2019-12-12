@@ -1,5 +1,5 @@
 from AirplaneIO import AirplaneIO
-from Airplane import Airplane
+from ModelFolder.Airplane import Airplane
 from LogicLayer import LogicLayer
 
 class AirplaneLL(LogicLayer):
