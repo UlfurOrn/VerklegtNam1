@@ -5,7 +5,7 @@ from LogicLayer.LogicLayer import LogicLayer
 class AirplaneLL(LogicLayer):
 
     def __init__(self):
-        self.IO = AirplaneIO()
+        self.IO = IO()
 
     def get_manufacturer(self):
         plane_list = self.IO.get_all_airplanes()
