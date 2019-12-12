@@ -142,8 +142,7 @@ class Asset(Menu):
         return self.logic.total_pages() > 1
 
     def page_legend(self):
-        return "  prev(a) " + str( self.logic.get_current_page(
-        ) ) + "/" + str(self.logic.total_pages()) + " next(d)"
+        return "  prev(a) {:>2}/{} next(d)".format(self.logic.get_current_page(), self.logic.total_pages())
 
     def _change_page(self, shift):
         self.logic.change_page(shift)
