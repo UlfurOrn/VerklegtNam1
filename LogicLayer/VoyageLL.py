@@ -39,4 +39,4 @@ class VoyageLL(LogicLayer):
     	voyage.airplane = airplane.id
 
     def get_all(self):
-    	return self.IOAPI.get_voyages()	
+    	return self.IOAPI.get_voyages()

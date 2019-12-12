@@ -5,37 +5,41 @@ from DataLayer.IOAPI import IOAPI
 class LogicLayer:
     def __init__(self):
         self.asset_list = self.get_all()
+        self.page_length = 9
         self._current_page = 0
         self.total_pages = self._total_pages()
 
-    def get_page(self, page_delimiter=9):
+    def get_page(self):
         return self.asset_list[self._current_page *
-                               page_delimiter:(self._current_page + 1) *
-                               page_delimiter]
+                               self.page_length:(self._current_page + 1) *
+                               self.page_length]
 
     def set_sorting_method(self, sorting_method):
         raise NotImplementedError(
             "set_sorting_method should be overridden by each subclass")
 
-    def get_page_to_print(self, page_delimiter=9):
+    def get_page_to_print(self):
         page_to_print = self.get_page()
-        page_to_print += [""] * (page_delimiter - len(page_to_print))
+        page_to_print += [""] * (self.page_length - len(page_to_print))
         return page_to_print
 
-    def _total_pages(self, page_delimiter=9):
-        num_pages = len(self.asset_list) // page_delimiter
-        if num_pages % page_delimiter != 0:
+    def _total_pages(self):
+        num_pages = len(self.asset_list) // self.page_length
+        if num_pages % self.page_length != 0:
             num_pages += 1
         return num_pages
 
     def get_current_page(self):
         return self._current_page + 1
 
-    def current_page_size(self, page_delimiter=9):
+    def current_page_size(self):
         return len(self.get_page())
 
     def change_page(self, change):
         self._current_page = (self._current_page + change) % self.total_pages
+
+    def get_asset_at(self, number):
+        return self.asset_list[self._current_page * self.page_length + number - 1]
 
     def check_time_table(self, time_table, departure_time, arrival_time):
         DEPARTURE = 0
