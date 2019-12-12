@@ -1,6 +1,6 @@
-from EmployeeUI import EmployeeUI
-from DestinationUI import DestinationUI
-from AirplaneUI import AirplaneUI
+from UILayer.EmployeeUI import EmployeeUI
+from UILayer.DestinationUI import DestinationUI
+from UILayer.AirplaneUI import AirplaneUI
 
 class OtherUI:
 

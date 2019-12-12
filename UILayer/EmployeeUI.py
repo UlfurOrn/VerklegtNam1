@@ -1,6 +1,6 @@
-from EmployeeLL import EmployeeLL
+from LogicLayer.EmployeeLL import EmployeeLL
 from ModelFolder.Employee import Employee
-from HelperUI import HelperUI
+from UILayer.HelperUI import HelperUI
 
 class EmployeeUI:
     ALL = 1

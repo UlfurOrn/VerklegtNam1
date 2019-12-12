@@ -1,6 +1,6 @@
-from DestinationLL import DestinationLL
+from LogicLayer.DestinationLL import DestinationLL
 from ModelFolder.Destination import Destination
-from HelperUI import HelperUI
+from UILayer.HelperUI import HelperUI
 
 class DestinationUI:
 
