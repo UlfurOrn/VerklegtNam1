@@ -1,4 +1,4 @@
-from UserInterface import UserInterface
+from UILayer.UserInterface import UserInterface
 
 def main():
     ui = UserInterface()
