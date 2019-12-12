@@ -2,10 +2,10 @@ from ModelFolder.Destination import Destination
 from ModelFolder.Employee import Employee
 from ModelFolder.Airplane import Airplane
 from ModelFolder.Voyage import Voyage
-from LogicLayer.DestinationLL import DestinationLL
-from LogicLayer.EmployeeLL import EmployeeLL
-from LogicLayer.AirplaneLL import AirplaneLL
-from LogicLayer.VoyageLL import VoyageLL
+from LogicLayer.DestinationLL import *
+from LogicLayer.EmployeeLL import *
+from LogicLayer.AirplaneLL import *
+from LogicLayer.VoyageLL import *
 from sys import platform
 from os import system
 
@@ -117,7 +117,6 @@ class Asset(Menu):
     def commander(self, sorts=True):
         result = Commander(
             Command("c", "Create new " + self.asset, EditingMenu, self),
-            Command("R", "previous page", lambda: self._change_page(-1)),
             Command("b", "Back to main menu", MainMenu),
         )
         if sorts:
@@ -180,10 +179,10 @@ class AirplaneMenu(Asset):
 
     def sorting_commands(self):
         return Commander(
-            Command("1", "Find all Airplanes", self),
-            Command("2", "Sort by Manufacturer", self),
-            Command("3", "Airplanes not in use", self),
-            Command("4", "Airplanes in use", self),
+            Command("1", "Find all Airplanes", self, AirplaneSortingMethods.ALL_AIRPLANES),
+            Command("2", "Airplanes not in use", self, AirplaneSortingMethods.ONLY_NOT_IN_USE),
+            Command("3", "Airplanes in use", self, AirplaneSortingMethods.ONLY_IN_USE),
+            Command("4", "Sort by Manufacturer", self, AirplaneSortingMethods.BY_MANUFACTURER),
             Command("b", "Back to " + self.asset + " list", self),
         )
 
