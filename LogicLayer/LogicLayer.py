@@ -41,6 +41,9 @@ class LogicLayer:
     def get_asset_at(self, number):
         return self.asset_list[self._current_page * self.page_length + number - 1]
 
+    def set_final_page(self):
+        return self.total_pages
+
     def check_time_table(self, time_table, departure_time, arrival_time):
         DEPARTURE = 0
         ARRIVAL = 1
