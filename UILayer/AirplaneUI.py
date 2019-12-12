@@ -1,6 +1,6 @@
-from AirplaneLL import AirplaneLL
+from LogicLayer.AirplaneLL import AirplaneLL
 from ModelFolder.Airplane import Airplane
-from HelperUI import HelperUI
+from UILayer.HelperUI import HelperUI
 
 class AirplaneUI:
     ALL = 1
