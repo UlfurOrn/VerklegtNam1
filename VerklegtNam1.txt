@@ -111,3 +111,7 @@
         
     Önnur færsla, 15:00
         Í dag uppfærðum við nokkur föll í UI og byrjuðum á tíma management
+        
+12/12/19
+    Fyrsta færsla, 10:00
+        Í dag ætlum við að útfæra logík tengt tíma og setja það inní Voyage hlutann okkar.
