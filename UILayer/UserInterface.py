@@ -116,7 +116,7 @@ class Asset(Menu):
 
     def commander(self, sorts=True):
         result = Commander(
-            Command("c", "Create new " + self.asset, EditingMenu, self),
+            Command("c", "Create new " + self.asset, CreationMenu, self),
             Command("b", "Back to main menu", MainMenu),
         )
         if sorts:
@@ -126,6 +126,10 @@ class Asset(Menu):
             result.add(Command("a", "previous page", lambda: self._change_page(-1), show=False))
             result.add(Command("d", "next page", lambda: self._change_page(1), show=False))
         return result
+
+    def sorting_commands(self):
+        raise NotImplementedError("sorting commands missing for " + self.asset)
+        return Commander()
 
     def title(self):
         return self.asset + " list"
@@ -151,7 +155,7 @@ class Asset(Menu):
     def handle_input(self, user_input):
         if user_input.isdigit() and 0 < int(user_input) <= self.logic.current_page_size():
             # pass the selected asset to the new editing menu
-            return EditingMenu(self, self.logic.get_asset_at(int(user_input)))
+            return UpdateMenu(self, self.logic.get_asset_at(int(user_input)))
         else:
             return self._invoke_comand(user_input)
 
@@ -214,13 +218,9 @@ class VoyageMenu(Asset):
 
 
 class EditingMenu(Menu):
-    def __init__(self, mother, focused_asset=None):
+    def __init__(self, mother):
         self.mother = mother
-        self.new_asset = mother.new(
-        ) if focused_asset is None else focused_asset
         self.asset_fields = self.new_asset.get_print_info()
-        self._title = "New" if focused_asset is None else "Update"
-        self.updatable_fields = self.new_asset.get_updatable_fields()
         self.current_index = 0
         self.confirming = False
 
@@ -234,9 +234,9 @@ class EditingMenu(Menu):
                 " list and discard all changes", self.mother),
             Command("c", "Confirm changes", self._confirm),
         )
-        if self._valid_index() != self.updatable_fields[0]:
+        if self._valid_index() != self.editable_fields[0]:
             result.add(Command("w", "Previous field", lambda: self._with_shifted_field(-1)))
-        if self._valid_index() != self.updatable_fields[-1]:
+        if self._valid_index() != self.editable_fields[-1]:
             result.add(Command("s", "Next field", lambda: self._with_shifted_field(1)))
         return result
 
@@ -244,7 +244,7 @@ class EditingMenu(Menu):
         return True
 
     def _valid_index(self):
-        return self.updatable_fields[self.current_index]
+        return self.editable_fields[self.current_index]
 
     def listing(self):
         header_list = self.new_asset.get_header()
@@ -272,8 +272,23 @@ class EditingMenu(Menu):
         return self.mother
 
     def _with_shifted_field(self, change):
-        self.current_index = (self.current_index + change) % len(self.updatable_fields)
+        self.current_index = (self.current_index + change) % len(self.editable_fields)
         return self
+
+class UpdateMenu(EditingMenu):
+    def __init__(self, mother, focused_asset):
+        self.new_asset = focused_asset
+        self._title = "Update"
+        self.editable_fields = self.new_asset.get_updatable_fields()
+        super().__init__(mother)
+
+
+class CreationMenu(EditingMenu):
+    def __init__(self, mother):
+        self.new_asset = mother.new()
+        self._title = "New"
+        self.editable_fields = self.new_asset.get_creation_fields()
+        super().__init__(mother)
 
 class SortingMenu(Menu):
     def __init__(self, mother):
