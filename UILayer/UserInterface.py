@@ -117,15 +117,15 @@ class Asset(Menu):
     def commander(self, sorts=True):
         result = Commander(
             Command("c", "Create new " + self.asset, EditingMenu, self),
-            Command("R", "previous page", self._change_page(-1)),
+            Command("R", "previous page", lambda: self._change_page(-1)),
             Command("b", "Back to main menu", MainMenu),
         )
         if sorts:
             result.add(Command("s", "Select sorting method", SortingMenu,
                                self))
         if self.needs_legend():
-            result.add(Command("a", "previous page", self._change_page(-1), show=False))
-            result.add(Command("d", "next page", self._change_page(1), show=False))
+            result.add(Command("a", "previous page", lambda: self._change_page(-1), show=False))
+            result.add(Command("d", "next page", lambda: self._change_page(1), show=False))
         return result
 
     def title(self):
@@ -136,7 +136,7 @@ class Asset(Menu):
 
     def listing(self):
         return "\n".join([
-            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.logic.get_page(self.page_length))
+            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.logic.get_page_to_print())
         ])
 
     def needs_legend(self):
@@ -150,9 +150,9 @@ class Asset(Menu):
         return self
 
     def handle_input(self, user_input):
-        if user_input.isdigit() and int(user_input) <= len(self.logic.current_page_size()):
+        if user_input.isdigit() and 0 < int(user_input) <= self.logic.current_page_size():
             # pass the selected asset to the new editing menu
-            return EditingMenu(self, self.asset_list[(self.logic.get_current_page() - 1) * self.page_length + int(user_input) - 1])
+            return EditingMenu(self, self.logic.get_asset_at(int(user_input)))
         else:
             return self._invoke_comand(user_input)
 
