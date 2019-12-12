@@ -20,10 +20,10 @@ class Destination:
         return [self.country, self.airport, self.abrev, self.flight_time, self.flight_dist, self.contact_name, self.contact_num]
 
     def get_creation_fields(self):
-        return [0,1,2,3,4,5,6]
+        return [0, 1, 2, 3, 4, 5, 6]
 
     def get_updatable_fields(self):
-        return []
+        return [5, 6]
 
     def update_info(self, new_info_list):
         country, airport, abrev, flight_time, flight_dist, contact_name, contact_num = new_info_list
