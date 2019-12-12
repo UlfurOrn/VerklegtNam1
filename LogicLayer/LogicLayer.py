@@ -4,9 +4,12 @@ from DataLayer.IOAPI import IOAPI
 
 class LogicLayer:
     def __init__(self):
-        self.asset_list = self.get_all()
-        self.page_length = 9
         self._current_page = 0
+        self.page_length = 9
+        self.load_asset_list()
+
+    def load_asset_list(self):
+        self.asset_list = self.get_all()
         self.total_pages = self._total_pages()
 
     def get_page(self):
@@ -25,7 +28,7 @@ class LogicLayer:
 
     def _total_pages(self):
         num_pages = len(self.asset_list) // self.page_length
-        if num_pages % self.page_length != 0:
+        if len(self.asset_list) % self.page_length != 0:
             num_pages += 1
         return num_pages
 
@@ -39,10 +42,11 @@ class LogicLayer:
         self._current_page = (self._current_page + change) % self.total_pages
 
     def get_asset_at(self, number):
-        return self.asset_list[self._current_page * self.page_length + number - 1]
+        return self.asset_list[self._current_page * self.page_length + number -
+                               1]
 
     def set_final_page(self):
-        return self.total_pages
+        self._current_page = self.total_pages - 1
 
     def check_time_table(self, time_table, departure_time, arrival_time):
         DEPARTURE = 0

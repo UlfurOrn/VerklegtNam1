@@ -170,6 +170,15 @@ class EmployeeMenu(Asset):
     def new(self):
         return Employee()
 
+    def sorting_commands(self):
+        return Commander(
+            Command("1", "List all employees", self, AirplaneSortingMethods.ALL_AIRPLANES),
+            Command("2", "List all pilots", self, AirplaneSortingMethods.ONLY_NOT_IN_USE),
+            Command("3", "List all assistants", self, AirplaneSortingMethods.ONLY_IN_USE),
+            Command("4", "Sort by name", self, AirplaneSortingMethods.BY_MANUFACTURER),
+            Command("b", "Back to " + self.asset + " list", self),
+        )
+
 
 class AirplaneMenu(Asset):
     def __init__(self, sorting_method=0):

@@ -21,7 +21,7 @@ class EmployeeLL(LogicLayer):
         return "To Do"
 
     def add(self, employee):
-        self.IOAPI.add_employee()
+        self.IOAPI.add_employee(employee)
 
     def is_unique_ssn(self, ssn):
         employee_list = self.get_all()

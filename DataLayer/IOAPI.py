@@ -23,7 +23,6 @@ class IOAPI:
     def get_voyages(self):
         return self.voyage.get_all()
 
-
     def get_airplane_by_id(self):
         return self.airplane.get_by_id()
 
@@ -35,7 +34,6 @@ class IOAPI:
 
     def get_voyage_by_id(self):
         return self.voyage.get_by_id()
-
 
     def save(self):
         self.voyage.save()
@@ -51,12 +49,16 @@ class IOAPI:
 
     def add_destination(self, destination):
         self.destination.add(destination)
+        self.destination.save()
 
     def add_airplane(self, airplane):
         self.airplane.add(airplane)
+        self.airplane.save()
 
     def add_voyage(self, voyage):
         self.voyage.add(voyage)
+        self.voyage.save()
 
     def add_employee(self, employee):
         self.employee.add(employee)
+        self.employee.save()
