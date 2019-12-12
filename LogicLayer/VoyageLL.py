@@ -1,5 +1,6 @@
+from DataLayer.IO import IO
 from LogicLayer import LogicLayer
-from IO import IO
+
 class VoyageLL(LogicLayer):
 
     def __init__(self):
