@@ -1,7 +1,8 @@
-from AirplaneIO import AirplaneIO
-from DestinationIO import DestinationIO
-from EmployeeIO import EmployeeIO
-from VoyageIO import VoyageIO
+from DataLayer.AirplaneIO import AirplaneIO
+from DataLayer.DestinationIO import DestinationIO
+from DataLayer.EmployeeIO import EmployeeIO
+from DataLayer.VoyageIO import VoyageIO
+
 
 class IO:
     def __init__(self):
@@ -46,17 +47,14 @@ class IO:
         self.airplane.load()
         self.employee.load()
 
-    def add_destination(self,destination):
-    	self.destination.add(destination)
+    def add_destination(self, destination):
+        self.destination.add(destination)
 
-    def add_airplane(self,airplane):
-    	self.airplane.add(airplane)
+    def add_airplane(self, airplane):
+        self.airplane.add(airplane)
 
-    def add_voyage(self,voyage):
-    	self.voyage.add(voyage)
+    def add_voyage(self, voyage):
+        self.voyage.add(voyage)
 
-    def add_employee(self,employee):
-    	self.employee.add(employee)
-
-
-
+    def add_employee(self, employee):
+        self.employee.add(employee)
