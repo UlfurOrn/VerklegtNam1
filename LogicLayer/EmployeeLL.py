@@ -18,6 +18,9 @@ class EmployeeLL(LogicLayer):
     def get_all(self):
         return self.IOAPI.get_employees()
 
+    def get_by_id(self):
+        return "To Do"
+
     def add(self,employee):
         self.IOAPI.add_employee()
 

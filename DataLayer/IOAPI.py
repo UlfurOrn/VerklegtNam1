@@ -23,6 +23,7 @@ class IOAPI:
     def get_voyages(self):
         return self.voyage.get_all()
 
+
     def get_airplane_by_id(self):
         return self.airplane.get_by_id()
 
@@ -34,6 +35,7 @@ class IOAPI:
 
     def get_voyage_by_id(self):
         return self.voyage.get_by_id()
+
 
     def save(self):
         self.voyage.save()

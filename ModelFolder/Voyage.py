@@ -18,6 +18,9 @@ class Voyage:
     def get_save_info(self):
         return [self.destination, self.departure_time, self.departure_return_time, self.airplane, self.pilot_list, self.attendant_list, self.seats_sold]
 
+    def get_creation_fields(self):
+        return [0, 1, 2, 3, 4, 5, 6]
+
     def get_updatable_fields(self):
         return [4,5,6]
 

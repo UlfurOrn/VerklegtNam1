@@ -116,14 +116,14 @@ class LogicLayer:
             return False
 
     def get_all(self):
-        return self.IO.load()
+        return self.IOAPI.load()
 
     def add(self, asset):
-        self.IO.add(asset)
+        self.IOAPI.add(asset)
         self.save()
 
     def save(self):
-        self.IO.save()
+        self.IOAPI.save()
 
     def load(self):
-        self.IO.load()
+        self.IOAPI.load()

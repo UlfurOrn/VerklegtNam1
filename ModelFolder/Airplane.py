@@ -20,6 +20,9 @@ class Airplane:
     def get_save_info(self):
         return [self.name, self.manufacturer, self.plane_type, self.seat_cap, self.time_table]
 
+    def get_creation_fields(self):
+        return [0, 1, 2, 3]
+
     def get_updatable_fields(self):
         return [0]
 

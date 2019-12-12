@@ -20,6 +20,9 @@ class Employee:
     def get_save_info(self):
         return [self.name, self.ssn, self.address, self.hphone, self.wphone, self.email, self.plane_type, self.job_type, self.time_table]
 
+    def get_creation_fields(self):
+        return [0, 1, 2, 3, 4, 5, 6, 7]
+
     def get_updatable_fields(self):
         return [2,3,4,5,6]
 
