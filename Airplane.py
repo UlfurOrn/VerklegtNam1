@@ -17,7 +17,6 @@ class Airplane:
     def get_print_info(self):
         return [self.name, self.manufacturer, self.plane_type, self.seat_cap]
 
-    
     def get_save_info(self):
         return [self.name, self.manufacturer, self.plane_type, self.seat_cap, self.time_table]
 
