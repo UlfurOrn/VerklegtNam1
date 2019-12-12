@@ -139,8 +139,8 @@ class Asset(Menu):
         return self.logic.total_pages() > 1
 
     def page_legend(self):
-        return "you are on page " + self.logic.current_page(
-        ) + " out of " + self.logic.total_pages() + " pages"
+        return "prev(a) " + self.logic.current_page(
+        ) + "/" + self.logic.total_pages() + " next(d)"
 
     def handle_input(self, user_input):
         self.current_page = self.logic.change_page(user_input, self.page_count, self.current_page)
