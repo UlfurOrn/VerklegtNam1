@@ -107,7 +107,6 @@ class MainMenu(Menu):
 
 class Asset(Menu):
     def __init__(self):
-        self.HUI = HelperUI()
         self.page_length = 9
         self.current_page = 1
 

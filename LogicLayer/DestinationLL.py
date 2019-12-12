@@ -1,19 +1,19 @@
-from DataLayer.IO import IO
+from DataLayer.IOAPI import IOAPI
 from ModelFolder.Destination import Destination
 from LogicLayer.LogicLayer import LogicLayer
 
 
 class DestinationLL(LogicLayer):
     def __init__(self):
-        self.IO = IO()
+        self.IOAPI = IOAPI()
         super().__init__()
 
     def get_all(self):
-        destination_list = self.IO.get_destinations()
+        destination_list = self.IOAPI.get_destinations()
         return sorted(destination_list, key=lambda k: k.country)
 
     def add_destination(self, destination):
-        self.IO.add_destination(destination)
+        self.IOAPI.add_destination(destination)
 
     def save_destinations(self):
-        self.IO.save_destinations()
+        self.IOAPI.save_destinations()

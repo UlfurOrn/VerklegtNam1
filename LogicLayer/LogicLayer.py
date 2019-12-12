@@ -1,5 +1,5 @@
 import datetime
-from DataLayer.IO import IO
+from DataLayer.IOAPI import IOAPI
 
 
 class LogicLayer:
@@ -72,7 +72,7 @@ class LogicLayer:
 
 			time_table_to_check = []
 			for voyage_id in asset_time_table:
-				voyage = self.IO.get_voyage_by_id(voyage_id)
+				voyage = self.IOAPI.get_voyage_by_id(voyage_id)
 				time_table_to_check.append([
 					self.text_to_datetime(voyage.departure_time,
 											voyage.departure_return_time)
@@ -114,14 +114,14 @@ class LogicLayer:
 			return False
 
 	def get_all(self):
-		return self.IO.load()
+		return self.IOAPI.load()
 
 	def add(self, asset):
-		self.IO.add(asset)
+		self.IOAPI.add(asset)
 		self.save()
 
 	def save(self):
-		self.IO.save()
+		self.IOAPI.save()
 
 	def load(self):
-		self.IO.load()
+		self.IOAPI.load()
