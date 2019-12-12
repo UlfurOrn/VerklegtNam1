@@ -7,6 +7,9 @@ class AirplaneIO:
         self.airplanes = {}
         self.load()
 
+    def get_all(self):
+        return list(self.airplanes.values())
+
     def get_by_id(self, item_id):
         return self.airplanes[item_id]
 

@@ -12,4 +12,4 @@ class AirplaneLL(LogicLayer):
         return sorted(plane_list, key=lambda k: k.info_dict["manufacturer"])
 
     def get_all(self):
-    	return IO.get_all_airplanes()
+    	return self.IO.get_airplanes()
