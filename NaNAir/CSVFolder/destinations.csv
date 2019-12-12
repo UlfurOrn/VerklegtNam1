@@ -1,0 +1,6 @@
+country,airport,abrev,flight_time,flight_dist,contact_name,contact_num
+Iceland,Keflavík,KEF,3,1000,Alfreð,9087655
+Norway,Oslo,NOR,"1,5",700,Magnus,8374839
+Greenland,Nuuk,NUU,1,300,Kuuli,123456789
+Sweden,Stockholm,SWE,3,1300,Sven,1823912789
+Finland,,,,,,
