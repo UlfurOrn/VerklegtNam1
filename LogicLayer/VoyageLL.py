@@ -6,6 +6,7 @@ class VoyageLL(LogicLayer):
 
     def __init__(self):
         self.IO = IO()
+        super().__init__()
 
     def get_voyage_info(self, voyage):
         return_value = str(voyage)
