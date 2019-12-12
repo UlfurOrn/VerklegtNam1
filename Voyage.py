@@ -1,6 +1,6 @@
 class Voyage:
 
-    def __init__(self, destination, departure_time, arrival_time, airplane, pilot_list, attendant_list, seats_sold):
+    def __init__(self, destination, departure_time, departure_return_time, airplane, pilot_list, attendant_list, seats_sold):
         self.destination = destination
         self.departure_time = departure_time
         self.arrival_time = arrival_time
@@ -39,7 +39,7 @@ class Voyage:
     def __str__ (self):
         total  = ""
         total+= "Time of Departure: "+departure_time+"\n"
-        total+= "Time of Arrival: "+arrival_time+"\n"
+        total+= "Time of return Departure: "+departure_return_time+"\n"
         total+= "pilot Count: "+str(len(pilot_list))+"\n"
         total+= "attendant Count"+str(len(attendant_list))+"\n"
         total+= "seats sold: "+str(seats_sold)+"\n"
