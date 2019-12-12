@@ -22,7 +22,7 @@ class LogicLayer:
 
 
 	def get_all(self):
-		return self.IO.get_all()
+		return self.IO.load()
 
 	def add(self, asset):
 		self.IO.add(asset)
