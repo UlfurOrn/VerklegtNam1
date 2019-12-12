@@ -19,6 +19,9 @@ class Destination:
 	def get_save_info(self):
 		return [self.country, self.airport, self.abrev, self.flight_time, self.flight_dist, self.contact_name, self.contact_num]
 
+	def get_updatable_fields(self):
+        return []
+
 	def update_info(self, new_info_list):
 		country, airport, abrev, flight_time, flight_dist, contact_name, contact_num = new_info_list
 		self.country = country
