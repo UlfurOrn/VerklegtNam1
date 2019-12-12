@@ -51,7 +51,7 @@ class Menu:
 
     def commands(self):
         raise NotImplementedError()
-        return Commander() # an example
+        return Commander()
 
     def has_list(self):
         return False
@@ -92,6 +92,10 @@ class Asset(Menu):
         self.current_page = 1
         self.page_count = 1 + (len(self.asset_list) // 9)
 
+    def __call__(self, sorting_method=0):
+        self.sorting_method = sorting_method
+        return self
+
     def commands(self, sorts=True):
         result = Commander(
             Command("c", "Create new " + self.asset, EditingMenu, self),
@@ -121,7 +125,8 @@ class Asset(Menu):
         return "you are on page " + self.logic.current_page() + " out of " + self.logic.total_pages() + " pages"
 
     def handle_input(self, user_input):
-        if user_input.isdigit():
+        if user_input.isdigit() and int(user_input) <= len(self.asset_list):
+            # pass the selected asset to the new editing menu
             return EditingMenu(self, self.asset_list[int(user_input) - 1])
         else:
             return super().handle_input(user_input)
@@ -150,9 +155,10 @@ class AirplaneMenu(Asset):
     def sorting_commands(self):
         return Commander(
             Command("1", "Find all Airplanes", self),
-            Command("2", "Sort by Manufacturer"),
-            Command("3", "Airplanes not in use"),
-            Command("4", "Airplanes in use"),
+            Command("2", "Sort by Manufacturer", self),
+            Command("3", "Airplanes not in use", self),
+            Command("4", "Airplanes in use", self),
+            Command("b", "Back to " + self.asset + " list", self),
         )
 
 
@@ -191,14 +197,13 @@ class EditingMenu(Asset):
 
     def commands(self):
         result = Commander(
-            Command("b", "Back to " + self.mother.asset + " list",
-                         self.mother),
+            Command("b", "Back to " + self.mother.asset + " list", self.mother),
         )
         return result
 
     def listing(self):
-        info_list = self.new_asset.get_print_info()
         header_list = self.new_asset.get_header()
+        info_list = self.new_asset.get_print_info()
         arrow_pos = [
             " <---" if self.current_index == pos else ""
             for pos in range(len(header_list))
@@ -213,15 +218,16 @@ class EditingMenu(Asset):
             self.new_asset.get_header()[self.current_index])
 
     def handle_input(self, user_input):
-        self.new_asset[self.new_asset.get_keys()[self.current_index]] = user_input
+        commanded = super().handle_input(user_input)
+        if commanded == None:
+            self.new_asset[self.new_asset.get_print_info()[self.current_index]] = user_input
+        else:
+            return commanded
 
 
 class SortingMenu(Menu):
     def __init__(self, mother):
         self.mother = mother
-
-    def has_list(self):
-        return False
 
     def title(self):
         return "Sorting " + self.mother.asset + "s"
