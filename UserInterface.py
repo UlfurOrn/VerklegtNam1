@@ -1,127 +1,271 @@
-from os import system
-from sys import platform
+from Destination import Destination
+from Employee import Employee
+from Airplane import Airplane
+from DestinationLL import DestinationLL
+from EmployeeLL import EmployeeLL
+from AirplaneLL import AirplaneLL
+from HelperUI import HelperUI
 
-from Airline import Airline
+
+class Command:
+    def __init__(self, character, description="", next_menu=None, arguments=None):
+        self.character = character
+        self.description = description
+        self.next_menu = next_menu
+        self.arguments = arguments
+
+    def __str__(self):
+        return "  " + self.character + ". " + self.description
+
+    def invoke(self):
+        return self.next_menu() if self.arguments is None else self.next_menu(self.arguments)
+
+class Commander:
+    def __init__(self, *commands):
+        self._commands = {}
+        for command in commands:
+            self._commands[command.character] = command
+
+    def __getitem__(self, key):
+        return self._commands[key]
+
+    def __iter__(self):
+        return iter(self._commands.values())
+
+    def add(self, command):
+        self._commands[command.character] = command
+
+    def has(self, key):
+        return self._commands.get(key, None)
+
+class State:
+    def __init__(self, title="", commands={}):
+        self.title = title
+        self.commands = commands
+
+
+class Menu:
+    def title(self):
+        raise NotImplementedError()
+        return ""
+
+    def commands(self):
+        raise NotImplementedError()
+        return Commander()
+
+    def has_list(self):
+        return False
+
+    def prompt(self):
+        return "Input Command: "
+
+    def commands_printable(self):
+        return "\n".join([str(e) for e in self.commands()])
+
+    def handle_input(self, user_input):
+        command = self.commands().has(user_input)
+        if command == None:
+            return self  # TODO: punish the user
+        else:
+            return command.invoke()
+
+
+class MainMenu(Menu):
+    def title(self):
+        return "Main menu"
+
+    def commands(self):
+        return Commander(
+            Command("1", "Employees", EmployeeMenu),
+            Command("2", "Airplanes", AirplaneMenu),
+            Command("3", "Destinations", DestinationMenu),
+            Command("4", "Voyages", VoyageMenu),
+            Command("q", "Quit the program"),
+        )
+
+
+class Asset(Menu):
+    def __init__(self):
+        self.HUI = HelperUI()
+        self.asset_list = self.logic.get_all()
+        self.page_length = 9
+        self.current_page = 1
+        self.page_count = 1 + (len(self.asset_list) // 9)
+
+    def __call__(self, sorting_method=0):
+        self.sorting_method = sorting_method
+        return self
+
+    def commands(self, sorts=True):
+        result = Commander(
+            Command("c", "Create new " + self.asset, EditingMenu, self),
+            Command("b", "Back to main menu", MainMenu),
+        )
+        if sorts:
+            result.add(Command("s", "Select sorting method", SortingMenu, self))
+        return result
+
+    def title(self):
+        return self.asset + " list"
+
+    def has_list(self):
+        return True
+
+    def listing(self):
+        return "\n".join([
+            "  {}: {}".format(1 + i, e)
+            for i, e in enumerate(self.asset_list)
+        ])
+
+    def needs_legend(self):
+        return False
+        return self.logic.is_paginated()
+
+    def page_legend(self):
+        return "you are on page " + self.logic.current_page() + " out of " + self.logic.total_pages() + " pages"
+
+    def handle_input(self, user_input):
+        if user_input.isdigit() and int(user_input) <= len(self.asset_list):
+            # pass the selected asset to the new editing menu
+            return EditingMenu(self, self.asset_list[int(user_input) - 1])
+        else:
+            return super().handle_input(user_input)
+
+
+class EmployeeMenu(Asset):
+    def __init__(self):
+        self.asset = "Employee"
+        self.logic = EmployeeLL()
+        super().__init__()
+
+    def new(self):
+        return Employee()
+
+
+class AirplaneMenu(Asset):
+    def __init__(self, sorting_method=0):
+        self.asset = "Airplane"
+        self.logic = AirplaneLL()
+        self.sorting_method = sorting_method
+        super().__init__()
+
+    def new(self):
+        return Airplane()
+
+    def sorting_commands(self):
+        return Commander(
+            Command("1", "Find all Airplanes", self),
+            Command("2", "Sort by Manufacturer", self),
+            Command("3", "Airplanes not in use", self),
+            Command("4", "Airplanes in use", self),
+            Command("b", "Back to " + self.asset + " list", self),
+        )
+
+
+class DestinationMenu(Asset):
+    def __init__(self):
+        self.asset = "Destination"
+        self.logic = DestinationLL()
+        super().__init__()
+
+    def commands(self):
+        return super().commands(False)
+
+    def new(self):
+        return Destination()
+
+
+class VoyageMenu(Asset):
+    def __init__(self):
+        self.asset = "Voyage"
+        self.logic = EmployeeLL()
+        super().__init__()
+
+    def commands(self):
+        return super().commands(False)
+
+
+class EditingMenu(Asset):
+    def __init__(self, mother, focused_asset=None):
+        self.mother = mother
+        self.new_asset = mother.new() if focused_asset is None else focused_asset
+        self._title = "New" if focused_asset is None else "Update"
+        self.current_index = 0
+
+    def title(self):
+        return self._title + " " + self.mother.asset
+
+    def commands(self):
+        result = Commander(
+            Command("b", "Back to " + self.mother.asset + " list", self.mother),
+        )
+        return result
+
+    def listing(self):
+        header_list = self.new_asset.get_header()
+        info_list = self.new_asset.get_print_info()
+        arrow_pos = [
+            " <---" if self.current_index == pos else ""
+            for pos in range(len(header_list))
+        ]
+        return "\n".join([
+            "{:>13}: {}{}".format(header, info, arrow)
+            for header, info, arrow in zip(header_list, info_list, arrow_pos)
+        ])
+
+    def prompt(self):
+        return "Enter {}: ".format(
+            self.new_asset.get_header()[self.current_index])
+
+    def handle_input(self, user_input):
+        commanded = super().handle_input(user_input)
+        if commanded == None:
+            self.new_asset[self.new_asset.get_print_info()[self.current_index]] = user_input
+        else:
+            return commanded
+
+
+class SortingMenu(Menu):
+    def __init__(self, mother):
+        self.mother = mother
+
+    def title(self):
+        return "Sorting " + self.mother.asset + "s"
+
+    def commands(self):
+        return self.mother.sorting_commands()
 
 
 class UserInterface:
     def __init__(self):
-        self.current_prompt = "hello: "
-        self.width = 30
-        self.airline = Airline()
-        # self.input_loop(self)
+        self.HUI = HelperUI()
+        self.menu = MainMenu()
+        self._separator_length = 1
 
-    def clear_screen(self):
-        if platform == "win32":
-            system("cls")
-        else:
-            system("clear")
+    def header(self):
+        fluff = "-" * 6
+        header = fluff + " " + self.menu.title() + " " + fluff
+        self._separator_length = len(header)
+        return header
 
-    # The main input loop
-    def input_loop(self):
-        user_input = input(self.current_prompt)
+    def separator(self):
+        return "-" * self._separator_length
 
-    def heading(self, title=""):
-        if len(title) + 2 > self.width:
-            print("Error: width is too small and title is too long")
-        fluff = "-" * ((self.width-len(title)) // 2)
-        return fluff + " " + title + " " + fluff
-
-    def main_menu(self):
+    def loop(self):
         while True:
-            print("\n" * 30)
-            print("-------- Main Menu --------")
-            print("      1. Employees")
-            print("      2. Destinations")
-            print("      3. Airplanes")
-            print("      4. Voyages")
-            print("---------------------------")
-            print("\n" * 5)
+            self.HUI.clear_screen()
+            print(self.header())
+            if self.menu.has_list():
+                print(self.menu.listing())
+                print(self.separator())
+            print(self.menu.commands_printable())
+            print(self.separator())
+            if self.menu.has_list() and self.menu.needs_legend():
+                print(self.menu.page_legend())
+                print(self.separator())
 
-            user_input = input("Enter command: ")
+            user_input = input(self.menu.prompt())
 
-            if user_input == "1":
-                self.list_employees(self.airline.get_all())
-            elif user_input == "2":
-                print("Destinations")
-            elif user_input == "3":
-                print("Airplanes")
-            elif user_input == "4":
-                print("Voyages")
-            elif user_input == "q":
-                break
-
-    def list_employees(self, employee_dict_list):
-        current_page = 1
-
-        num_pages = len(employee_dict_list) // 9 
-        if len(employee_dict_list) % 9 != 0:
-            num_pages += 1
-
-        while True: 
-            self.clear_screen()
-            print("------ Employee List ------")
-            for i in range(9):
-                try:
-                    print("   {}: {}".format(i + 1, employee_dict_list[(current_page - 1) * 9 + i]["name"]))
-                except IndexError:
-                    print("")
-            print("---------------------------")
-            print("  c. Create new Employee")
-            print("  s. Select Sorting method")
-            print("  q. Back to Main Menu")
-            print("---------------------------")
-            print("prev(a) Page: {:>2}/{:<2} next(d)".format(current_page, num_pages))
-            print("---------------------------")
-            print("\n" * 5)
-
-            user_input = input("Enter command: ")
-
-            if user_input == "d":
-                if current_page == num_pages:
-                    current_page = 1
-                else:
-                    current_page += 1
-
-            elif user_input == "a":
-                if current_page == 1:
-                    current_page = num_pages
-                else:
-                    current_page -= 1
-            
-            elif user_input.isdigit():
-                self.display_employee(employee_dict_list[(current_page - 1) * 9 + int(user_input) - 1])
-
-            elif user_input == "b":
-                return
-
-    def display_employee(self, employee_dict):
-        while True:
-            print("\n" * 30)
-            print("----- Display Employee -----")
-            for title, info in employee_dict.items():
-                print("{:>10}: {}".format(title, info))
-            print("----------------------------")
-            print("\n" * 5)
-
-            user_input = input("Enter command:")
-
-            if user_input == "b":
-                return
-
-    def display_assets(array, page_delimeter):
-        if len(array) % page_delimeter == 0:
-            page_amount = len(array)//page_delimeter
-        else:
-            page_amount = (len(array)//page_delimeter)+1
-        print(page_amount)
-
-
-ui = UserInterface()
-print(ui.heading("Main Menu", 30))
-print(ui.heading("hello", 20))
-# UserInterface.display_assets([1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,16,17,18],9)
-
-
-#ui = UserInterface()
-ui.main_menu()
+            self.menu = self.menu.handle_input(user_input)
+            if user_input == "q":
+                return  # we outa here
