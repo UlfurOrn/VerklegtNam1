@@ -6,7 +6,8 @@ from LogicLayer.DestinationLL import DestinationLL
 from LogicLayer.EmployeeLL import EmployeeLL
 from LogicLayer.AirplaneLL import AirplaneLL
 from LogicLayer.VoyageLL import VoyageLL
-from UILayer.HelperUI import HelperUI
+from sys import platform
+from os import system
 
 
 class Command:
@@ -289,7 +290,6 @@ class SortingMenu(Menu):
 
 class UserInterface:
     def __init__(self):
-        self.HUI = HelperUI()
         self.menu = MainMenu()
         self._separator_length = 1
 
@@ -299,12 +299,18 @@ class UserInterface:
         self._separator_length = len(header)
         return header
 
+    def clear_screen(self):
+        if platform == "win32":
+            system("cls")
+        else:
+            system("clear")
+
     def separator(self):
         return "-" * self._separator_length
 
     def loop(self):
         while True:
-            self.HUI.clear_screen()
+            self.clear_screen()
             print(self.header())
             if self.menu.has_list():
                 print(self.menu.listing())
