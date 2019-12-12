@@ -1,4 +1,4 @@
-from DataLayer.IO import IO
+from DataLayer.IOAPI import IOAPI
 from ModelFolder.Employee import Employee
 from LogicLayer.LogicLayer import LogicLayer
 
@@ -6,20 +6,20 @@ from LogicLayer.LogicLayer import LogicLayer
 class EmployeeLL(LogicLayer):
 
     def __init__(self):
-        self.IO = IO()
+        self.IOAPI = IOAPI()
         super().__init__()
 
     def get_pilots(self):
-        return self.IO.get_pilots()
+        return self.IOAPI.get_pilots()
 
     def get_attendants(self):
-        return self.IO.get_attendants()
+        return self.IOAPI.get_attendants()
 
     def get_all(self):
-        return self.IO.get_employees()
+        return self.IOAPI.get_employees()
 
     def add(self,employee):
-        self.IO.add_employee()
+        self.IOAPI.add_employee()
 
 
 

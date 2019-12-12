@@ -2,7 +2,7 @@ from UILayer.EmployeeUI import EmployeeUI
 from UILayer.DestinationUI import DestinationUI
 from UILayer.AirplaneUI import AirplaneUI
 
-class OtherUI:
+class OherUI:
 
     def __init__(self):
         self.EmployeeUI = EmployeeUI()

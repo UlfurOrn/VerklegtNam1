@@ -1,26 +1,26 @@
-from DataLayer.IO import IO
+from DataLayer.API import IOAPI
 from LogicLayer.LogicLayer import LogicLayer
 from ModelFolder.Voyage import Voyage
 
 class VoyageLL(LogicLayer):
 
     def __init__(self):
-        self.IO = IO()
+        self.IOAPI = IOAPI()
         super().__init__()
 
     def get_voyage_info(self, voyage):
         return_value = str(voyage)
-        destination = IO.get_destination_by_id(voyage.destination)
-        airplane = IO.get_airplane_by_id(voyage.airplane)
-        return_value+= "destination: "+destination.country+"\n"
+        destination = IOAPI.get_destination_by_id(voyage.destination)
+        airplane = IOAPI.get_airplane_by_id(voyage.airplane)
+        return_value += "destination: "+destination.country+"\n"
         return return_value
 
     def get_employees_in_voyage(self, voyage):
         return_array = []
         for i in voyage.pilots:
-            return_array.append(self.IO.get_employee_by_id(i))
+            return_array.append(self.IOAPI.get_employee_by_id(i))
         for i in voyage.attendants:
-    	    return_array.append(self.IO.get_employee_by_id(i))
+    	    return_array.append(self.IOAPI.get_employee_by_id(i))
         return return_array
 
     def add_employee_to_voyage(self, voyage, employee):
@@ -39,4 +39,4 @@ class VoyageLL(LogicLayer):
     	voyage.airplane = airplane.id
 
     def get_all(self):
-    	return self.IO.get_voyages()	
+    	return self.IOAPI.get_voyages()	
