@@ -23,6 +23,9 @@ class Command:
     def __str__(self):
         return "  " + self.character + ". " + self.description
 
+    def __call__(self):
+        return self.invoke()
+
     def is_none(self):
         return self._command == None
 
@@ -32,9 +35,9 @@ class Command:
 
 
 class Commander:
-    def __init__(self, *commands):
+    def __init__(self, *commander):
         self._commands = {}
-        for command in commands:
+        for command in commander:
             self._commands[command.character] = command
 
     def __getitem__(self, key):
@@ -55,7 +58,7 @@ class Menu:
         raise NotImplementedError()
         return ""
 
-    def commands(self):
+    def commander(self):
         raise NotImplementedError()
         return Commander()
 
@@ -72,21 +75,24 @@ class Menu:
         return False
 
     def commands_printable(self):
-        return "\n".join([str(e) for e in self.commands()])
+        return "\n".join([str(e) for e in self.commander()])
 
-    def handle_input(self, user_input):
-        command = self.commands().has(user_input)
+    def _invoke_comand(self, user_input):
+        command = self.commander().has(user_input)
         if command == None or command.is_none():
             return self  # TODO: punish the user
         else:
             return command.invoke()
+
+    def handle_input(self, user_input):
+        return self._invoke_comand(user_input)
 
 
 class MainMenu(Menu):
     def title(self):
         return "Main menu"
 
-    def commands(self):
+    def commander(self):
         return Commander(
             Command("1", "Employees", EmployeeMenu),
             Command("2", "Airplanes", AirplaneMenu),
@@ -108,7 +114,7 @@ class Asset(Menu):
         self.sorting_method = sorting_method
         return self
 
-    def commands(self, sorts=True):
+    def commander(self, sorts=True):
         result = Commander(
             Command("c", "Create new " + self.asset, EditingMenu, self),
             Command("b", "Back to main menu", MainMenu),
@@ -144,7 +150,7 @@ class Asset(Menu):
             # pass the selected asset to the new editing menu
             return EditingMenu(self, self.asset_list[int(user_input) - 1])
         else:
-            return super().handle_input(user_input)
+            return self._invoke_comand(user_input)
 
 
 
@@ -184,8 +190,8 @@ class DestinationMenu(Asset):
         self.logic = DestinationLL()
         super().__init__()
 
-    def commands(self):
-        return super().commands(False)
+    def commander(self):
+        return super().commander(False)
 
     def new(self):
         return Destination()
@@ -197,8 +203,8 @@ class VoyageMenu(Asset):
         self.logic = VoyageLL()
         super().__init__()
 
-    def commands(self):
-        return super().commands(False)
+    def commander(self):
+        return super().commander(False)
 
     def new(self):
         return Voyage()
@@ -218,18 +224,18 @@ class EditingMenu(Menu):
     def title(self):
         return self._title + " " + self.mother.asset
 
-    def commands(self):
-        commander = Commander(
+    def commander(self):
+        result = Commander(
             Command(
                 "b", "Back to " + self.mother.asset +
                 " list and discard all changes", self.mother),
             Command("c", "Confirm changes", self._confirm),
         )
         if self._valid_index() != self.updatable_fields[0]:
-            commander.add(Command("w", "Previous field", self._with_shifted_field(-1)), )
+            result.add(Command("w", "Previous field", lambda: self._with_shifted_field(-1)))
         if self._valid_index() != self.updatable_fields[-1]:
-            commander.add(Command("s", "Next field", self._with_shifted_field(1)), )
-        return commander
+            result.add(Command("s", "Next field", lambda: self._with_shifted_field(1)))
+        return result
 
     def has_list(self):
         return True
@@ -251,16 +257,12 @@ class EditingMenu(Menu):
             self.new_asset.get_header()[self.current_index])
 
     def handle_input(self, user_input):
-        commanded = super().handle_input(user_input)
-        if commanded == self:
+        command = self.commander().has(user_input)
+        if command == None:
             self.asset_fields[self._valid_index()] = user_input
-            self.current_index += 1
-            print(self.current_index)
-            if self.current_index >= len(self.updatable_fields):
-                self.current_index = 0
+            self._with_shifted_field(1)
             return self
-        else:
-            return commanded
+        return command.invoke()
 
     def _confirm(self):
         self.new_asset.update_info(self.asset_fields)
@@ -268,7 +270,7 @@ class EditingMenu(Menu):
 
     def _with_shifted_field(self, change):
         self.current_index = (self.current_index + change) % len(self.updatable_fields)
-        return lambda: self
+        return self
 
 class SortingMenu(Menu):
     def __init__(self, mother):
@@ -277,7 +279,7 @@ class SortingMenu(Menu):
     def title(self):
         return "Sorting " + self.mother.asset + "s"
 
-    def commands(self):
+    def commander(self):
         return self.mother.sorting_commands()
 
 
