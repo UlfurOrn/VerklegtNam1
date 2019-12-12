@@ -9,7 +9,7 @@ class DestinationLL(LogicLayer):
     
 
     def get_all(self):
-        destination_list = self.IO.get_all_destinations()
+        destination_list = self.IO.get_destinations()
         return sorted(destination_list, key=lambda k: k.country)
 
     
