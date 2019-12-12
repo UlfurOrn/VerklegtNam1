@@ -24,11 +24,12 @@ class EmployeeLL(LogicLayer):
     def add(self,employee):
         self.IOAPI.add_employee()
 
-    def is_unique_ssn(self, ssn):
+    def is_unique_ssn(self, new_ssn):
         employee_list = self.get_all()
 
         for employee in employee_list:
-
+            if employee.ssn == new_ssn:
+                return False
         return True
 
 
@@ -38,7 +39,7 @@ class EmployeeLL(LogicLayer):
             return self.is_only_letters(new_input) and new_input != ""
         
         elif field_index == 1:
-            if new_input.isdigit() and is_unique_ssn(new_input) and new_input != "":
+            if new_input.isdigit() and self.is_unique_ssn(new_input) and new_input != "":
                 return True
             else:
                 return False
