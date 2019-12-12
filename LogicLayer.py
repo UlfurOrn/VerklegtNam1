@@ -65,6 +65,13 @@ class LogicLayer:
 					return False
 		else:
 			return True
+
+	def is_only_numbers(self, string):
+		for c in string:
+			if not c.isdigit():
+				return False
+		else:
+			return True
 					
 
 
