@@ -200,7 +200,7 @@ class EditingMenu(Menu):
         ) if focused_asset is None else focused_asset
         self.asset_fields = self.new_asset.get_print_info()
         self._title = "New" if focused_asset is None else "Update"
-        self.valid_indices = self.new_asset.get_updateable_fields()
+        self.valid_indices = self.new_asset.get_updatable_fields()
         self.current_index = 0
         self.confirming = False
 
@@ -212,8 +212,10 @@ class EditingMenu(Menu):
             return Commander()
         else:
             return Commander(
-                Command("b", "Back to " + self.mother.asset + " list",
-                        self.mother), )
+                Command("-b", "Back to " + self.mother.asset + " list", self.mother),
+                Command("-w", "Previous field", self),
+                Command("-s", "Next field", self),
+            )
 
     def has_list(self):
         return True
