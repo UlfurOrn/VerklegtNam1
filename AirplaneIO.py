@@ -5,14 +5,18 @@ from Airplane import Airplane
 class AirplaneIO:
     def __init__(self):
         self.airplanes = {}
+        self.load()
 
     def get_all(self):
         return self.load_airplanes()
 
+    def get_by_id(self, item_id):
+        return self.airplanes[item_id]
+
     def add(self, airplane):
         self.airplanes[airplane.ID] = airplane
 
-    def save_airplanes(self):
+    def save(self):
         with open("CSVFolder/airplanes.csv", "w",
                   encoding="utf8") as airplane_file:
             csv_writer = csv.writer(airplane_file)
@@ -20,7 +24,7 @@ class AirplaneIO:
             for airplane in list(self.airplanes.values()):
                 csv_writer.writerow(airplane.get_save_info())
 
-    def load_airplanes(self):
+    def load(self):
         if self.airplanes == {}:
 
             with open("CSVFolder/airplanes.csv", "r",

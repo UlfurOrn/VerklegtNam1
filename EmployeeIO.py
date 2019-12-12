@@ -11,6 +11,9 @@ class EmployeeIO:
     def get_all(self):
         return self.load()
 
+    def get_by_id(self, item_id):
+        return self.employees[item_id]
+
     def add(self, employee):
         self.employees[employee.ssn] = employee
         if(employee.job_type == "Captain" and employee.job_type == "Co Pilot"):

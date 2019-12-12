@@ -5,9 +5,13 @@ from Destination import Destination
 class DestinationIO:
     def __init__(self):
         self.destinations = {}
+        self.load()
 
     def get_all(self):
         return self.load()
+
+    def get_by_id(self, item_id):
+        return self.destinations[item_id]
 
     def add(self, destination):
         self.destinations[destination.abrev] = destination

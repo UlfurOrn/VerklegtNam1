@@ -8,5 +8,5 @@ class AirplaneLL(LogicLayer):
         self.IO = AirplaneIO()
 
     def get_manufacturer(self):
-        plane_list = self.get_all()
+        plane_list = self.IO.get_all_airplanes()
         return sorted(plane_list, key=lambda k: k.info_dict["manufacturer"])
