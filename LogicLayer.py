@@ -73,6 +73,13 @@ class LogicLayer:
 		else:
 			return True
 					
+	
+	def is_date_format(self, string):
+		try:
+			datetime.datetime.strptime(string, "‰d/%m/%Y %H:%M")
+			return True
+		except ValueError:
+			return False
 
 
 
