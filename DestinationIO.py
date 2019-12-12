@@ -21,7 +21,7 @@ class DestinationIO:
                   encoding="utf8") as destination_file:
             csv_writer = csv.writer(destination_file)
 
-            for destination in self.destination_list:
+            for destination in list(self.destinations.values()):
                 csv_writer.writerow(destination.get_save_info())
 
     def load(self):
