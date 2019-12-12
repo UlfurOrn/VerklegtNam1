@@ -170,6 +170,15 @@ class EmployeeMenu(Asset):
     def new(self):
         return Employee()
 
+    def sorting_commands(self):
+        return Commander(
+            Command("1", "List all employees", self, AirplaneSortingMethods.ALL_AIRPLANES),
+            Command("2", "List all pilots", self, AirplaneSortingMethods.ONLY_NOT_IN_USE),
+            Command("3", "List all assistants", self, AirplaneSortingMethods.ONLY_IN_USE),
+            Command("4", "Sort by name", self, AirplaneSortingMethods.BY_MANUFACTURER),
+            Command("b", "Back to " + self.asset + " list", self),
+        )
+
 
 class AirplaneMenu(Asset):
     def __init__(self, sorting_method=0):
@@ -220,7 +229,7 @@ class VoyageMenu(Asset):
 class EditingMenu(Menu):
     def __init__(self, mother):
         self.mother = mother
-        self.asset_fields = self.new_asset.get_print_info()
+        self.asset_fields = self.focused_asset.get_print_info()
         self.current_index = 0
         self.confirming = False
 
@@ -247,7 +256,7 @@ class EditingMenu(Menu):
         return self.editable_fields[self.current_index]
 
     def listing(self):
-        header_list = self.new_asset.get_header()
+        header_list = self.focused_asset.get_header()
         return "\n".join([
             "{:>13}: {}{}".format(header, info,
                                   " <---" if i == self._valid_index() else "")
@@ -257,18 +266,21 @@ class EditingMenu(Menu):
 
     def prompt(self):
         return "Enter {}: ".format(
-            self.new_asset.get_header()[self.current_index])
+            self.focused_asset.get_header()[self.current_index])
 
     def handle_input(self, user_input):
         command = self.commander().has(user_input)
         if command == None:
+            # self.mother.logic.is_valid_input(self._valid_index(), user_input)
             self.asset_fields[self._valid_index()] = user_input
             self._with_shifted_field(1)
             return self
         return command.invoke()
 
     def _confirm(self):
-        self.new_asset.update_info(self.asset_fields)
+        self.focused_asset.update_info(self.asset_fields)
+        self.mother.logic.add(self.focused_asset)
+        self.mother.logic.set_final_page()
         return self.mother
 
     def _with_shifted_field(self, change):
@@ -277,17 +289,17 @@ class EditingMenu(Menu):
 
 class UpdateMenu(EditingMenu):
     def __init__(self, mother, focused_asset):
-        self.new_asset = focused_asset
+        self.focused_asset = focused_asset
         self._title = "Update"
-        self.editable_fields = self.new_asset.get_updatable_fields()
+        self.editable_fields = self.focused_asset.get_updatable_fields()
         super().__init__(mother)
 
 
 class CreationMenu(EditingMenu):
     def __init__(self, mother):
-        self.new_asset = mother.new()
+        self.focused_asset = mother.new()
         self._title = "New"
-        self.editable_fields = self.new_asset.get_creation_fields()
+        self.editable_fields = self.focused_asset.get_creation_fields()
         super().__init__(mother)
 
 class SortingMenu(Menu):

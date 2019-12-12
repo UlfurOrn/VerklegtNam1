@@ -9,10 +9,8 @@ class Airplane:
         self.ID = Airplane.ID
         Airplane.ID+=1
 
-
     def get_header(self):
         return ["Name" ,"Manufacturer", "Plane Type", "Seat Capacity"]
-
 
     def get_print_info(self):
         return [self.name, self.manufacturer, self.plane_type, self.seat_cap]

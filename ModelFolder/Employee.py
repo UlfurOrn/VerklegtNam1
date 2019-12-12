@@ -1,6 +1,14 @@
 class Employee:
-
-    def __init__(self, name="", ssn="", address="", hphone="", wphone="", email="", plane_type="", job_type="", time_table=[]):
+    def __init__(self,
+                 name="",
+                 ssn="",
+                 address="",
+                 hphone="",
+                 wphone="",
+                 email="",
+                 plane_type="",
+                 job_type="",
+                 time_table=[]):
         self.name = name
         self.ssn = ssn
         self.address = address
@@ -12,19 +20,28 @@ class Employee:
         self.time_table = time_table
 
     def get_header(self):
-        return ["Name", "Social Num", "Address", "Home Phone", "Work Phone", "Email", "Plane Auth", "Job Title"]
+        return [
+            "Name", "Social Num", "Address", "Home Phone", "Work Phone",
+            "Email", "Plane Auth", "Job Title"
+        ]
 
     def get_print_info(self):
-        return [self.name, self.ssn, self.address, self.hphone, self.wphone, self.email, self.plane_type, self.job_type]
+        return [
+            self.name, self.ssn, self.address, self.hphone, self.wphone,
+            self.email, self.plane_type, self.job_type
+        ]
 
     def get_save_info(self):
-        return [self.name, self.ssn, self.address, self.hphone, self.wphone, self.email, self.plane_type, self.job_type, self.time_table]
+        return [
+            self.name, self.ssn, self.address, self.hphone, self.wphone,
+            self.email, self.plane_type, self.job_type, self.time_table
+        ]
 
     def get_creation_fields(self):
         return [0, 1, 2, 3, 4, 5, 6, 7]
 
     def get_updatable_fields(self):
-        return [2,3,4,5,6]
+        return [2, 3, 4, 5, 6]
 
     def update_info(self, new_info_list):
         name, ssn, address, hphone, wphone, email, plane_type, job_type = new_info_list
