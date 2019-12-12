@@ -19,7 +19,7 @@ class Voyage:
         return [self.destination, self.departure_time, self.departure_return_time, self.airplane, self.pilot_list, self.attendant_list, self.seats_sold]
 
     def get_updatable_fields(self):
-        return [6,7,8]
+        return [4,5,6]
 
     def update_info(self, new_info_list):
         destination, departure_time, departure_return_time, airplane, pilot_list, attendant_list, seats_sold = new_info_list
