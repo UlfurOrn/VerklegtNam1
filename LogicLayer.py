@@ -81,6 +81,13 @@ class LogicLayer:
 		except ValueError:
 			return False
 
+	"hh:mm"
+	def is_time_format(self, string):
+		try:
+			datetime.datetime.striptime(string, "%H:%M")
+			return True
+		except ValueError:
+			return False
 
 
 	def get_all(self):
