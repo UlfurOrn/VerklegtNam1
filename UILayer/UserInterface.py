@@ -132,15 +132,15 @@ class Asset(Menu):
 
     def listing(self):
         return "\n".join([
-            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.logic.get_page( self.current_page, self.page_length))
+            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.logic.get_page(self.page_length))
         ])
 
     def needs_legend(self):
         return self.logic.total_pages() > 1
 
     def page_legend(self):
-        return "prev(a) " + self.logic.current_page(
-        ) + "/" + self.logic.total_pages() + " next(d)"
+        return "  prev(a) " + str( self.logic.get_current_page(
+        ) ) + "/" + str(self.logic.total_pages()) + " next(d)"
 
     def handle_input(self, user_input):
         self.current_page = self.logic.change_page(user_input, self.page_count, self.current_page)

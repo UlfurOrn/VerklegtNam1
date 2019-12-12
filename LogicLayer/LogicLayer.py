@@ -3,34 +3,39 @@ from DataLayer.IO import IO
 
 
 class LogicLayer:
-    def get_page(self, current_page, page_delimiter=9):
-        asset_list = self.get_all()
-        return_value = asset_list[(current_page - 1) *
-                                  page_delimiter:current_page * page_delimiter]
+    def __init__(self):
+        self.asset_list = self.get_all()
+        self._current_page = 1
+
+    def get_page(self, page_delimiter=9):
+        return_value = self.asset_list[(self._current_page - 1) *
+                                  page_delimiter:self._current_page * page_delimiter]
         return_value += [""] * (page_delimiter - len(return_value))
         return return_value
 
     def total_pages(self, page_delimiter=9):
-        asset_list = self.get_all()
-        num_pages = len(asset_list) // page_delimiter
+        num_pages = len(self.asset_list) // page_delimiter
         if num_pages % page_delimiter != 0:
             num_pages += 1
         if num_pages == 0:
             num_pages += 1
         return num_pages
 
-    def change_page(self, user_input, num_pages, current_page):
+    def get_current_page(self):
+        return self._current_page
+
+    def change_page(self, user_input, num_pages, _current_page):
         if user_input == "a":
-            if current_page == 1:
-                current_page = num_pages
+            if _current_page == 1:
+                _current_page = num_pages
             else:
-                current_page -= 1
+                _current_page -= 1
         elif user_input == "d":
-            if current_page == num_pages:
-                current_page = 1
+            if _current_page == num_pages:
+                _current_page = 1
             else:
-                current_page += 1
-        return current_page
+                _current_page += 1
+        return _current_page
 
     def check_time_table(self, time_table, departure_time, arrival_time):
         DEPARTURE = 0
@@ -54,13 +59,13 @@ class LogicLayer:
         arrival_time = datetime.datetime(arrival_str)
         return departure_time, arrival_time
 
-    def get_available(self, asset_list, departure_str, arrival_str):
+    def get_available(self, departure_str, arrival_str):
         departure_time, arrival_time = self.text_to_datetime(
             departure_str, arrival_str)
 
         return_list = []
 
-        for asset in asset_list:
+        for asset in self.asset_list:
             asset_time_table = asset.time_table
 
             time_table_to_check = []

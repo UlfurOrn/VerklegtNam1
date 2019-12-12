@@ -7,6 +7,7 @@ class EmployeeLL(LogicLayer):
 
     def __init__(self):
         self.IO = IO()
+        super().__init__()
 
     def get_pilots(self):
         return self.IO.get_pilots()
