@@ -14,11 +14,50 @@ class LogicLayer:
 		if num_pages == 0:
 			num_pages += 1
 		return num_pages
+
+	
+	def check_time_table(self, time_table, departure_time, arrival_time):
+		DEPARTURE = 0
+		ARRIVAL = 1
+
+		if len(time_table) == 0:
+			return True
+		if time_table[0][DEPARTURE] > arrival_time:
+			return True
+		if time_table[-1][ARRIVAL] < departure_time:
+			return True
+		for i in range(len(time_table)):
+			if time_table[i + 1][DEPARTURE] > arrival_time:
+				if time_table[i][ARRIVAL] < departure_time:
+					return True
+				else:
+					return False
 	
 	def text_to_datetime(self, departure_str, arrival_str):
 		departure_time = datetime.datetime(departure_str)
 		arrival_time = datetime.datetime(arrival_str)
 		return departure_time, arrival_time
+	
+
+	def get_available(self, departure_str, arrival_str):
+		departure_time, arrival_time = self.text_to_datetime(departure_str, arrival_str)
+		asset_list = self.IO.load_assets()
+
+		return_list = []
+
+		for asset in asset_list:
+			asset_time_table = asset.time_table
+
+			time_table_to_check = []
+			for voyage_id in asset_time_table:
+				voyage = self.IO.get_voyage_by_id(voyage_id)
+				time_table_to_check.append([self.text_to_datetime(voyage.departure_time, voyage.arrival_time)])
+
+				if self.check_time_table(time_table_to_check, departure_time, arrival_time):
+					return_list.append(asset)
+		
+		return return_list
+
 
 
 	def get_all(self):
