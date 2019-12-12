@@ -108,7 +108,7 @@ class Asset(Menu):
         self.asset_list = self.logic.get_all()
         self.page_length = 9
         self.current_page = 1
-        self.page_count = self.logic.total_pages(self.asset_list, self.page_length)
+        self.page_count = self.logic.total_pages(self.page_length)
 
     def __call__(self, sorting_method=0):
         self.sorting_method = sorting_method
@@ -132,12 +132,11 @@ class Asset(Menu):
 
     def listing(self):
         return "\n".join([
-            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.logic.get_page(self.asset_list, self.current_page, self.page_length))
+            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.logic.get_page( self.current_page, self.page_length))
         ])
 
     def needs_legend(self):
-        return False
-        return self.logic.is_paginated()
+        return self.logic.total_pages() > 1
 
     def page_legend(self):
         return "you are on page " + self.logic.current_page(
