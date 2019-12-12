@@ -1,4 +1,4 @@
-from DataLayer.API import IOAPI
+from DataLayer.IOAPI import IOAPI
 from LogicLayer.LogicLayer import LogicLayer
 from ModelFolder.Voyage import Voyage
 
