@@ -5,13 +5,13 @@ from DataLayer.IO import IO
 class LogicLayer:
 	def __init__(self):
 		self.asset_list = self.get_all()
-		self._current_page = 1
+		self._current_page = 0
 		self.total_pages = self._total_pages()
 
 
 
 	def get_page(self, page_delimiter=9):
-		return self.asset_list[(self._current_page - 1) * page_delimiter:self._current_page * page_delimiter]
+		return self.asset_list[self._current_page * page_delimiter:(self._current_page + 1) * page_delimiter]
 
 	def get_page_to_print(self, page_delimiter=9):
 		page_to_print = self.get_page()
@@ -22,12 +22,10 @@ class LogicLayer:
 		num_pages = len(self.asset_list) // page_delimiter
 		if num_pages % page_delimiter != 0:
 			num_pages += 1
-		if num_pages == 0:
-			num_pages += 1
 		return num_pages
 
 	def get_current_page(self):
-		return self._current_page
+		return self._current_page + 1
 
 	def current_page_size(self, page_delimiter=9):
 		return len(self.get_page())

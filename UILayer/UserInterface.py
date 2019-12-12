@@ -117,6 +117,7 @@ class Asset(Menu):
     def commander(self, sorts=True):
         result = Commander(
             Command("c", "Create new " + self.asset, EditingMenu, self),
+            Command("R", "previous page", self._change_page(-1)),
             Command("b", "Back to main menu", MainMenu),
         )
         if sorts:
@@ -139,10 +140,10 @@ class Asset(Menu):
         ])
 
     def needs_legend(self):
-        return self.logic.total_pages() > 1
+        return self.logic.total_pages > 1
 
     def page_legend(self):
-        return "  prev(a) {:>2}/{} next(d)".format(self.logic.get_current_page(), self.logic.total_pages())
+        return "  prev(a) {:>2}/{} next(d)".format(self.logic.get_current_page(), self.logic.total_pages)
 
     def _change_page(self, shift):
         self.logic.change_page(shift)
