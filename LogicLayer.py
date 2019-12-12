@@ -1,3 +1,5 @@
+import datetime
+
 class LogicLayer:
 
 	def get_page(self,asset_list,current_page,page_delimiter = 9):
@@ -12,6 +14,11 @@ class LogicLayer:
 		if num_pages == 0:
 			num_pages += 1
 		return num_pages
+	
+	def text_to_datetime(self, departure_str, arrival_str):
+		departure_time = datetime.datetime(departure_str)
+		arrival_time = datetime.datetime(arrival_str)
+		return departure_time, arrival_time
 
 
 	def get_all(self):
