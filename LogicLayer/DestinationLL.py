@@ -1,6 +1,6 @@
 from DataLayer.IO import IO
 from ModelFolder.Destination import Destination
-from LogicLayersLogicLayer import LogicLayer
+from LogicLayer.LogicLayer import LogicLayer
 
 
 class DestinationLL(LogicLayer):

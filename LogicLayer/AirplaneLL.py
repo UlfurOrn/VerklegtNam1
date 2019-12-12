@@ -1,11 +1,11 @@
 from DataLayer.IO import IO
 from ModelFolder.Airplane import Airplane
-from LogicLayer import LogicLayer
+from LogicLayer.LogicLayer import LogicLayer
 
 class AirplaneLL(LogicLayer):
 
     def __init__(self):
-        self.IO = AirplaneIO()
+        self.IO = IO()
 
     def get_manufacturer(self):
         plane_list = self.IO.get_all_airplanes()

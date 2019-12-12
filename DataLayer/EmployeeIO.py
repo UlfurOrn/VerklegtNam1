@@ -1,5 +1,5 @@
 import csv
-from Employee import Employee
+from ModelFolder.Employee import Employee
 
 
 class EmployeeIO:
