@@ -3,7 +3,7 @@ class Voyage:
     def __init__(self, destination, departure_time, departure_return_time, airplane, pilot_list, attendant_list, seats_sold):
         self.destination = destination
         self.departure_time = departure_time
-        self.arrival_time = arrival_time
+        self.departure_return_time = departure_return_time
         self.airplane = airplane
         self.pilot_list = pilot_list
         self.attendant_list = attendant_list
@@ -13,16 +13,19 @@ class Voyage:
         return ["Destination", "Departure", "Arrival", "Airplane", "Pilots", "Attendants", "Seats Sold"]
 
     def get_print_info(self):
-        return [self.destination, self.departure_time, self.arrival_time, self.airplane, self.pilot_list, self.attendant_list, self.seats_sold]
+        return [self.destination, self.departure_time, self.departure_return_time, self.airplane, self.pilot_list, self.attendant_list, self.seats_sold]
 
     def get_save_info(self):
-        return [self.destination, self.departure_time, self.arrival_time, self.airplane, self.pilot_list, self.attendant_list, self.seats_sold]
+        return [self.destination, self.departure_time, self.departure_return_time, self.airplane, self.pilot_list, self.attendant_list, self.seats_sold]
+
+    def get_updatable_fields(self):
+        return [6,7,8]
 
     def update_info(self, new_info_list):
-        destination, departure_time, arrival_time, airplane, pilot_list, attendant_list, seats_sold = new_info_list
+        destination, departure_time, departure_return_time, airplane, pilot_list, attendant_list, seats_sold = new_info_list
         self.destination = destination
         self.departure_time = departure_time
-        self.arrival_time = arrival_time
+        self.departure_return_time = departure_return_time
         self.airplane = airplane
         self.pilot_list = pilot_list
         self.attendant_list = attendant_list
