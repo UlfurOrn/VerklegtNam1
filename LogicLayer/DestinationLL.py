@@ -6,6 +6,7 @@ from LogicLayer.LogicLayer import LogicLayer
 class DestinationLL(LogicLayer):
     def __init__(self):
         self.IO = IO()
+        super().__init__()
 
     def get_all(self):
         destination_list = self.IO.get_destinations()
