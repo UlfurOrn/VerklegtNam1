@@ -4,7 +4,6 @@ from LogicLayer.LogicLayer import LogicLayer
 
 
 class EmployeeLL(LogicLayer):
-
     def __init__(self):
         self.IOAPI = IOAPI()
         super().__init__()
@@ -21,44 +20,25 @@ class EmployeeLL(LogicLayer):
     def get_by_id(self):
         return "To Do"
 
-    def add(self,employee):
+    def add(self, employee):
         self.IOAPI.add_employee()
 
     def is_unique_ssn(self, ssn):
         employee_list = self.get_all()
 
         for employee in employee_list:
-
+            pass
         return True
-
-
 
     def is_valid_input(self, field_index, new_input):
         if field_index == 0:
             return self.is_only_letters(new_input) and new_input != ""
-        
         elif field_index == 1:
-            if new_input.isdigit() and is_unique_ssn(new_input) and new_input != "":
-                return True
-            else:
-                return False
-        
+            return new_input.isdigit() and is_unique_ssn(
+                new_input) and new_input != ""
         elif field_index == 6:
-            if new_input != "":
-                return True
-            else:
-                return False
-        
+            return new_input != ""
         elif field_index == 7:
-            if new_input != "":
-                return True
-            else:
-                return False
-        
+            return new_input != ""
         else:
             return True
-        
-
-
-
-
