@@ -57,6 +57,16 @@ class LogicLayer:
 		
 		return return_list
 
+	
+	def is_only_letters(self, string):
+		for c in string.strip():
+			if c != " ":
+				if not c.isalpha():
+					return False
+		else:
+			return True
+					
+
 
 
 	def get_all(self):
