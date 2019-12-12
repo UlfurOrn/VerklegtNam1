@@ -23,7 +23,7 @@ class VoyageIO:
                   encoding="utf8") as voyage_file:
             csv_writer = csv.writer(voyage_file)
 
-            for voyage in self.voyages:
+            for voyage in list(self.voyages.values()):
                 csv_writer.writerow(voyage.get_save_info())
 
     def load(self):
