@@ -14,11 +14,13 @@ class Command:
                  character,
                  description="",
                  command=None,
-                 arguments=None):
+                 arguments=None,
+                 show=True):
         self.character = character
         self.description = description
         self._command = command
         self.arguments = arguments
+        self.show = show
 
     def __str__(self):
         return "  " + self.character + ". " + self.description
@@ -44,7 +46,7 @@ class Commander:
         return self._commands[key]
 
     def __iter__(self):
-        return iter(self._commands.values())
+        return filter(lambda c: c.show, iter(self._commands.values()))
 
     def add(self, command):
         self._commands[command.character] = command
@@ -120,6 +122,9 @@ class Asset(Menu):
         if sorts:
             result.add(Command("s", "Select sorting method", SortingMenu,
                                self))
+        if self.needs_legend():
+            result.add(Command("a", "previous page", self._change_page(-1), show=False))
+            result.add(Command("d", "next page", self._change_page(1), show=False))
         return result
 
     def title(self):
@@ -139,6 +144,10 @@ class Asset(Menu):
     def page_legend(self):
         return "  prev(a) " + str( self.logic.get_current_page(
         ) ) + "/" + str(self.logic.total_pages()) + " next(d)"
+
+    def _change_page(self, shift):
+        self.logic.change_page(shift)
+        return self
 
     def handle_input(self, user_input):
         if user_input.isdigit() and int(user_input) <= len(self.logic.current_page_size()):
