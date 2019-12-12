@@ -8,7 +8,11 @@ from HelperUI import HelperUI
 
 
 class Command:
-    def __init__(self, character, description="", command=None, arguments=None):
+    def __init__(self,
+                 character,
+                 description="",
+                 command=None,
+                 arguments=None):
         self.character = character
         self.description = description
         self._command = command
@@ -21,7 +25,9 @@ class Command:
         return self._command == None
 
     def invoke(self):
-        return self._command() if self.arguments is None else self._command(self.arguments)
+        return self._command() if self.arguments is None else self._command(
+            self.arguments)
+
 
 class Commander:
     def __init__(self, *commands):
@@ -103,7 +109,8 @@ class Asset(Menu):
             Command("b", "Back to main menu", MainMenu),
         )
         if sorts:
-            result.add(Command("s", "Select sorting method", SortingMenu, self))
+            result.add(Command("s", "Select sorting method", SortingMenu,
+                               self))
         return result
 
     def title(self):
@@ -114,8 +121,7 @@ class Asset(Menu):
 
     def listing(self):
         return "\n".join([
-            "  {}: {}".format(1 + i, e)
-            for i, e in enumerate(self.asset_list)
+            "  {}: {}".format(1 + i, e) for i, e in enumerate(self.asset_list)
         ])
 
     def needs_legend(self):
@@ -123,7 +129,8 @@ class Asset(Menu):
         return self.logic.is_paginated()
 
     def page_legend(self):
-        return "you are on page " + self.logic.current_page() + " out of " + self.logic.total_pages() + " pages"
+        return "you are on page " + self.logic.current_page(
+        ) + " out of " + self.logic.total_pages() + " pages"
 
     def handle_input(self, user_input):
         if user_input.isdigit() and int(user_input) <= len(self.asset_list):
@@ -189,32 +196,38 @@ class VoyageMenu(Asset):
 class EditingMenu(Menu):
     def __init__(self, mother, focused_asset=None):
         self.mother = mother
-        self.new_asset = mother.new() if focused_asset is None else focused_asset
+        self.new_asset = mother.new(
+        ) if focused_asset is None else focused_asset
         self.asset_fields = self.new_asset.get_print_info()
         self._title = "New" if focused_asset is None else "Update"
+        self.valid_indices = self.new_asset.get_updateable_fields()
         self.current_index = 0
+        self.confirming = False
 
     def title(self):
         return self._title + " " + self.mother.asset
 
     def commands(self):
-        result = Commander(
-            Command("b", "Back to " + self.mother.asset + " list", self.mother),
-        )
-        return result
+        if self.confirming:
+            return Commander()
+        else:
+            return Commander(
+                Command("b", "Back to " + self.mother.asset + " list",
+                        self.mother), )
 
     def has_list(self):
         return True
 
+    def _valid_index(self):
+        return self.valid_indices[self.current_index]
+
     def listing(self):
         header_list = self.new_asset.get_header()
-        arrow_pos = [
-            " <---" if self.current_index == pos else ""
-            for pos in range(len(header_list))
-        ]
         return "\n".join([
-            "{:>13}: {}{}".format(header, info, arrow)
-            for header, info, arrow in zip(header_list, self.asset_fields, arrow_pos)
+            "{:>13}: {}{}".format(header, info,
+                                  " <---" if i == self._valid_index() else "")
+            for i, (header,
+                    info) in enumerate(zip(header_list, self.asset_fields))
         ])
 
     def prompt(self):
