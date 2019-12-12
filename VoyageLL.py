@@ -30,3 +30,10 @@ class VoyageLL(LogicLayer):
     		voyage.attendants[0] = employee
     	elif employee.job_type == "attendant":
     		voyage.attendants.append(employee)
+
+    def add_airplane_to_voyage(self, voyage, airplane):
+    	airplane.time_table.append(voyage.id)
+    	voyage.airplane = airplane.id
+
+    def get_all(self):
+    	return self.IO.get_voyages()	
