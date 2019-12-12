@@ -15,6 +15,19 @@ class LogicLayer:
 		if num_pages == 0:
 			num_pages += 1
 		return num_pages
+	
+	def change_page(self, user_input, num_pages, current_page):
+		if user_input == "a":
+			if current_page == 1:
+				current_page = num_pages
+			else:
+				current_page -= 1
+		elif user_input == "d":
+			if current_page == num_pages:
+				current_page = 1
+			else:
+				current_page += 1
+		return current_page
 
 	
 	def check_time_table(self, time_table, departure_time, arrival_time):
