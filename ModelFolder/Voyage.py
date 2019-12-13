@@ -1,3 +1,4 @@
+from copy import copy
 class Voyage:
     def __init__(self,
                  destination="",
@@ -50,8 +51,8 @@ class Voyage:
         self.departure_time = departure_time
         self.return_time = return_time
         self.airplane = airplane
-        self.pilot_list = pilot_list
-        self.attendant_list = attendant_list
+        self.pilot_list = copy(pilot_list)
+        self.attendant_list = copy(attendant_list)
         self.seats_sold = seats_sold
 
     def __str__(self):

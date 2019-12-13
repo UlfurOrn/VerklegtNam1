@@ -51,6 +51,7 @@ class AirplaneLL(LogicLayer):
 
     # TODO: make this work and consolidate the get_manufacturer function above
     def set_sorting_method(self, sorting_method):
+        self.load_asset_list()
         if sorting_method == AirplaneSortingMethods.ALL_AIRPLANES:
             self.asset_list.sort(key=lambda plane: plane.get_id())
         elif sorting_method == AirplaneSortingMethods.ONLY_IN_USE:

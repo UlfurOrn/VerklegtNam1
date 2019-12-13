@@ -90,6 +90,9 @@ class VoyageLL(LogicLayer):
     def add(self, voyage):
         self.IOAPI.add_voyage(voyage)
 
+    def save(self):
+        self.IOAPI.save()
+
     def get_input_type(self,field_index):
         return [
             Destination,
@@ -116,9 +119,9 @@ class VoyageLL(LogicLayer):
         if field_index == 1:
             return self.is_datetime_format(new_input)
         elif field_index == 2:
-            return self.is_dateti_format(new_input)
+            return self.is_datetime_format(new_input)
         elif field_index == 6:
-            return new_input.is_digit()
+            return new_input.isdigit()
 
     def set_sorting_method(self, sorting_method):
         if sorting_method == VoyageSortingMethods.BY_DESTINATION:

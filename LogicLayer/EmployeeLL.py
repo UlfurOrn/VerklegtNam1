@@ -98,6 +98,7 @@ class EmployeeLL(LogicLayer):
             return "insert the title of the new employee's position"
 
     def set_sorting_method(self, sorting_method):
+        self.load_asset_list()
         if sorting_method == EmployeeSortingMethods.ALL_EMPLOYEES:
             self.asset_list.sort(key=lambda e: e.name)
         elif sorting_method == EmployeeSortingMethods.PILOTS:

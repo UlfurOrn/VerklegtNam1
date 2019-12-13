@@ -219,7 +219,9 @@ class EditingMenu(Menu):
         if self.creating:
             self.mother.logic.add(self.focused_asset)
             self.mother.logic.set_final_page()
-            self.mother.logic.load_asset_list()
+        else:
+            self.mother.logic.save()
+        self.mother.logic.load_asset_list()
         return self.mother
 
     def has_list(self):
@@ -272,8 +274,20 @@ class SelectionMenu(Asset):
         self.appending = appending
 
     def commander(self):
-        return Commander(
+        result = Commander(
             Command("b", "Back to editing menu", lambda: self.mother))
+        if self.needs_legend():
+            result.add(
+                Command("a",
+                        "previous page",
+                        lambda: self._change_page(-1),
+                        show=False))
+            result.add(
+                Command("d",
+                        "next page",
+                        lambda: self._change_page(1),
+                        show=False))
+        return result
 
     def handle_input(self, user_input):
         if user_input.isdigit() and 0 < int(user_input) <= self.logic.current_page_size():
