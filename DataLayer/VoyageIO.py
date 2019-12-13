@@ -18,11 +18,6 @@ class VoyageIO:
         self.voyages[voyage.get_id()] = voyage
 
     def save(self):
-        with open("CSVFolder/voyages.csv", "w",
-                  encoding="utf8") as voyage_file:
-            csv_writer = csv.writer(voyage_file)
-            for voyage in list(self.voyages.values()):
-                csv_writer.writerow(voyage.get_save_info())
         with open("Data/voyages.json", "w") as voyage_file:
             voyage_file.write(
                 json.dumps(
