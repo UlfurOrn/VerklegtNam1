@@ -16,7 +16,6 @@ class EmployeeLL(LogicLayer):
     def is_pilot(self, employee):
         return employee.job_type == "Captain" or employee.job_type == "Co Pilot"
 
-    def 
 
     def get_attendants(self):
         return self.IOAPI.get_attendants()

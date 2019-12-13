@@ -26,7 +26,7 @@ class LogicLayer:
         page_to_print += [""] * (self.page_length - len(page_to_print))
         return page_to_print
 
-     def get_time_schedule(self, asset, time_start, time_end):
+    def get_time_schedule(self, asset, time_start, time_end):
         schedule = []
         for voyage in asset.time_table:
             voyage = self.IOAPI.get_voyage_by_id(voyage)

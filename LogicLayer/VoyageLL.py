@@ -116,7 +116,7 @@ class VoyageLL(LogicLayer):
         if field_index == 1:
             return self.is_datetime_format(new_input)
         elif field_index == 2:
-            return self.is_dateti_format(new_input)
+            return self.is_datetime_format(new_input)
         elif field_index == 6:
             return new_input.is_digit()
 
