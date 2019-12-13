@@ -125,6 +125,9 @@ class LogicLayer:
     def str_to_datetime(self, string):
         return datetime.datetime.strptime(string, "‰d/%m/%Y %H:%M")
 
+    def str_to_time_delta(self, string):
+        return datetime.datetime.striptime(string, "%H:%M")
+
     def get_all(self):
         return self.IOAPI.load()
 
