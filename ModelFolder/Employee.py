@@ -38,6 +38,12 @@ class Employee:
             self.email, self.plane_type, self.job_type, self.time_table
         ]
 
+    def is_pilot(self):
+        return self.job_type == "Captain" or self.job_type == "Co Pilot"
+
+    def is_superior(self):
+        return self.job_type == "Captain" or self.job_type == "Super Attendant"
+
     def get_creation_fields(self):
         return [0, 1, 2, 3, 4, 5, 6, 7]
 
