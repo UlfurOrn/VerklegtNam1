@@ -16,24 +16,9 @@ class AirplaneLL(LogicLayer):
     def is_valid_input(self, field_index, new_input):
         if field_index == 0:
             return self.is_only_letters(new_input) and new_input != ""
-
-        elif field_index == 1:
-            return self.is_only_letters(new_input) and new_input != ""
-
-        elif field_index == 2:
-            return self.is_unique_abreviation(new_input) and new_input != ""
         
         elif field_index == 3:
-            return self.is_time_format(new_input)
-
-        elif field_index == 4:
             return new_input.isdigit()
-
-        elif field_index == 5:
-            return self.is_only_letters(new_input)
-        
-        elif field_index == 6:
-            return self.is_only_digits(new_input)
         
         else:
             return True

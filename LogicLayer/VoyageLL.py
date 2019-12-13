@@ -34,9 +34,33 @@ class VoyageLL(LogicLayer):
     	elif employee.job_type == "attendant":
     		voyage.attendants.append(employee)
 
+
     def add_airplane_to_voyage(self, voyage, airplane):
     	airplane.time_table.append(voyage.id)
     	voyage.airplane = airplane.id
 
+    def is_unique_departure(self, new_departure_str):
+        new_departure_time = self.str_to_datetime(new_departure_str)
+        voyage_list = self.get_all()
+
+        for voyage in voyage_list:
+            if voyage.departure_time == new_departure_time:
+                return False
+        return True
+
+
     def get_all(self):
     	return self.IOAPI.get_voyages()
+
+    def is_valid_input(self, field_index, new_input):
+        if field_index == 1:
+            if self.is_date_format(new_input):
+                return self.is_unique_departure(new_input)
+            else:
+                return False
+            
+        elif field_index == 2:
+            return self.is_date_format(new_input)
+
+        else:
+            return True
