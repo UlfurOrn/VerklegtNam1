@@ -20,7 +20,6 @@ class VoyageIO:
         with open("CSVFolder/voyages.csv", "w",
                   encoding="utf8") as voyage_file:
             csv_writer = csv.writer(voyage_file)
-            print("hi")
             for voyage in list(self.voyages.values()):
                 csv_writer.writerow(voyage.get_save_info())
 

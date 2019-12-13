@@ -17,6 +17,7 @@ class Asset(Menu):
 
     def __call__(self, sorting_method=0):
         self.sorting_method = sorting_method
+        self.logic.set_sorting_method(sorting_method)
         return self
 
     def commander(self, sorts=True):
@@ -99,13 +100,13 @@ class EmployeeMenu(Asset):
     def sorting_commands(self):
         return Commander(
             Command("1", "List all employees", self,
-                    AirplaneSortingMethods.ALL_AIRPLANES),
+                    EmployeeSortingMethods.ALL_AIRPLANES),
             Command("2", "List all pilots", self,
-                    AirplaneSortingMethods.ONLY_NOT_IN_USE),
+                    EmployeeSortingMethods.ONLY_NOT_IN_USE),
             Command("3", "List all assistants", self,
-                    AirplaneSortingMethods.ONLY_IN_USE),
+                    EmployeeSortingMethods.ONLY_IN_USE),
             Command("4", "Sort by name", self,
-                    AirplaneSortingMethods.BY_MANUFACTURER),
+                    EmployeeSortingMethods.BY_MANUFACTURER),
             Command("b", "Back to " + self.asset + " list", self),
         )
 
@@ -128,7 +129,9 @@ class AirplaneMenu(Asset):
                     AirplaneSortingMethods.ONLY_NOT_IN_USE),
             Command("3", "Airplanes in use", self,
                     AirplaneSortingMethods.ONLY_IN_USE),
-            Command("4", "Sort by Manufacturer", self,
+            Command("4", "Sort by name", self,
+                    AirplaneSortingMethods.BY_NAME),
+            Command("5", "Sort by manufacturer", self,
                     AirplaneSortingMethods.BY_MANUFACTURER),
             Command("b", "Back to " + self.asset + " list", self),
         )

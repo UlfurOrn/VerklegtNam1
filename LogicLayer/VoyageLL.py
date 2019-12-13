@@ -1,3 +1,4 @@
+from enum import Enum
 from DataLayer.IOAPI import IOAPI
 from LogicLayer.LogicLayer import LogicLayer
 from ModelFolder.Voyage import Voyage
@@ -89,3 +90,13 @@ class VoyageLL(LogicLayer):
             return self.is_dateti_format(new_input)
         elif field_index == 6:
             return new_input.is_digit()
+
+    def set_sorting_method(self, sorting_method):
+        if sorting_method == VoyageSortingMethods.BY_DESTINATION:
+            self.asset_list.sort(key=lambda voyage: voyage.destination)
+        elif sorting_method == VoyageSortingMethods.BY_DEPARTURE_TIME:
+            self.asset_list.sort(key=lambda voyage: voyage.departure_time)
+
+class VoyageSortingMethods(Enum):
+    BY_DESTINATION = 0
+    BY_DEPARTURE_TIME = 1

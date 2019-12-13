@@ -24,7 +24,6 @@ class Airplane:
     def get_updatable_fields(self):
         return [0]
 
-
     def update_info(self, new_info_list):
         name, manufacturer, plane_type, seat_cap = new_info_list
         self.name = name
