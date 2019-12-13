@@ -231,12 +231,12 @@ class EditingMenu(Menu):
         if command == None:
             # self.mother.logic.is_valid_input(self._valid_index(), user_input)
             if self.can_input:
-                if self.logic.is_valid_input(self._valid_index(), user_input):
+                if self.mother.logic.is_valid_input(self._valid_index(), user_input):
                     self.asset_fields[self._valid_index()] = user_input
                     self._with_shifted_field(1)
                     self._user_message = ""
                 else:
-                    self._user_message = self.logic.get_input_specification()
+                    self._user_message = self.mother.logic.get_input_specification()
             else:
                 self._user_message = "This field doesn't accept text input\nplease select a command\n"
             return self
