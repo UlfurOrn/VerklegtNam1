@@ -49,15 +49,20 @@ class VoyageLL(LogicLayer):
                 return False
         return True
 
-    def is_valid_arrival(self, new_arrival_str):
+    def is_valid_arrival(self, new_input, voyage):
         destination = self.get_destination_by_id(self, voyage.id)
         dest_flight_time = destination.flight_time
+        if new_input > self.string_to_datetime(voyage.departure)+dest_flight_time:
+            return True
+        else:
+            return False
+
         
 
     def get_all(self):
     	return self.IOAPI.get_voyages()
 
-    def is_valid_input(self, field_index, new_input):
+    def is_valid_input(self, field_index, new_input, voyage):
         if field_index == 1:
             if self.is_date_format(new_input):
                 return self.is_unique_departure(new_input)
@@ -66,9 +71,13 @@ class VoyageLL(LogicLayer):
             
         elif field_index == 2:
             if self.is_date_format(new_input):
-                return self.is_valid_arrival(new_input)
+                return self.is_valid_arrival(new_input,voyage)
             else:
                 return False
-
+        elif field_index == 6:
+            if new_input < self.IOAPI.get_airplane_by_id(voyage).seat_cap :
+                return True
+            else:
+                False
         else:
             return True
