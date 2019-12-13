@@ -13,7 +13,7 @@ class VoyageLL(LogicLayer):
         super().__init__()
 
     def get_voyages_time_period(self,time_start, time_end):
-
+        pass
 
     def get_employees_in_voyage(self, voyage):
         return_array = []
