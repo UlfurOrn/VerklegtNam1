@@ -47,7 +47,7 @@ class EmployeeIO:
                     name, ssn, address, hphone, wphone, email, plane_type, job_type, time_table = line
                     employee = Employee(name, ssn, address, hphone, wphone,
                                         email, plane_type, job_type,
-                                        time_table)
+                                        time_table.replace("]","").replace("[","").split(","))
 
                     self.add(employee)
         return list(self.employees.values())
