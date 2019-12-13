@@ -197,9 +197,7 @@ class EditingMenu(Menu):
 
     def _confirm(self):
         self.focused_asset.update_info(self.asset_fields)
-        print("confirming")
         if self.creating:
-            print("confirming creating")
             self.mother.logic.add(self.focused_asset)
             self.mother.logic.set_final_page()
         return self.mother
@@ -245,15 +243,15 @@ class SelectionMenu(Asset):
         self.logic = self.sibling.logic
 
     def commander(self):
-        return {
-            Command("b", "Back to editing menu", self.mother)
-        }
+        return Commander(
+            Command("b", "Back to editing menu", lambda: self.mother)
+        )
 
     def handle_input(self, user_input):
         if user_input.isdigit(
         ) and 0 < int(user_input) <= self.logic.current_page_size():
             # pass the selected asset to the new editing menu
-            self.mother.asset_fields[self.mother._valid_index()] = self.logic.get_asset_at(int(user_input)).ID
+            self.mother.asset_fields[self.mother._valid_index()] = self.logic.get_asset_at(int(user_input)).get_id()
             return self.mother
         else:
             return self._invoke_comand(user_input)
