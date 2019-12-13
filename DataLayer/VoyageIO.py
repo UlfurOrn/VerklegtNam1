@@ -1,4 +1,5 @@
 import csv
+import json
 from ModelFolder.Voyage import Voyage
 
 
@@ -20,22 +21,21 @@ class VoyageIO:
         with open("CSVFolder/voyages.csv", "w",
                   encoding="utf8") as voyage_file:
             csv_writer = csv.writer(voyage_file)
-            print("hi")
             for voyage in list(self.voyages.values()):
                 csv_writer.writerow(voyage.get_save_info())
+        with open("Data/voyages.json", "w") as voyage_file:
+            voyage_file.write(
+                json.dumps(
+                    [voy.get_save_info() for voy in self.voyages.values()]))
 
     def load(self):
         if self.voyages == {}:
-
-            with open("CSVFolder/voyages.csv", "r",
-                      encoding="utf8") as voyage_file:
-                csv_reader = csv.reader(voyage_file)
-                for line in csv_reader:
+            with open("Data/voyages.json", "r") as voyage_file:
+                for line in json.loads(voyage_file.read()):
                     destination, departure_time, arrival_time, airplane, pilot_list, attendant_list, seats_sold = line
                     voyage = Voyage(destination, departure_time, arrival_time,
-                                    airplane, pilot_list.replace("]","").replace("[","").split(","), attendant_list.replace("]","").replace("[","").split(","),
+                                    airplane, pilot_list, attendant_list,
                                     seats_sold)
-
                     self.add(voyage)
 
         return list(self.voyages.values())
