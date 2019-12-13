@@ -115,3 +115,6 @@
 12/12/19
     Fyrsta færsla, 10:00
         Í dag ætlum við að útfæra logík tengt tíma og setja það inní Voyage hlutann okkar.
+        
+    Önnur færsla, 24:00
+        Í dag kláruðum við að útfæra margt sem tengdist forritinu aðallega í UI og Logic.
