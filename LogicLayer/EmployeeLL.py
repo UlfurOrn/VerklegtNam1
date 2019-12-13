@@ -70,10 +70,8 @@ class EmployeeLL(LogicLayer):
             return new_input.isdigit() and self.is_unique_ssn(new_input) and new_input != ""
         elif field_index == 2:
             return new_input != ""
-        elif field_index == 3:
-            return self.is_only_digits(str(filter(lambda: c != "-", new_input)))
-        elif field_index == 4:
-            return self.is_only_digits(str(filter(lambda: c != "-", new_input)))
+        elif field_index in [3,4]:
+            return self.is_only_digits(new_input)
         elif field_index == 5:
             return new_input != ""
         elif field_index == 6:
