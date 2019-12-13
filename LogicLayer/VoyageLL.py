@@ -5,6 +5,7 @@ from ModelFolder.Voyage import Voyage
 from ModelFolder.Destination import Destination
 from ModelFolder.Airplane import Airplane
 from ModelFolder.Employee import Employee
+import datetime
 
 
 class VoyageLL(LogicLayer):
@@ -12,8 +13,35 @@ class VoyageLL(LogicLayer):
         self.IOAPI = IOAPI()
         super().__init__()
 
+    def get_voyages_day(self,day):
+        day = str_to_datetime(day)
+        return self.get_voyages_time_period(day,day+datetime.timedelta(hours=23,minute=59))
+
     def get_voyages_time_period(self,time_start, time_end):
-        pass
+        time_start = string_to_datetime(time_start)
+        time_end = string_to_datetime(time_end)
+        voyages = self.IOAPI.get_voyages()
+        total = []
+        for voyage in voyages:
+            if voyage.departure_time > time_start and voyage.return_time > time_end:
+                total.append(voyage)
+        return total
+
+
+    def is_staffed(self, voyage):
+        captain = False
+        super_attendant = False
+        if(len(voyage.pilots)<2 or len(voyage.attendants)<1):
+            return False
+
+        for pilot in voyage.pilots:
+            if pilots.job_type == "Captain":
+                captain = True
+        for attendant in voyage.attendants:
+            if pilots.job_type == "Super Attendant":
+                attendant = True
+        return attendant and captain
+
 
     def get_employees_in_voyage(self, voyage):
         return_array = []

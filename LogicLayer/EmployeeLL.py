@@ -13,6 +13,11 @@ class EmployeeLL(LogicLayer):
     def get_pilots(self):
         return self.IOAPI.get_pilots()
 
+    def is_pilot(self, employee):
+        return employee.job_type == "Captain" or employee.job_type == "Co Pilot"
+
+    def 
+
     def get_attendants(self):
         return self.IOAPI.get_attendants()
 
@@ -107,9 +112,9 @@ class EmployeeLL(LogicLayer):
             self.asset_list = list(filter(lambda employee: not self.in_use(employee), self.asset_list))
 
 
-    def get_week_schedule(self, employee, week_start, week_end):
+    def get_week_schedule(self, asset, week_start, week_end):
         schedule = []
-        for voyage in employee.time_table:
+        for voyage in asset.time_table:
             voyage = self.IOAPI.get_voyage_by_id(voyage)
             if voyage.departure_time > week_start and voyage.return_time < week_end:
                 schedule.append(voyage)
