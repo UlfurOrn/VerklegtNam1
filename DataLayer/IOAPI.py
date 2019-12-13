@@ -29,8 +29,8 @@ class IOAPI:
     def get_destination_by_id(self):
         return self.destination.get_by_id()
 
-    def get_employee_by_id(self):
-        return self.employee.get_by_id()
+    def get_employee_by_id(self, item_id):
+        return self.employee.get_by_id(item_id)
 
     def get_voyage_by_id(self):
         return self.voyage.get_by_id()

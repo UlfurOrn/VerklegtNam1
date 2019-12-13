@@ -118,3 +118,8 @@
         
     Önnur færsla, 24:00
         Í dag kláruðum við að útfæra margt sem tengdist forritinu aðallega í UI og Logic.
+
+13/12/19
+    Fyrsta færsla, 21:22
+        í dag ætlum við að fín pússa og klára það sem við getum
+    

@@ -5,6 +5,7 @@ from ModelFolder.Employee import Employee
 class EmployeeIO:
     def __init__(self):
         self.employees = {}
+        self.plane_types = {}
         self.attendants = []
         self.pilots = []
 
@@ -15,9 +16,14 @@ class EmployeeIO:
         return self.employees[item_id]
 
     def add(self, employee):
+
         self.employees[employee.ssn] = employee
-        if(employee.job_type == "Captain" and employee.job_type == "Co Pilot"):
+        if(employee.job_type == "Captain" or employee.job_type == "Co Pilot"):
             self.pilots.append(employee.ssn)
+            try:
+                self.plane_types[employee.plane_type].append(employee.ssn)
+            except KeyError:
+                self.plane_types[employee.plane_type] = [employee.ssn]
         elif(employee.job_type == "Senior Attendant" and employee.job_type == "Attendant"):
             self.attendants.append(employee.ssn)
 
