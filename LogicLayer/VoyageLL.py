@@ -10,16 +10,8 @@ class VoyageLL(LogicLayer):
         self.IOAPI = IOAPI()
         super().__init__()
 
-    def get_voyage_info(self, voyage):
-        return_value = str(voyage)
-        destination = IOAPI.get_destination_by_id(voyage.destination)
-        airplane = IOAPI.get_airplane_by_id(voyage.airplane)
-        string += "{} KEF --> {} \n".format(self.destination.departure_time,
-                                            self.destination.abrev)
-        string += "{} {}<-- KEF \n".format(self.destination.departure_time,
-                                           self.destination.abrev)
+    def get_voyages_time_period(self,time_start, time_end):
 
-        return return_value
 
     def get_employees_in_voyage(self, voyage):
         return_array = []
@@ -94,6 +86,6 @@ class VoyageLL(LogicLayer):
         if field_index == 1:
             return self.is_datetime_format(new_input)
         elif field_index == 2:
-            return self.is_datetime_format(new_input)
+            return self.is_dateti_format(new_input)
         elif field_index == 6:
             return new_input.is_digit()
