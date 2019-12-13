@@ -34,12 +34,15 @@ class EmployeeLL(LogicLayer):
     def is_valid_input(self, field_index, new_input):
         if field_index == 0:
             return self.is_only_letters(new_input) and new_input != ""
+
         elif field_index == 1:
-            return new_input.isdigit() and self.is_unique_ssn(
-                new_input) and new_input != ""
+            return new_input.isdigit() and self.is_unique_ssn(new_input) and new_input != ""
+
         elif field_index == 6:
             return new_input != ""
+
         elif field_index == 7:
             return new_input != ""
+
         else:
             return True
