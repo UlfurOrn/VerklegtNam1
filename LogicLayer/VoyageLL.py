@@ -39,6 +39,7 @@ class VoyageLL(LogicLayer):
     	airplane.time_table.append(voyage.id)
     	voyage.airplane = airplane.id
 
+
     def is_unique_departure(self, new_departure_str):
         new_departure_time = self.str_to_datetime(new_departure_str)
         voyage_list = self.get_all()
@@ -48,6 +49,10 @@ class VoyageLL(LogicLayer):
                 return False
         return True
 
+    def is_valid_arrival(self, new_arrival_str):
+        destination = self.get_destination_by_id(self, voyage.id)
+        dest_flight_time = destination.flight_time
+        
 
     def get_all(self):
     	return self.IOAPI.get_voyages()
@@ -60,7 +65,10 @@ class VoyageLL(LogicLayer):
                 return False
             
         elif field_index == 2:
-            return self.is_date_format(new_input)
+            if self.is_date_format(new_input):
+                return self.is_valid_arrival(new_input)
+            else:
+                return False
 
         else:
             return True
