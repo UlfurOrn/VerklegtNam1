@@ -35,7 +35,7 @@ class EmployeeLL(LogicLayer):
 
 
     def show_busy_destination(self, departure_str, arrival_str):
-        busy_destination = self.get_is_busy_and_free(IOAPI.employee.get_all(), departure_str, arrival_str)[0]
+        busy_destination = self.get_is_busy_and_free(self.get_all(), departure_str, arrival_str)[0]
 
         return_list = []
 
@@ -92,7 +92,15 @@ class EmployeeLL(LogicLayer):
             self.asset_list = filter(lambda employee: not employee.in_use(), self.asset_list)
 
 
+    def get_week_schedule(self, employee, week_start, week_end):
+        schedule = []
+        for voyage in employee.time_table:
+            voyage = self.IOAPI.get_voyage_by_id(voyage)
+            if voyage.departure_time > week_start and voyage.return_time < week_end:
+                schedule.append(voyage)
+        return voyage
 
+        
 class EmployeeSortingMethods(Enum):
     ALL_EMPLOYEES = 0
     PILOTS = 1

@@ -11,6 +11,7 @@ class Employee:
                  time_table=[]):
         self.name = name
         self.ssn = ssn
+        self.ID = ssn
         self.address = address
         self.hphone = hphone
         self.wphone = wphone

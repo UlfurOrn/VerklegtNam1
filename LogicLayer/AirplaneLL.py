@@ -22,6 +22,10 @@ class AirplaneLL(LogicLayer):
         
         else:
             return True
+
+    def in_use(self, airplane):
+        self.check_time_table(airplane)
+
     
 
     def get_all(self):

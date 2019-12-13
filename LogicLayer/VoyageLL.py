@@ -12,7 +12,9 @@ class VoyageLL(LogicLayer):
         return_value = str(voyage)
         destination = IOAPI.get_destination_by_id(voyage.destination)
         airplane = IOAPI.get_airplane_by_id(voyage.airplane)
-        return_value += "destination: "+destination.country+"\n"
+        string += "{} KEF --> {} \n".format(self.destination.departure_time,self.destination.abrev)
+        string += "{} {}<-- KEF \n".format(self.destination.departure_time,self.destination.abrev)
+
         return return_value
 
     def get_employees_in_voyage(self, voyage):

@@ -66,8 +66,8 @@ class LogicLayer:
                     return False
 
     def text_to_datetime(self, departure_str, arrival_str):
-        departure_time = datetime.datetime(departure_str)
-        arrival_time = datetime.datetime(arrival_str)
+        departure_time = self.str_to_datetime(departure_str)
+        arrival_time = self.str_to_datetime(arrival_str)
         return departure_time, arrival_time
 
     def is_busy(self, asset, departure_str, arrival_str):
@@ -133,7 +133,7 @@ class LogicLayer:
 
 
     def str_to_datetime(self, string):
-        return datetime.datetime.strptime(string, "‰d/%m/%Y %H:%M")
+        return datetime.datetime.fromisoformat(string)
 
     def str_to_time_delta(self, string):
         hour, minute = string.split(":")
