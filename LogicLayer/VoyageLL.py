@@ -14,16 +14,14 @@ class VoyageLL(LogicLayer):
         super().__init__()
 
     def get_voyages_day(self,day):
-        day = str_to_datetime(day)
-        return self.get_voyages_time_period(day,day+datetime.timedelta(hours=23,minute=59))
+        day = self.str_to_datetime(day)
+        return self.get_voyages_time_period(day,day+datetime.timedelta(23,59))
 
     def get_voyages_time_period(self,time_start, time_end):
-        time_start = string_to_datetime(time_start)
-        time_end = string_to_datetime(time_end)
         voyages = self.IOAPI.get_voyages()
         total = []
         for voyage in voyages:
-            if voyage.departure_time > time_start and voyage.return_time > time_end:
+            if self.str_to_datetime( voyage.departure_time ) > time_start and self.str_to_datetime(voyage.return_time) > time_end:
                 total.append(voyage)
         return total
 

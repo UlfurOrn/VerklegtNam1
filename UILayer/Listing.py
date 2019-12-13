@@ -160,7 +160,10 @@ class VoyageMenu(Asset):
         super().__init__(mother)
 
     def commander(self):
-        return super().commander(False)
+        result = super().commander(False)
+        # TODO: finish TimeMenu
+        # result.add(Command("t", "View timetable", TimeMenu, self))
+        return result
 
     def new(self):
         return Voyage()
@@ -219,8 +222,6 @@ class EditingMenu(Menu):
         if self.creating:
             self.mother.logic.add(self.focused_asset)
             self.mother.logic.set_final_page()
-        else:
-            self.mother.logic.save()
         self.mother.logic.load_asset_list()
         return self.mother
 
@@ -301,7 +302,26 @@ class SelectionMenu(Asset):
         else:
             return self._invoke_comand(user_input)
         return self
+# TODO: finish this
+class TimeMenu(Menu):
+    def __init__(self, mother):
+        self.mother = mother
 
+    def title(self):
+        return "Timetable"
+
+    def commander(self):
+        result = Commander(Command("b", "Back to editing menu", lambda: self.mother))
+        return result
+
+    def listing(self):
+        return self.mother.logic.get_voyages_day(datetime.datetime.now().isoformat())
+
+    def has_list(self):
+        return True
+
+    def handle_input(self, user_input):
+        return super().handle_input(user_input)
 
 def get_menu_from_type(input_type):
     if input_type == Airplane:
