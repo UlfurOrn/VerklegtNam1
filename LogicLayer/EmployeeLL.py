@@ -32,6 +32,18 @@ class EmployeeLL(LogicLayer):
                 return False
         return True
 
+
+    def show_busy_destination(self, departure_str, arrival_str):
+        busy_destination = self.get_is_busy_and_free(IOAPI.employee.get_all(), departure_str, arrival_str)[0]
+
+        return_list = []
+
+        for employee in busy_destination:
+            return_list.append(str(employee[0])+" "+str(employee[1].abrev))
+
+        return return_list
+
+
     def check_time_table(self, time_table, departure_time, arrival_time):
         DEPARTURE = 0
         ARRIVAL = 1
