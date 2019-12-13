@@ -56,8 +56,12 @@ class Command:
         return self._command == None
 
     def invoke(self):
-        return self._command() if self.arguments is None else self._command(
-            self.arguments)
+        if self.arguments is None:
+            return self._command()
+        elif type(self.arguments) == tuple:
+            return self._command(*self.arguments)
+        else:
+            return self._command(self.arguments)
 
 
 class Commander:

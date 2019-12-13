@@ -21,7 +21,7 @@ class Asset(Menu):
 
     def commander(self, sorts=True):
         result = Commander(
-            Command("c", "Create new " + self.asset, CreationMenu, self),
+            Command("c", "Create new " + self.asset, EditingMenu, (self, None, True)),
             Command("b", "Back to main menu", lambda: self.mother),
         )
         if sorts:
@@ -71,7 +71,7 @@ class Asset(Menu):
         if user_input.isdigit(
         ) and 0 < int(user_input) <= self.logic.current_page_size():
             # pass the selected asset to the new editing menu
-            return UpdateMenu(self, self.logic.get_asset_at(int(user_input)))
+            return EditingMenu(self, self.logic.get_asset_at(int(user_input)))
         else:
             return self._invoke_comand(user_input)
 
@@ -161,7 +161,16 @@ class VoyageMenu(Asset):
 
 
 class EditingMenu(Menu):
-    def __init__(self, mother):
+    def __init__(self, mother, focused_asset, creating=False):
+        self.creating = creating
+        if creating:
+            self.focused_asset = mother.new()
+            self._title = "New"
+            self.editable_fields = self.focused_asset.get_creation_fields()
+        else:
+            self.focused_asset = focused_asset
+            self._title = "Update"
+            self.editable_fields = self.focused_asset.get_updatable_fields()
         self.mother = mother
         self.asset_fields = self.focused_asset.get_print_info()
         self.current_index = 0
@@ -182,8 +191,18 @@ class EditingMenu(Menu):
         if self._valid_index() != self.editable_fields[-1]:
             result.add(Command("s", "Next field", lambda: self._with_shifted_field(1)))
         if True:
-            result.add(Command("p", "Pick destination", SelectionMenu, (self, DestinationMenu)))
+            result.add(Command("pa", "Pick destination", SelectionMenu, (self, DestinationMenu)))
+            result.add(Command("pb", "Pick airplane", SelectionMenu, (self, AirplaneMenu)))
         return result
+
+    def _confirm(self):
+        self.focused_asset.update_info(self.asset_fields)
+        print("confirming")
+        if self.creating:
+            print("confirming creating")
+            self.mother.logic.add(self.focused_asset)
+            self.mother.logic.set_final_page()
+        return self.mother
 
     def has_list(self):
         return True
@@ -213,37 +232,15 @@ class EditingMenu(Menu):
             return self
         return command.invoke()
 
-    def _confirm(self):
-        self.focused_asset.update_info(self.asset_fields)
-        self.mother.logic.add(self.focused_asset)
-        self.mother.logic.set_final_page()
-        return self.mother
-
     def _with_shifted_field(self, change):
         self.current_index = (self.current_index + change) % len(self.editable_fields)
         return self
 
 
-class UpdateMenu(EditingMenu):
-    def __init__(self, mother, focused_asset):
-        self.focused_asset = focused_asset
-        self._title = "Update"
-        self.editable_fields = self.focused_asset.get_updatable_fields()
-        super().__init__(mother)
-
-
-class CreationMenu(EditingMenu):
-    def __init__(self, mother):
-        self.focused_asset = mother.new()
-        self._title = "New"
-        self.editable_fields = self.focused_asset.get_creation_fields()
-        super().__init__(mother)
-
-
 class SelectionMenu(Asset):
-    def __init__(self, family):
-        self.mother = family[0]
-        self.sibling = family[1]()
+    def __init__(self, mother, sibling):
+        self.mother = mother
+        self.sibling = sibling(self.mother)
         self.asset = self.sibling.asset
         self.logic = self.sibling.logic
 
@@ -253,4 +250,11 @@ class SelectionMenu(Asset):
         }
 
     def handle_input(self, user_input):
-        return super(Asset).handle_input(user_input)
+        if user_input.isdigit(
+        ) and 0 < int(user_input) <= self.logic.current_page_size():
+            # pass the selected asset to the new editing menu
+            self.mother.asset_fields[self.mother._valid_index()] = self.logic.get_asset_at(int(user_input)).ID
+            return self.mother
+        else:
+            return self._invoke_comand(user_input)
+        return self
