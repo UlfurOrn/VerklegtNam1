@@ -1,3 +1,4 @@
+import datetime
 from DataLayer.IOAPI import IOAPI
 from ModelFolder.Employee import Employee
 from LogicLayer.LogicLayer import LogicLayer
@@ -23,22 +24,55 @@ class EmployeeLL(LogicLayer):
     def add(self, employee):
         self.IOAPI.add_employee(employee)
 
-    def is_unique_ssn(self, ssn):
+    def is_unique_ssn(self, new_ssn):
         employee_list = self.get_all()
 
         for employee in employee_list:
-            pass
+            if employee.ssn == new_ssn:
+                return False
         return True
+
+
+    def show_busy_destination(self, departure_str, arrival_str):
+        busy_destination = self.get_is_busy_and_free(IOAPI.employee.get_all(), departure_str, arrival_str)[0]
+
+        return_list = []
+
+        for employee in busy_destination:
+            return_list.append(str(employee[0])+" "+str(employee[1].abrev))
+
+        return return_list
+
+
+    def check_time_table(self, time_table, departure_time, arrival_time):
+        DEPARTURE = 0
+        ARRIVAL = 1
+
+        if len(time_table) == 0:
+            return True
+        if time_table[0][DEPARTURE] > arrival_time:
+            return True
+        if time_table[-1][ARRIVAL] < departure_time:
+            return True
+        for i in range(len(time_table)):
+            if time_table[i + 1][DEPARTURE] > arrival_time:
+                if time_table[i][ARRIVAL] < departure_time+datetime.timedelta(day=1):
+                    return True
+                else:
+                    return False
 
     def is_valid_input(self, field_index, new_input):
         if field_index == 0:
             return self.is_only_letters(new_input) and new_input != ""
+
         elif field_index == 1:
-            return new_input.isdigit() and is_unique_ssn(
-                new_input) and new_input != ""
+            return new_input.isdigit() and self.is_unique_ssn(new_input) and new_input != ""
+
         elif field_index == 6:
             return new_input != ""
+
         elif field_index == 7:
             return new_input != ""
+
         else:
             return True

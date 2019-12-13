@@ -70,28 +70,39 @@ class LogicLayer:
         arrival_time = datetime.datetime(arrival_str)
         return departure_time, arrival_time
 
-    def get_available(self, departure_str, arrival_str):
-        departure_time, arrival_time = self.text_to_datetime(
+    def is_busy(self, asset, departure_str, arrival_str):
+    	departure_time, arrival_time = self.text_to_datetime(
             departure_str, arrival_str)
-
-        return_list = []
-
-        for asset in self.asset_list:
-            asset_time_table = asset.time_table
+    	asset_time_table = asset.time_table
 
             time_table_to_check = []
             for voyage_id in asset_time_table:
-                voyage = self.IO.get_voyage_by_id(voyage_id)
+                voyage = self.IOAPI.get_voyage_by_id(voyage_id)
                 time_table_to_check.append([
                     self.text_to_datetime(voyage.departure_time,
                                           voyage.departure_return_time)
                 ])
 
-                if self.check_time_table(time_table_to_check, departure_time,
+                if not self.check_time_table(time_table_to_check, departure_time,
                                          arrival_time):
-                    return_list.append(asset)
+                	return voyage
+                    
 
-        return return_list
+    def get_is_busy_and_free(self, asset_list, departure_str, arrival_str):
+        departure_time, arrival_time = self.text_to_datetime(
+            departure_str, arrival_str)
+
+        busy = []
+        free = []
+
+        for asset in self.asset_list:
+        	voyage_if_busy = self.is_busy(asset)
+            if asset_busy is not None:
+            	busy.append(asset,asset_busy)
+            else:
+            	free.append(asset)
+
+        return busy,free
 
     def is_only_letters(self, string):
         for c in string.strip():
@@ -121,6 +132,14 @@ class LogicLayer:
             return True
         except ValueError:
             return False
+
+
+    def str_to_datetime(self, string):
+        return datetime.datetime.strptime(string, "‰d/%m/%Y %H:%M")
+
+    def str_to_time_delta(self, string):
+        int(hour), int(minute) = string.split(":")
+        datetime.timedelta(hour=hour,minute=minute)
 
     def get_all(self):
         return self.IOAPI.load()

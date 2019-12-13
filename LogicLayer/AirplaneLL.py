@@ -13,6 +13,17 @@ class AirplaneLL(LogicLayer):
         plane_list = self.IOAPI.get_all_airplanes()
         return sorted(plane_list, key=lambda k: k.info_dict["manufacturer"])
 
+    def is_valid_input(self, field_index, new_input):
+        if field_index == 0:
+            return self.is_only_letters(new_input) and new_input != ""
+        
+        elif field_index == 3:
+            return new_input.isdigit()
+        
+        else:
+            return True
+    
+
     def get_all(self):
     	return self.IOAPI.get_airplanes()
     # TODO: make this work and consolidate the function above
