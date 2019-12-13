@@ -236,7 +236,7 @@ class EditingMenu(Menu):
                     self._with_shifted_field(1)
                     self._user_message = ""
                 else:
-                    self._user_message = self.mother.logic.get_input_specification()
+                    self._user_message = self.mother.logic.get_input_specification(self._valid_index())
             else:
                 self._user_message = "This field doesn't accept text input\nplease select a command\n"
             return self
