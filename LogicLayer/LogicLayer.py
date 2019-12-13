@@ -71,22 +71,20 @@ class LogicLayer:
         return departure_time, arrival_time
 
     def is_busy(self, asset, departure_str, arrival_str):
-    	departure_time, arrival_time = self.text_to_datetime(
+        departure_time, arrival_time = self.text_to_datetime(
             departure_str, arrival_str)
-    	asset_time_table = asset.time_table
+        asset_time_table = asset.time_table
 
-            time_table_to_check = []
-            for voyage_id in asset_time_table:
-                voyage = self.IOAPI.get_voyage_by_id(voyage_id)
-                time_table_to_check.append([
-                    self.text_to_datetime(voyage.departure_time,
-                                          voyage.departure_return_time)
-                ])
-
-                if not self.check_time_table(time_table_to_check, departure_time,
+        time_table_to_check = []
+        for voyage_id in asset_time_table:
+            voyage = self.IOAPI.get_voyage_by_id(voyage_id)
+            time_table_to_check.append([
+                self.text_to_datetime(voyage.departure_time,
+                                      voyage.departure_return_time)
+            ])
+            if not self.check_time_table(time_table_to_check, departure_time,
                                          arrival_time):
-                	return voyage
-                    
+                return voyage
 
     def get_is_busy_and_free(self, asset_list, departure_str, arrival_str):
         departure_time, arrival_time = self.text_to_datetime(
@@ -96,11 +94,11 @@ class LogicLayer:
         free = []
 
         for asset in self.asset_list:
-        	voyage_if_busy = self.is_busy(asset)
+            voyage_if_busy = self.is_busy(asset)
             if asset_busy is not None:
-            	busy.append(asset,asset_busy)
+                busy.append(asset,asset_busy)
             else:
-            	free.append(asset)
+                free.append(asset)
 
         return busy,free
 
@@ -138,8 +136,8 @@ class LogicLayer:
         return datetime.datetime.strptime(string, "‰d/%m/%Y %H:%M")
 
     def str_to_time_delta(self, string):
-        int(hour), int(minute) = string.split(":")
-        datetime.timedelta(hour=hour,minute=minute)
+        hour, minute = string.split(":")
+        datetime.timedelta(hour=int(hour),minute=int(minute))
 
     def get_all(self):
         return self.IOAPI.load()
