@@ -133,7 +133,7 @@ class LogicLayer:
 
 
     def str_to_datetime(self, string):
-        return datetime.datetime.strptime(string, "‰d/%m/%Y %H:%M")
+        return datetime.datetime.fromisoformat(string)
 
     def str_to_time_delta(self, string):
         hour, minute = string.split(":")
