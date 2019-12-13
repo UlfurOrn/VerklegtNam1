@@ -14,7 +14,7 @@ class AirplaneIO:
         return self.airplanes[item_id]
 
     def add(self, airplane):
-        self.airplanes[airplane.ID] = airplane
+        self.airplanes[airplane.name] = airplane
 
     def save(self):
         with open("CSVFolder/airplanes.csv", "w",
