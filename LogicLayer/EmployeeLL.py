@@ -1,3 +1,4 @@
+import datetime
 from DataLayer.IOAPI import IOAPI
 from ModelFolder.Employee import Employee
 from LogicLayer.LogicLayer import LogicLayer
@@ -30,6 +31,23 @@ class EmployeeLL(LogicLayer):
             if employee.ssn == new_ssn:
                 return False
         return True
+
+    def check_time_table(self, time_table, departure_time, arrival_time):
+        DEPARTURE = 0
+        ARRIVAL = 1
+
+        if len(time_table) == 0:
+            return True
+        if time_table[0][DEPARTURE] > arrival_time:
+            return True
+        if time_table[-1][ARRIVAL] < departure_time:
+            return True
+        for i in range(len(time_table)):
+            if time_table[i + 1][DEPARTURE] > arrival_time:
+                if time_table[i][ARRIVAL] < departure_time+datetime.timedelta(day=1):
+                    return True
+                else:
+                    return False
 
     def is_valid_input(self, field_index, new_input):
         if field_index == 0:
