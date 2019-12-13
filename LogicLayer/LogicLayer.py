@@ -26,6 +26,15 @@ class LogicLayer:
         page_to_print += [""] * (self.page_length - len(page_to_print))
         return page_to_print
 
+     def get_time_schedule(self, asset, time_start, time_end):
+        schedule = []
+        for voyage in asset.time_table:
+            voyage = self.IOAPI.get_voyage_by_id(voyage)
+            if voyage.departure_time > week_start and voyage.return_time < week_end:
+                schedule.append(voyage)
+        return voyage
+
+
     def _total_pages(self):
         num_pages = len(self.asset_list) // self.page_length
         if len(self.asset_list) % self.page_length != 0:
@@ -47,9 +56,6 @@ class LogicLayer:
 
     def set_final_page(self):
         self._current_page = self.total_pages - 1
-
-    def get_schedule(self, asset):
-        pass
 
     def intersects_schedule(self, asset, time):
         first, last = time if time is tuple else (time, time)
