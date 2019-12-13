@@ -16,7 +16,9 @@ class Voyage:
         self.attendant_list = attendant_list
         self.seats_sold = seats_sold
         self.ID = Voyage.ID
-        Voyage.ID+=1
+
+    def get_id(self):
+        return str(self.departure_time)
 
     def get_header(self):
         return [

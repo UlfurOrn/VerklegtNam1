@@ -1,5 +1,4 @@
 class Destination:
-    ID = 0
     def __init__(self, country="", airport="", abrev="", flight_time="", flight_dist="", contact_name="", contact_num=""):
         self.country = country
         self.airport = airport
@@ -8,8 +7,10 @@ class Destination:
         self.flight_dist = flight_dist
         self.contact_name = contact_name
         self.contact_num = contact_num
-        self.ID = Destination.ID
-        Destination.ID+=1
+
+
+    def get_id(self):
+        return self.abrev
 
     def get_header(self):
         return ["Country" ,"Airport", "Abreviation", "Time", "Distance", "Contact country", "Contact Num"]

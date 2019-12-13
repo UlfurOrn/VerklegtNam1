@@ -44,6 +44,9 @@ class Employee:
     def get_updatable_fields(self):
         return [2, 3, 4, 5, 6]
 
+    def get_id(self):
+        return self.ssn
+
     def update_info(self, new_info_list):
         name, ssn, address, hphone, wphone, email, plane_type, job_type = new_info_list
         self.name = name

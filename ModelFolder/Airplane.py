@@ -1,13 +1,13 @@
 class Airplane:
-    ID = 0
     def __init__(self, name="", manufacturer="", plane_type="", seat_cap="", time_table=[]):
         self.name = name
         self.manufacturer = manufacturer
         self.plane_type = plane_type
         self.seat_cap = seat_cap
         self.time_table = time_table
-        self.ID = Airplane.ID
-        Airplane.ID+=1
+
+    def get_id(self):
+        return self.name
 
     def get_header(self):
         return ["Name" ,"Manufacturer", "Plane Type", "Seat Capacity"]
