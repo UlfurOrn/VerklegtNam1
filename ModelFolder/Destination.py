@@ -13,7 +13,7 @@ class Destination:
         return self.abrev
 
     def get_header(self):
-        return ["Country" ,"Airport", "Abreviation", "Time", "Distance", "Contact country", "Contact Num"]
+        return ["Country" ,"Airport", "Abreviation", "Time", "Distance", "Contact name", "Contact num"]
 
     def get_print_info(self):
         return [self.country, self.airport, self.abrev, self.flight_time, self.flight_dist, self.contact_name, self.contact_num]

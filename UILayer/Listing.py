@@ -174,7 +174,8 @@ class EditingMenu(Menu):
         self.mother = mother
         self.asset_fields = self.focused_asset.get_print_info()
         self.current_index = 0
-        self.confirming = False
+        self.can_input = True
+        self._user_message = ""
 
     def title(self):
         return self._title + " " + self.mother.asset
@@ -190,9 +191,10 @@ class EditingMenu(Menu):
             result.add(Command("w", "Previous field", lambda: self._with_shifted_field(-1)))
         if self._valid_index() != self.editable_fields[-1]:
             result.add(Command("s", "Next field", lambda: self._with_shifted_field(1)))
-        input_type = self.mother.logic.get_field_input_type(self._valid_index())
-        if input_type != str:
-            result.add(Command("pa", "Pick " + input_type.__name__(), SelectionMenu, (self, get_menu_from_type(input_type))))
+        input_type = self.mother.logic.get_input_type(self._valid_index())
+        self.can_input = input_type in [int, str]
+        if not self.can_input:
+            result.add(Command("p", "Pick " + input_type.__name__, SelectionMenu, (self, get_menu_from_type(input_type))))
         return result
 
     def _confirm(self):
@@ -218,16 +220,21 @@ class EditingMenu(Menu):
         ])
 
     def prompt(self):
-        return "Enter {}: ".format(
-            self.focused_asset.get_header()[self.current_index])
+        return self._user_message + "Enter {}: ".format(
+            self.focused_asset.get_header()[self._valid_index()])
 
     def handle_input(self, user_input):
         command = self.commander().has(user_input)
         if command == None:
             # self.mother.logic.is_valid_input(self._valid_index(), user_input)
-            self.asset_fields[self._valid_index()] = user_input
-            self._with_shifted_field(1)
+            if self.can_input:
+                self.asset_fields[self._valid_index()] = user_input
+                self._with_shifted_field(1)
+                self._user_message = ""
+            else:
+                self._user_message = "Hei\n"
             return self
+        self._user_message = ""
         return command.invoke()
 
     def _with_shifted_field(self, change):

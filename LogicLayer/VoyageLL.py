@@ -1,6 +1,8 @@
 from DataLayer.IOAPI import IOAPI
 from LogicLayer.LogicLayer import LogicLayer
 from ModelFolder.Voyage import Voyage
+from ModelFolder.Destination import Destination
+from ModelFolder.Airplane import Airplane
 
 
 class VoyageLL(LogicLayer):
@@ -67,13 +69,15 @@ class VoyageLL(LogicLayer):
         self.IOAPI.add_voyage(voyage)
 
     def get_input_type(self,field_index):
-        if field_index == 1:
-            return str
-        elif field_index == 2:
-            return str
-        elif field_index == 6:
-            return int
-
+        return [
+            Destination,
+            str,
+            str,
+            Airplane,
+            list,
+            list,
+            int,
+        ][field_index]
 
     def is_valid_input(self, field_index, new_input, voyage):
         if field_index == 1:

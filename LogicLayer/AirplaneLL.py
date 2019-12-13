@@ -13,9 +13,9 @@ class AirplaneLL(LogicLayer):
         plane_list = self.IOAPI.get_all_airplanes()
         return sorted(plane_list, key=lambda k: k.info_dict["manufacturer"])
 
-    def get_input_type(self):
-    	if field_index == 0:
-    		return str 
+    def get_input_type(self, field_index):
+    	if field_index in [0,1,2]:
+    		return str
     	if field_index == 3:
     		return int
 

@@ -20,28 +20,19 @@ class DestinationLL(LogicLayer):
 
     def is_unique_abreviation(self, new_abreviation):
         destination_list = self.get_all()
-
         for destination in destination_list:
             if destination.abrev == new_abreviation:
                 return False
         return True
 
-    def get_input_type(self):
-        if field_index == 0:
-            return str
-
-        elif field_index == 1:
-            return str
-        elif field_index == 2:
-            return str
-        elif field_index == 3:
-           return str
-        elif field_index == 4:
+    def get_input_type(self, field_index):
+        if field_index == 4:
             return int
-        elif field_index == 5:
-            return str
         elif field_index == 6:
             return int
+        else:
+            return str
+
     def is_valid_input(self, field_index, new_input):
         if field_index == 0:
             return self.is_only_letters(new_input) and new_input != ""

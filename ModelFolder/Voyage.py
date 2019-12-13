@@ -54,17 +54,5 @@ class Voyage:
         self.attendant_list = attendant_list
         self.seats_sold = seats_sold
 
-    # def __str__(self):
-    #     string = ""
-    #     string += "NA020 KEF --> {} 12/12/2019 23:20\n".format(self.destination.abrev)
-    #     string += "     NA021 KEF <-- {} 12/13/2019 02:20".format(self.destination.abrev)
-    #     return string
-
     def __str__(self):
-        total = ""
-        total += "Time of Departure: " + departure_time + "\n"
-        total += "Time of return Departure: " + return_time + "\n"
-        total += "pilot Count: " + str(len(pilot_list)) + "\n"
-        total += "attendant Count" + str(len(attendant_list)) + "\n"
-        total += "seats sold: " + str(seats_sold) + "\n"
-        return total
+        return "KEF --> {} @ {} | KEF <-- {} @ {}".format(self.destination, self.departure_time, self.destination, self.departure_time)
