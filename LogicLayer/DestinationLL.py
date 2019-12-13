@@ -12,12 +12,11 @@ class DestinationLL(LogicLayer):
         destination_list = self.IOAPI.get_destinations()
         return sorted(destination_list, key=lambda k: k.country)
 
-    def add_destination(self, destination):
+    def add(self, destination):
         self.IOAPI.add_destination(destination)
 
-    def save_destinations(self):
+    def save(self):
         self.IOAPI.save_destinations()
-
 
     def is_unique_abreviation(self, new_abreviation):
         destination_list = self.get_all()
@@ -52,7 +51,7 @@ class DestinationLL(LogicLayer):
 
         elif field_index == 2:
             return self.is_unique_abreviation(new_input) and new_input != ""
-        
+
         elif field_index == 3:
             return self.is_time_format(new_input)
 
@@ -61,9 +60,9 @@ class DestinationLL(LogicLayer):
 
         elif field_index == 5:
             return self.is_only_letters(new_input)
-        
+
         elif field_index == 6:
             return self.is_only_digits(new_input)
-        
+
         else:
             return True

@@ -22,21 +22,23 @@ class AirplaneLL(LogicLayer):
     def is_valid_input(self, field_index, new_input):
         if field_index == 0:
             return self.is_only_letters(new_input) and new_input != ""
-        
+
         elif field_index == 3:
             return new_input.isdigit()
-        
+
         else:
             return True
 
     def in_use(self, airplane):
         self.check_time_table(airplane)
 
-    
-
     def get_all(self):
-    	return self.IOAPI.get_airplanes()
-    # TODO: make this work and consolidate the function above
+        return self.IOAPI.get_airplanes()
+
+    def add(self, airplane):
+        self.IOAPI.add_airplane(airplane)
+
+    # TODO: make this work and consolidate the get_manufacturer function above
     def set_sorting_method(self, sorting_method):
         if sorting_method == AirplaneSortingMethods.ALL_AIRPLANES:
             self.asset_list.sort()

@@ -4,7 +4,7 @@ from ModelFolder.Voyage import Voyage
 
 class VoyageIO:
     def __init__(self):
-        self.voyages = []
+        self.voyages = {}
         self.load()
 
     def get_by_id(self, item_id):
@@ -14,8 +14,7 @@ class VoyageIO:
         return self.load()
 
     def add(self, voyage):
-        self.voyages.append(voyage)
-
+        self.voyages[voyage.get_id()] = voyage
         self.save()
 
     def save(self):
@@ -35,8 +34,10 @@ class VoyageIO:
 
                 for line in csv_reader:
                     destination, departure_time, arrival_time, airplane, pilot_list, attendant_list, seats_sold = line
-                    voyage = Voyage(destination, departure_time, arrival_time, airplane, pilot_list, attendant_list, seats_sold)
+                    voyage = Voyage(destination, departure_time, arrival_time,
+                                    airplane, pilot_list, attendant_list,
+                                    seats_sold)
 
                     self.add(voyage)
 
-        return self.voyages
+        return list(self.voyages.values())
