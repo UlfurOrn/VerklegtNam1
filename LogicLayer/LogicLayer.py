@@ -66,8 +66,8 @@ class LogicLayer:
                     return False
 
     def text_to_datetime(self, departure_str, arrival_str):
-        departure_time = datetime.datetime(departure_str)
-        arrival_time = datetime.datetime(arrival_str)
+        departure_time = self.str_to_datetime(departure_str)
+        arrival_time = self.str_to_datetime(arrival_str)
         return departure_time, arrival_time
 
     def is_busy(self, asset, departure_str, arrival_str):
