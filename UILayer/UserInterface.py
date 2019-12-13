@@ -57,9 +57,10 @@ class UserInterface:
             try:
                 user_input = input(self.menu.prompt())
             except KeyboardInterrupt:
+                print() # so the greeting is on the next line
                 break
 
             self.menu = self.menu.handle_input(user_input)
             if user_input == "q":
                 break  # we outa here
-        print("\nThank you for choosing NaN air")
+        print("Thank you for choosing NaN air")

@@ -102,13 +102,15 @@ class EmployeeMenu(Asset):
     def sorting_commands(self):
         return Commander(
             Command("1", "List all employees", self,
-                    EmployeeSortingMethods.ALL_AIRPLANES),
+                    EmployeeSortingMethods.ALL_EMPLOYEES),
             Command("2", "List all pilots", self,
-                    EmployeeSortingMethods.ONLY_NOT_IN_USE),
-            Command("3", "List all assistants", self,
-                    EmployeeSortingMethods.ONLY_IN_USE),
-            Command("4", "Sort by name", self,
-                    EmployeeSortingMethods.BY_MANUFACTURER),
+                    EmployeeSortingMethods.PILOTS),
+            Command("3", "List all attendants", self,
+                    EmployeeSortingMethods.ATTENDANTS),
+            Command("4", "List those who are available", self,
+                    EmployeeSortingMethods.IS_AVAILABLE),
+            Command("5", "List those who are working", self,
+                    EmployeeSortingMethods.IS_WORKING),
             Command("b", "Back to " + self.asset + " list", self),
         )
 
@@ -229,10 +231,8 @@ class EditingMenu(Menu):
     def listing(self):
         header_list = self.focused_asset.get_header()
         return "\n".join([
-            "{:>17}: {}{}".format(header, info,
-                                  " <---" if i == self._valid_index() else "")
-            for i, (header,
-                    info) in enumerate(zip(header_list, self.asset_fields))
+            "{:>17}: {}{}".format(header, info, " <---" if i == self._valid_index() else "")
+            for i, (header, info) in enumerate(zip(header_list, self.asset_fields))
         ])
 
     def prompt(self):
@@ -276,10 +276,8 @@ class SelectionMenu(Asset):
             Command("b", "Back to editing menu", lambda: self.mother))
 
     def handle_input(self, user_input):
-        if user_input.isdigit(
-        ) and 0 < int(user_input) <= self.logic.current_page_size():
+        if user_input.isdigit() and 0 < int(user_input) <= self.logic.current_page_size():
             if self.appending:
-                print(self.mother.asset_fields[self.mother._valid_index()])
                 self.mother.asset_fields[self.mother._valid_index()].append(self.logic.get_asset_at(int(user_input)).get_id())
             else:
                 self.mother.asset_fields[self.mother._valid_index()] = self.logic.get_asset_at(

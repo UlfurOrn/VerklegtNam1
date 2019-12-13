@@ -96,15 +96,15 @@ class EmployeeLL(LogicLayer):
 
     def set_sorting_method(self, sorting_method):
         if sorting_method == EmployeeSortingMethods.ALL_EMPLOYEES:
-            self.asset_list.sort()
+            self.asset_list.sort(key=lambda e: e.name)
         elif sorting_method == EmployeeSortingMethods.PILOTS:
-            self.get_pilots()
+            self.asset_list = list(filter(lambda employee: employee.is_pilot(), self.asset_list))
         elif sorting_method == EmployeeSortingMethods.ATTENDANTS:
-            self.get_attendants()
+            self.asset_list = list(filter(lambda employee: employee.is_attendant(), self.asset_list))
         elif sorting_method == EmployeeSortingMethods.IS_WORKING:
-            self.asset_list = filter(lambda employee: employee.in_use(), self.asset_list)
+            self.asset_list = list(filter(lambda employee: self.in_use(employee), self.asset_list))
         elif sorting_method == EmployeeSortingMethods.IS_AVAILABLE:
-            self.asset_list = filter(lambda employee: not employee.in_use(), self.asset_list)
+            self.asset_list = list(filter(lambda employee: not self.in_use(employee), self.asset_list))
 
 
     def get_week_schedule(self, employee, week_start, week_end):
