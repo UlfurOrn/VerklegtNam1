@@ -190,9 +190,9 @@ class EditingMenu(Menu):
             result.add(Command("w", "Previous field", lambda: self._with_shifted_field(-1)))
         if self._valid_index() != self.editable_fields[-1]:
             result.add(Command("s", "Next field", lambda: self._with_shifted_field(1)))
-        if True:
-            result.add(Command("pa", "Pick destination", SelectionMenu, (self, DestinationMenu)))
-            result.add(Command("pb", "Pick airplane", SelectionMenu, (self, AirplaneMenu)))
+        input_type = self.mother.logic.get_field_input_type(self._valid_index())
+        if input_type != str:
+            result.add(Command("pa", "Pick " + input_type.__name__(), SelectionMenu, (self, get_menu_from_type(input_type))))
         return result
 
     def _confirm(self):
@@ -211,7 +211,7 @@ class EditingMenu(Menu):
     def listing(self):
         header_list = self.focused_asset.get_header()
         return "\n".join([
-            "{:>13}: {}{}".format(header, info,
+            "{:>17}: {}{}".format(header, info,
                                   " <---" if i == self._valid_index() else "")
             for i, (header,
                     info) in enumerate(zip(header_list, self.asset_fields))
@@ -256,3 +256,13 @@ class SelectionMenu(Asset):
         else:
             return self._invoke_comand(user_input)
         return self
+
+def get_menu_from_type(input_type):
+    if input_type == Airplane:
+        return AirplaneMenu
+    if input_type == Destination:
+        return DestinationMenu
+    if input_type == Employee:
+        return EmployeeMenu
+    if input_type == Voyage:
+        return VoyageMenu
