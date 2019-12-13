@@ -1,4 +1,5 @@
 import datetime
+from enum import Enum
 from DataLayer.IOAPI import IOAPI
 from ModelFolder.Employee import Employee
 from LogicLayer.LogicLayer import LogicLayer
@@ -64,3 +65,26 @@ class EmployeeLL(LogicLayer):
 
         else:
             return True
+
+
+    def set_sorting_method(self, sorting_method):
+        if sorting_method == EmployeeSortingMethods.ALL_EMPLOYEES:
+            self.asset_list.sort()
+        elif sorting_method == EmployeeSortingMethods.PILOTS:
+            self.get_pilots()
+        elif sorting_method == EmployeeSortingMethods.ATTENDANTS:
+            self.get_attendants()
+        elif sorting_method == EmployeeSortingMethods.IS_WORKING:
+            self.asset_list = filter(lambda employee: employee.in_use(), self.asset_list)
+        elif sorting_method == EmployeeSortingMethods.IS_AVAILABLE:
+            self.asset_list = filter(lambda employee: not employee.in_use(), self.asset_list)
+
+
+
+class EmployeeSortingMethods(Enum):
+    ALL_EMPLOYEES = 0
+    PILOTS = 1
+    ATTENDANTS = 2
+    IS_WORKING = 3
+    IS_AVAILABLE = 4
+    
