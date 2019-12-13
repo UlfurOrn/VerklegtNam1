@@ -16,7 +16,6 @@ class EmployeeLL(LogicLayer):
     def is_pilot(self, employee):
         return employee.job_type == "Captain" or employee.job_type == "Co Pilot"
 
-
     def get_attendants(self):
         return self.IOAPI.get_attendants()
 
@@ -37,7 +36,6 @@ class EmployeeLL(LogicLayer):
             return False
         except KeyError:
             return True
-
 
     def show_busy_destination(self, departure_str, arrival_str):
         busy_destination = self.get_is_busy_and_free(self.get_all(), departure_str, arrival_str)[0]

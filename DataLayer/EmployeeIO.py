@@ -1,4 +1,5 @@
 import csv
+import json
 from ModelFolder.Employee import Employee
 
 
@@ -27,27 +28,19 @@ class EmployeeIO:
         elif(employee.job_type == "Senior Attendant" and employee.job_type == "Attendant"):
             self.attendants.append(employee.ssn)
 
-
     def save(self):
-        with open("CSVFolder/employees.csv", "w",
-                  encoding="utf8") as employee_file:
-            csv_writer = csv.writer(employee_file)
-
-            for employee in list(self.employees.values()):
-                csv_writer.writerow(employee.get_save_info())
+        with open("Data/employees.json", "w") as employee_file:
+            employee_file.write(
+                json.dumps(
+                    [employee.get_save_info() for employee in self.employees.values()]))
 
     def load(self):
         if self.employees == {}:
-
-            with open("CSVFolder/employees.csv", "r",
-                      encoding="utf8") as employee_file:
-                csv_reader = csv.reader(employee_file)
-
-                for line in csv_reader:
+            with open("Data/employees.json", "r") as employee_file:
+                for line in json.loads(employee_file.read()):
                     name, ssn, address, hphone, wphone, email, plane_type, job_type, time_table = line
                     employee = Employee(name, ssn, address, hphone, wphone,
                                         email, plane_type, job_type,
-                                        time_table.replace("]","").replace("[","").split(","))
-
+                                        time_table)
                     self.add(employee)
         return list(self.employees.values())
