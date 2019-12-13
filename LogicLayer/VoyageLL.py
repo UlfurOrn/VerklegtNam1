@@ -66,6 +66,15 @@ class VoyageLL(LogicLayer):
     def add(self, voyage):
         self.IOAPI.add_voyage(voyage)
 
+    def get_input_type(self,field_index):
+        if field_index == 1:
+            return str
+        elif field_index == 2:
+            return str
+        elif field_index == 6:
+            return int
+
+
     def is_valid_input(self, field_index, new_input, voyage):
         if field_index == 1:
             if self.is_date_format(new_input):
@@ -79,7 +88,7 @@ class VoyageLL(LogicLayer):
             else:
                 return False
         elif field_index == 6:
-            if new_input < self.IOAPI.get_airplane_by_id(voyage).seat_cap :
+            if new_input < self.IOAPI.get_airplane_by_id(voyage).seat_cap and new_input.is_digit():
                 return True
             else:
                 False
