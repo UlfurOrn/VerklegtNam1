@@ -68,24 +68,13 @@ class EmployeeLL(LogicLayer):
             return self.is_only_letters(new_input) and new_input != ""
         elif field_index == 1:
             return new_input.isdigit() and self.is_unique_ssn(new_input) and new_input != ""
-        elif field_index == 2:
-            return new_input != ""
         elif field_index in [3,4]:
             return self.is_only_digits(new_input)
-        elif field_index == 5:
-            return new_input != ""
-        elif field_index == 6:
-            return new_input != ""
-        elif field_index == 7:
-            return new_input != ""
         else:
             return True
 
     def get_input_type(self, field_index):
-        if field_index in [0,3,6,7]:
-            return str
-        else:
-            return int
+        return str
 
     def get_input_specification(self, field_index):
         return ""

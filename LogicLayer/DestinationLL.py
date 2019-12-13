@@ -26,33 +26,28 @@ class DestinationLL(LogicLayer):
         return True
 
     def get_input_type(self, field_index):
-        if field_index == 4:
-            return int
-        elif field_index == 6:
-            return int
-        else:
-            return str
+        return str
 
     def is_valid_input(self, field_index, new_input):
-        if field_index == 0:
+        if field_index == 0: # Country
             return self.is_only_letters(new_input) and new_input != ""
 
-        elif field_index == 1:
+        elif field_index == 1: # Airport
             return self.is_only_letters(new_input) and new_input != ""
 
-        elif field_index == 2:
+        elif field_index == 2: # Airport Abbreviation
             return self.is_unique_abreviation(new_input) and new_input != ""
 
-        elif field_index == 3:
-            return self.is_time_format(new_input)
+        elif field_index == 3: # Time
+            return self.is_time_format(new_input) and new_input != ""
 
-        elif field_index == 4:
-            return new_input.isdigit()
+        elif field_index == 4: # Distance
+            return new_input.isdigit() and new_input != ""
 
-        elif field_index == 5:
+        elif field_index == 5: # Contact name
             return self.is_only_letters(new_input)
 
-        elif field_index == 6:
+        elif field_index == 6: # Contact number
             return self.is_only_digits(new_input)
 
         else:
