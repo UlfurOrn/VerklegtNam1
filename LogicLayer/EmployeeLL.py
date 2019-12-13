@@ -66,16 +66,20 @@ class EmployeeLL(LogicLayer):
     def is_valid_input(self, field_index, new_input):
         if field_index == 0:
             return self.is_only_letters(new_input) and new_input != ""
-
         elif field_index == 1:
             return new_input.isdigit() and self.is_unique_ssn(new_input) and new_input != ""
-
+        elif field_index == 2:
+            return new_input != ""
+        elif field_index == 3:
+            return self.is_only_digits(str(filter(lambda: c != "-", new_input)))
+        elif field_index == 4:
+            return self.is_only_digits(str(filter(lambda: c != "-", new_input)))
+        elif field_index == 5:
+            return new_input != ""
         elif field_index == 6:
             return new_input != ""
-
         elif field_index == 7:
             return new_input != ""
-
         else:
             return True
 
@@ -85,7 +89,8 @@ class EmployeeLL(LogicLayer):
         else:
             return int
 
-
+    def get_input_specification(self, field_index):
+        return ""
 
     def set_sorting_method(self, sorting_method):
         if sorting_method == EmployeeSortingMethods.ALL_EMPLOYEES:
