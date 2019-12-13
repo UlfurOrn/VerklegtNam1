@@ -19,8 +19,8 @@ class EmployeeLL(LogicLayer):
     def get_all(self):
         return self.IOAPI.get_employees()
 
-    def get_by_id(self):
-        return "To Do"
+    def get_by_id(self, item_id):
+        return self.IOAPI.get_employee_by_id(item_id)
 
     def add(self, employee):
         self.IOAPI.add_employee(employee)
@@ -114,6 +114,17 @@ class EmployeeLL(LogicLayer):
             if voyage.departure_time > week_start and voyage.return_time < week_end:
                 schedule.append(voyage)
         return voyage
+
+
+    def get_pilots_ordered_by_plane_type(self):
+        total = []
+        for plane_type in self.IOAPI.employee.plane_types.values():
+            for pilot in plane_type:
+                total.append(self.get_by_id(pilot))
+        return total
+
+
+
 
 
 class EmployeeSortingMethods(Enum):

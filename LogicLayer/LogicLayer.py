@@ -83,15 +83,19 @@ class LogicLayer:
         asset_time_table = asset.time_table
 
         time_table_to_check = []
-        for voyage_id in asset_time_table:
-            voyage = self.IOAPI.get_voyage_by_id(voyage_id)
-            time_table_to_check.append([
-                (self.str_to_datetime(voyage.departure_time),
-                 self.str_to_datetime(voyage.return_time))
-            ])
-            if not self.check_time_table(time_table_to_check, departure_time,
-                                         arrival_time):
-                return voyage
+        if len(asset_time_table) >=1:
+            for voyage_id in asset_time_table:
+                print(asset.time_table)
+                if voyage_id is not "":
+                    voyage = self.IOAPI.get_voyage_by_id(voyage_id)
+                    time_table_to_check.append(
+                        self.text_to_datetime(voyage.departure_time,
+                                              voyage.return_time))
+                    if not self.check_time_table(time_table_to_check, departure_time,
+                                                 arrival_time):
+                        return voyage
+        return False
+
 
     def get_is_busy_and_free(self, asset_list, departure_str, arrival_str):
         departure_time, arrival_time = (self.str_to_datetime(departure_str),
@@ -101,9 +105,9 @@ class LogicLayer:
         free = []
 
         for asset in self.asset_list:
-            voyage_if_busy = self.is_busy_during_period(asset)
-            if asset_busy is not None:
-                busy.append(asset, asset_busy)
+            voyage_if_busy = self.is_busy(asset, departure_str, arrival_str)
+            if voyage_if_busy:
+                busy.append((asset,voyage_if_busy))
             else:
                 free.append(asset)
 
