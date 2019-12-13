@@ -15,13 +15,12 @@ class VoyageIO:
 
     def add(self, voyage):
         self.voyages[voyage.get_id()] = voyage
-        self.save()
 
     def save(self):
         with open("CSVFolder/voyages.csv", "w",
                   encoding="utf8") as voyage_file:
             csv_writer = csv.writer(voyage_file)
-
+            print("hi")
             for voyage in list(self.voyages.values()):
                 csv_writer.writerow(voyage.get_save_info())
 
@@ -31,8 +30,8 @@ class VoyageIO:
             with open("CSVFolder/voyages.csv", "r",
                       encoding="utf8") as voyage_file:
                 csv_reader = csv.reader(voyage_file)
-
                 for line in csv_reader:
+                    print(line)
                     destination, departure_time, arrival_time, airplane, pilot_list, attendant_list, seats_sold = line
                     voyage = Voyage(destination, departure_time, arrival_time,
                                     airplane, pilot_list, attendant_list,
