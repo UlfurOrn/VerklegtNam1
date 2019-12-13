@@ -80,14 +80,10 @@ class EmployeeLL(LogicLayer):
             return True
 
     def get_input_type(self, field_index):
-        if field_index == 0:
+        if field_index in [0,3,6,7]:
             return str
-        elif field_index == 1:
+        else:
             return int
-        elif field_index == 6:
-            return str
-        elif field_index == 7:
-            return str
 
 
 

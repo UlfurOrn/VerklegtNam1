@@ -194,7 +194,10 @@ class EditingMenu(Menu):
         input_type = self.mother.logic.get_input_type(self._valid_index())
         self.can_input = input_type in [int, str]
         if not self.can_input:
-            result.add(Command("p", "Pick " + input_type.__name__, SelectionMenu, (self, get_menu_from_type(input_type))))
+            if input_type == list:
+                result.add(Command("p", "Add " + input_type.__name__, SelectionMenu, (self, get_menu_from_type(input_type))))
+            else:
+                result.add(Command("p", "Pick " + input_type.__name__, SelectionMenu, (self, get_menu_from_type(input_type))))
         return result
 
     def _confirm(self):
@@ -228,11 +231,14 @@ class EditingMenu(Menu):
         if command == None:
             # self.mother.logic.is_valid_input(self._valid_index(), user_input)
             if self.can_input:
-                self.asset_fields[self._valid_index()] = user_input
-                self._with_shifted_field(1)
-                self._user_message = ""
+                if self.logic.is_valid_input(self._valid_index(), user_input):
+                    self.asset_fields[self._valid_index()] = user_input
+                    self._with_shifted_field(1)
+                    self._user_message = ""
+                else:
+                    self._user_message = self.logic.get_input_specification()
             else:
-                self._user_message = "Hei\n"
+                self._user_message = "This field doesn't accept text input\nplease select a command\n"
             return self
         self._user_message = ""
         return command.invoke()
@@ -257,8 +263,8 @@ class SelectionMenu(Asset):
     def handle_input(self, user_input):
         if user_input.isdigit(
         ) and 0 < int(user_input) <= self.logic.current_page_size():
-            # pass the selected asset to the new editing menu
             self.mother.asset_fields[self.mother._valid_index()] = self.logic.get_asset_at(int(user_input)).get_id()
+            self.mother._with_shifted_field(1)
             return self.mother
         else:
             return self._invoke_comand(user_input)
