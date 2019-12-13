@@ -1,4 +1,5 @@
 class Voyage:
+    ID = 0
     def __init__(self,
                  destination="",
                  departure_time="",
@@ -14,6 +15,8 @@ class Voyage:
         self.pilot_list = pilot_list
         self.attendant_list = attendant_list
         self.seats_sold = seats_sold
+        self.ID = Voyage.ID
+        Voyage.ID+=1
 
     def get_header(self):
         return [
