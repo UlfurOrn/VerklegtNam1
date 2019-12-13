@@ -29,6 +29,17 @@ class AirplaneLL(LogicLayer):
         else:
             return True
 
+
+    def get_input_specifacation(self, field_index):
+    	if field_index == 0:
+    		return "insert the name of the airplane"
+    	elif field_index == 1:
+    		return "insert the name of the airplane's manufacturer"
+    	elif field_index == 2:
+    		return "insert the type of the airplane"
+    	elif field_index == 3:
+    		return "insert the amount of seats in the airplane"
+
     def in_use(self, airplane):
         self.check_time_table(airplane)
 

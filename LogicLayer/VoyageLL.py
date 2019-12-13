@@ -79,22 +79,21 @@ class VoyageLL(LogicLayer):
             int,
         ][field_index]
 
-    def is_valid_input(self, field_index, new_input, voyage):
-        if field_index == 1:
-            if self.is_date_format(new_input):
-                return self.is_unique_departure(new_input)
-            else:
-                return False
+    def get_input_specification(self, field_index):
+        return [
+        'press "p" to pick a destination to fly to\n',
+        'insert the time of departure "yyyy-mm-dd HH:MM"\n',
+        'insert the time of departure returning to Iceland "yyyy-mm-dd HH:MM"\n',
+        'if you have selected a timeframe press "p" to select the Airplane to fly with\n',
+        'if you have selected a plane press "p" to select a pilot who has the authorization to fly it\n',
+        'if you have selected a timeframe press "p" to select an Attendant\n'
+        'insert the amount of seats sold this voyage\n'
+        ][field_index]
 
+    def is_valid_input(self, field_index, new_input):
+        if field_index == 1:
+            return self.is_datetime_format(new_input)
         elif field_index == 2:
-            if self.is_date_format(new_input):
-                return self.is_valid_arrival(new_input,voyage)
-            else:
-                return False
+            return self.is_datetime_format(new_input)
         elif field_index == 6:
-            if new_input < self.IOAPI.get_airplane_by_id(voyage).seat_cap and new_input.is_digit():
-                return True
-            else:
-                False
-        else:
-            return True
+            return new_input.is_digit()

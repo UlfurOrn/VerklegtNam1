@@ -113,19 +113,12 @@ class LogicLayer:
     def is_only_digits(self, string):
         return string.isdigit()
 
-    def is_date_format(self, string):
+    def is_datetime_format(self, string):
         try:
-            datetime.datetime.strptime(string, "‰d/%m/%Y %H:%M")
+            datetime.datetime.fromisoformat(string)
             return True
-        except ValueError:
-            return False
-
-    def is_time_format(self, string):
-        try:
-            datetime.datetime.striptime(string, "%H:%M")
-            return True
-        except ValueError:
-            return False
+        except:
+        	pass
 
 
     def str_to_datetime(self, string):

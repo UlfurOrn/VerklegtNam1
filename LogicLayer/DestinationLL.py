@@ -25,6 +25,28 @@ class DestinationLL(LogicLayer):
                 return False
         return True
 
+    def get_input_specifacation(self, field_index):
+        if field_index == 0:
+            return "insert name of the new destination's country"
+
+        elif field_index == 1:
+            return  "insert the name of the new destination's airport"
+
+        elif field_index == 2:
+            return "insert the abreviation for your airport"
+        elif field_index == 3:
+            return "insert the time it takes to fly to the new destination"
+
+        elif field_index == 4:
+            return "insert the distance from Iceland"
+
+        elif field_index == 5:
+            return "insert the name of the new destination's contanct" 
+
+        elif field_index == 6:
+            return "insert the phone number of the new destination's contanct"
+
+
     def get_input_type(self, field_index):
         if field_index == 4:
             return int

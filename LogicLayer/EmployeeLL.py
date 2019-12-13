@@ -88,7 +88,22 @@ class EmployeeLL(LogicLayer):
             return int
 
     def get_input_specification(self, field_index):
-        return ""
+        if field_index == 0:
+            return "insert the name of the new employee"
+        elif field_index == 1:
+            return "insert the social security number of the new employee"
+        elif field_index == 2:
+            return "insert the address of the new employee"
+        elif field_index == 2:
+            return "insert the home phone of the new employee"
+        elif field_index == 3:
+            return "insert the mobile phone of the new employee"
+        elif field_index == 4:
+            return "insert the email address of the new employee"
+        elif field_index == 5:
+            return "insert the plane type the employee is allowed to operate(leave empty if attendant)"
+        elif field_index == 6:
+            return "insert the title of the new employee's position"
 
     def set_sorting_method(self, sorting_method):
         if sorting_method == EmployeeSortingMethods.ALL_EMPLOYEES:
