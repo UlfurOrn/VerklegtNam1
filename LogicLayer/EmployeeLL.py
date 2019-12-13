@@ -79,6 +79,17 @@ class EmployeeLL(LogicLayer):
         else:
             return True
 
+    def get_input_type(self):
+        if field_index == 0:
+            return str
+        elif field_index == 1:
+            return int
+        elif field_index == 6:
+            return str
+        elif field_index == 7:
+            return str
+
+
 
     def set_sorting_method(self, sorting_method):
         if sorting_method == EmployeeSortingMethods.ALL_EMPLOYEES:
