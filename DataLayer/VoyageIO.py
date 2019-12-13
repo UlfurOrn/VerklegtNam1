@@ -31,7 +31,6 @@ class VoyageIO:
                       encoding="utf8") as voyage_file:
                 csv_reader = csv.reader(voyage_file)
                 for line in csv_reader:
-                    print(line)
                     destination, departure_time, arrival_time, airplane, pilot_list, attendant_list, seats_sold = line
                     voyage = Voyage(destination, departure_time, arrival_time,
                                     airplane, pilot_list, attendant_list,
