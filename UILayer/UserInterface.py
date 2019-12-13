@@ -54,8 +54,12 @@ class UserInterface:
                 print(self.menu.page_legend())
                 print(self.separator())
 
-            user_input = input(self.menu.prompt())
+            try:
+                user_input = input(self.menu.prompt())
+            except KeyboardInterrupt:
+                break
 
             self.menu = self.menu.handle_input(user_input)
             if user_input == "q":
-                return  # we outa here
+                break  # we outa here
+        print("\nThank you for choosing NaN air")

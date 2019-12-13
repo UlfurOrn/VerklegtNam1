@@ -205,6 +205,7 @@ class EditingMenu(Menu):
         if self.creating:
             self.mother.logic.add(self.focused_asset)
             self.mother.logic.set_final_page()
+            self.mother.logic.load_asset_list()
         return self.mother
 
     def has_list(self):
