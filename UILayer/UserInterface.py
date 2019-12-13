@@ -43,7 +43,7 @@ class UserInterface:
 
     def loop(self):
         while True:
-            # self.clear_screen()
+            self.clear_screen()
             print(self.header())
             if self.menu.has_list():
                 print(self.menu.listing())
