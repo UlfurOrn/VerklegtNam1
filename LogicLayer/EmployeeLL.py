@@ -28,10 +28,11 @@ class EmployeeLL(LogicLayer):
     def is_unique_ssn(self, new_ssn):
         employee_list = self.get_all()
 
-        for employee in employee_list:
-            if employee.ssn == new_ssn:
-                return False
-        return True
+        try:
+            self.IOAPI.employee.employees[new_ssn]
+            return False
+        except KeyError:
+            return True
 
 
     def show_busy_destination(self, departure_str, arrival_str):
@@ -100,7 +101,7 @@ class EmployeeLL(LogicLayer):
                 schedule.append(voyage)
         return voyage
 
-        
+
 class EmployeeSortingMethods(Enum):
     ALL_EMPLOYEES = 0
     PILOTS = 1
