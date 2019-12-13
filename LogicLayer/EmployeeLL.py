@@ -92,7 +92,15 @@ class EmployeeLL(LogicLayer):
             self.asset_list = filter(lambda employee: not employee.in_use(), self.asset_list)
 
 
+    def get_week_schedule(self, employee, week_start, week_end):
+        schedule = []
+        for voyage in employee.time_table:
+            voyage = self.IOAPI.get_voyage_by_id(voyage)
+            if voyage.departure_time > week_start and voyage.return_time < week_end:
+                schedule.append(voyage)
+        return voyage
 
+        
 class EmployeeSortingMethods(Enum):
     ALL_EMPLOYEES = 0
     PILOTS = 1
