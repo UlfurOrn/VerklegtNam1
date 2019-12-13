@@ -35,7 +35,7 @@ class EmployeeLL(LogicLayer):
 
 
     def show_busy_destination(self, departure_str, arrival_str):
-        busy_destination = self.get_is_busy_and_free(IOAPI.employee.get_all(), departure_str, arrival_str)[0]
+        busy_destination = self.get_is_busy_and_free(self.get_all(), departure_str, arrival_str)[0]
 
         return_list = []
 
