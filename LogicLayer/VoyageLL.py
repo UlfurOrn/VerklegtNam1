@@ -4,6 +4,7 @@ from LogicLayer.LogicLayer import LogicLayer
 from ModelFolder.Voyage import Voyage
 from ModelFolder.Destination import Destination
 from ModelFolder.Airplane import Airplane
+from ModelFolder.Employee import Employee
 
 
 class VoyageLL(LogicLayer):
@@ -75,8 +76,8 @@ class VoyageLL(LogicLayer):
             str,
             str,
             Airplane,
-            list,
-            list,
+            "pilots",
+            "assistants",
             int,
         ][field_index]
 

@@ -9,6 +9,7 @@ from LogicLayer.VoyageLL import *
 
 from UILayer.Abstract import *
 
+
 class Asset(Menu):
     def __init__(self, mother):
         self.mother = mother
@@ -22,7 +23,8 @@ class Asset(Menu):
 
     def commander(self, sorts=True):
         result = Commander(
-            Command("c", "Create new " + self.asset, EditingMenu, (self, None, True)),
+            Command("c", "Create new " + self.asset, EditingMenu,
+                    (self, None, True)),
             Command("b", "Back to main menu", lambda: self.mother),
         )
         if sorts:
@@ -129,8 +131,7 @@ class AirplaneMenu(Asset):
                     AirplaneSortingMethods.ONLY_NOT_IN_USE),
             Command("3", "Airplanes in use", self,
                     AirplaneSortingMethods.ONLY_IN_USE),
-            Command("4", "Sort by name", self,
-                    AirplaneSortingMethods.BY_NAME),
+            Command("4", "Sort by name", self, AirplaneSortingMethods.BY_NAME),
             Command("5", "Sort by manufacturer", self,
                     AirplaneSortingMethods.BY_MANUFACTURER),
             Command("b", "Back to " + self.asset + " list", self),
@@ -191,16 +192,24 @@ class EditingMenu(Menu):
             Command("c", "Confirm changes", self._confirm),
         )
         if self._valid_index() != self.editable_fields[0]:
-            result.add(Command("w", "Previous field", lambda: self._with_shifted_field(-1)))
+            result.add(
+                Command("w", "Previous field",
+                        lambda: self._with_shifted_field(-1)))
         if self._valid_index() != self.editable_fields[-1]:
-            result.add(Command("s", "Next field", lambda: self._with_shifted_field(1)))
+            result.add(
+                Command("s", "Next field",
+                        lambda: self._with_shifted_field(1)))
         input_type = self.mother.logic.get_input_type(self._valid_index())
         self.can_input = input_type in [int, str]
         if not self.can_input:
-            if input_type == list:
-                result.add(Command("p", "Add " + input_type.__name__, SelectionMenu, (self, get_menu_from_type(input_type))))
+            if type(input_type) == str:
+                result.add(
+                    Command("p", "Add " + input_type, SelectionMenu,
+                            (self, get_menu_from_type(input_type), True)))
             else:
-                result.add(Command("p", "Pick " + input_type.__name__, SelectionMenu, (self, get_menu_from_type(input_type))))
+                result.add(
+                    Command("p", "Pick " + input_type.__name__, SelectionMenu,
+                            (self, get_menu_from_type(input_type))))
         return result
 
     def _confirm(self):
@@ -234,13 +243,14 @@ class EditingMenu(Menu):
         command = self.commander().has(user_input)
         if command == None:
             # self.mother.logic.is_valid_input(self._valid_index(), user_input)
-            if self.can_input:
-                if self.mother.logic.is_valid_input(self._valid_index(), user_input):
-                    self.asset_fields[self._valid_index()] = user_input
-                    self._with_shifted_field(1)
-                    self._user_message = ""
-                else:
-                    self._user_message = self.mother.logic.get_input_specification(self._valid_index())
+            if self.can_input and self.mother.logic.is_valid_input(
+                    self._valid_index(), user_input):
+                self.asset_fields[self._valid_index()] = user_input
+                self._with_shifted_field(1)
+                self._user_message = ""
+            elif self.can_input:
+                self._user_message = self.mother.logic.get_input_specification(
+                    self._valid_index())
             else:
                 self._user_message = "This field doesn't accept text input\nplease select a command\n"
             return self
@@ -248,31 +258,38 @@ class EditingMenu(Menu):
         return command.invoke()
 
     def _with_shifted_field(self, change):
-        self.current_index = (self.current_index + change) % len(self.editable_fields)
+        self.current_index = (self.current_index + change) % len(
+            self.editable_fields)
         return self
 
 
 class SelectionMenu(Asset):
-    def __init__(self, mother, sibling):
+    def __init__(self, mother, sibling, appending=False):
         self.mother = mother
         self.sibling = sibling(self.mother)
         self.asset = self.sibling.asset
         self.logic = self.sibling.logic
+        self.appending = appending
 
     def commander(self):
         return Commander(
-            Command("b", "Back to editing menu", lambda: self.mother)
-        )
+            Command("b", "Back to editing menu", lambda: self.mother))
 
     def handle_input(self, user_input):
         if user_input.isdigit(
         ) and 0 < int(user_input) <= self.logic.current_page_size():
-            self.mother.asset_fields[self.mother._valid_index()] = self.logic.get_asset_at(int(user_input)).get_id()
-            self.mother._with_shifted_field(1)
+            if self.appending:
+                print(self.mother.asset_fields[self.mother._valid_index()])
+                self.mother.asset_fields[self.mother._valid_index()].append(self.logic.get_asset_at(int(user_input)).get_id())
+            else:
+                self.mother.asset_fields[self.mother._valid_index()] = self.logic.get_asset_at(
+                    int(user_input)).get_id()
+                self.mother._with_shifted_field(1)
             return self.mother
         else:
             return self._invoke_comand(user_input)
         return self
+
 
 def get_menu_from_type(input_type):
     if input_type == Airplane:
@@ -283,3 +300,5 @@ def get_menu_from_type(input_type):
         return EmployeeMenu
     if input_type == Voyage:
         return VoyageMenu
+    if type(input_type) == str:
+        return EmployeeMenu
